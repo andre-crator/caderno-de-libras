@@ -1,13 +1,31 @@
-# CLAUDE.md — [NOME DO PROJETO]
+# CLAUDE.md — Caderno de Libras
 
 @AGENTS.md
 
-> Ao criar um projeto a partir deste starter, troque [NOME DO PROJETO] e preencha
-> "O que é este app". Mantenha este arquivo com menos de 200 linhas: instruções
-> longas de tarefas específicas vão para skills em `.claude/skills/`.
+> Mantenha este arquivo com menos de 200 linhas: instruções longas de tarefas
+> específicas vão para skills em `.claude/skills/`.
 
 ## O que é este app
-[Uma ou duas frases: o que faz, para quem.]
+Caderno de estudo de Libras (Língua Brasileira de Sinais) para a esposa do André, que
+está começando um curso. Ela anota os sinais de cada aula, revisa com cartões
+(repetição espaçada) e treina a datilologia (alfabeto manual). Interface em português,
+pensada para o celular.
+
+**Antes do MVP:** levantamento de requisitos em andamento (`docs/REQUISITOS.md`).
+Não definir telas nem tabelas novas sem as respostas dela e o OK do André.
+
+**Protótipo de referência:** `docs/prototipo/caderno-de-libras.html` (página única,
+publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletrar.
+
+## Regras de conteúdo
+- **Sinais não são inventados.** O app nunca descreve, desenha nem gera sinais por conta
+  própria: o conteúdo vem do que ela anota ou grava. Sinais variam por região; vale o que a
+  professora ensinou.
+- Vídeos e imagens de dicionários (INES, Spread The Sign, VLibras etc.) só como **link**.
+  Nada copiado sem licença conferida; na dúvida, perguntar ao André.
+- Descrição de sinal segue os 5 parâmetros da Libras: configuração de mão (CM), ponto de
+  articulação (PA), movimento (M), orientação da palma (Or) e expressão não manual (ENM).
+- Fotos e vídeos dela são dados pessoais: privados por padrão (RLS + Storage privado).
 
 ## Stack
 - Next.js 16 (App Router, Server Components) + TypeScript estrito.
@@ -26,6 +44,13 @@
 - `lib/routes.ts` — rotas privadas (`PRIVATE_PREFIXES`) e `safeNextPath`.
 - `supabase/migrations/` — toda mudança de banco, em ordem, versionada.
 - `docs/SETUP.md` — configuração de Supabase, Google e Vercel.
+- `docs/REQUISITOS.md` — levantamento de requisitos (questionário dela + o que já se sabe).
+- `docs/ROADMAP.md` — o que vem depois do MVP; `docs/decisoes/` — uma nota por decisão.
+- `docs/prototipo/` — protótipo em HTML (só referência, não é código do app).
+
+## Começo e fim de sessão
+`PROXIMOS.md` diz onde paramos e o que vem a seguir. Leia no começo e atualize no fim
+(meia página, sem histórico — o histórico está no git).
 
 ## Regras do projeto
 - Segurança:
