@@ -1,0 +1,89 @@
+.page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--spacing-6) var(--spacing-4);
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-8) var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form { display: flex; flex-direction: column; gap: var(--spacing-3); }
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.input {
+  font: inherit;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--foreground);
+}
+.input:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-color: var(--primary); }
+
+.primary,
+.google {
+  font: inherit;
+  font-weight: 500;
+  padding: var(--spacing-3);
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.primary { background: var(--primary); color: var(--primary-foreground); }
+.google { background: var(--card); color: var(--foreground); border-color: var(--border); }
+.primary:disabled, .google:disabled { opacity: 0.6; cursor: wait; }
+.primary:focus-visible, .google:focus-visible, .link:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+.link {
+  font: inherit;
+  font-size: 0.875rem;
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  padding: var(--spacing-1);
+}
+
+.skeleton {
+  height: 260px;
+  border-radius: var(--radius);
+  background: var(--muted);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: 0.55; } }
+
+.error { color: var(--error); font-size: 0.875rem; margin: 0; }
+.ok { color: var(--success); font-size: 0.875rem; margin: 0; }
