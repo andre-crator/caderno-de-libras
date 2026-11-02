@@ -1,20 +1,24 @@
 # Levantamento de requisitos
 
-**Questionário (ela preenche):** https://claude.ai/artifact/VgCFfYRmU1vMQqgjU1Hmkc
-Quando as respostas chegarem, resuma aqui o que foi decidido. O questionário continua
-sendo a fonte das respostas dela.
+**Questionário para ela (celular, uma pergunta por tela):**
+https://claude.ai/artifact/FK9jYopoedneZJXh6hanbm — cópia em `docs/prototipo/questionario.html`.
+No fim ela envia as respostas pelo WhatsApp. Cole as respostas aqui, abaixo de "Respostas".
+
+**Versão para o André (tabelas, decisões técnicas):**
+https://claude.ai/artifact/VgCFfYRmU1vMQqgjU1Hmkc
+
+## Respostas
+(colar aqui o texto que chegar pelo WhatsApp)
 
 ## Status
 Aguardando respostas (enviado em 2026-11-02).
 
-## O que o questionário pergunta
-1. Ela e o curso: onde, nível, frequência, material da professora, avaliação, objetivo.
-2. Como estuda hoje: onde anota, quanto tempo, maiores dificuldades, apps que já usa.
-3. Funções do app, cada uma com prioridade (Precisa ter / Seria bom / Não preciso).
-4. Como e onde vai usar: aparelho, momento do dia, internet, login, compartilhar.
-5. Gosto e aparência: cores, tema, tamanho de letra, nome do app.
-6. Opinião sobre o protótipo.
-7. Decisões do André.
+## O que o questionário pergunta (23 perguntas)
+- Ela e o curso: onde, nível, aulas por semana, professora, material, motivo, objetivo.
+- Como estuda hoje: como guarda, frequência, o que é difícil.
+- Funções do app, cada uma com prioridade (Preciso / Seria bom / Não preciso) + ideias.
+- Uso: aparelho, momento, tempo, internet, login, com quem compartilhar.
+- Aparência: tema, tamanho da letra, cores, nome do app; opinião sobre o protótipo.
 
 ## Já validado no protótipo
 - Anotar sinal: palavra, categoria, aula, 5 parâmetros (CM, PA, M, Or, ENM), dica, link de vídeo.
