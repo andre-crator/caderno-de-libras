@@ -78,3 +78,15 @@
   border-radius: var(--radius-full);
   background: var(--highlight-soft);
 }
+
+/* O link cobre o cartão inteiro (alvo de toque grande). */
+.link {
+  font-family: var(--font-family-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+.link::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+.link:focus-visible { box-shadow: none; }
+.link:focus-visible::after { box-shadow: var(--shadow-focus); }

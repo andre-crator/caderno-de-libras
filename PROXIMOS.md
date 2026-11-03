@@ -5,7 +5,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 ## Onde paramos (2026-11-03)
 
 - PRs abertos, um em cima do outro: #1 `configuracao-inicial` (docs) → #2 `fase1-base`
-  (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda).
+  (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda) →
+  #4 `fase1-soletrar` (treino de alfabeto e números, página pública).
   Migrações testadas só no Postgres local (`npm run test:banco`); **não aplicadas** no Supabase.
   Ainda **sem** Supabase nem Vercel do app.
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
@@ -19,8 +20,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 ## O André precisa
 
 1. Criar o projeto no Supabase (região São Paulo) e o OAuth do Google (`docs/SETUP.md`).
-   A organização já tem 2 projetos ativos (limite do plano grátis): pausar um, usar outra
-   organização ou plano pago.
+   Decidido: criar na organização **Zeus-AI** (grátis, tem vaga). O conector do Supabase
+   do Claude precisa ser reconectado incluindo a Zeus-AI e a sessão reiniciada.
 2. Ligar o repositório à Vercel.
 3. Levar o questionário para o `starter-andre` (precisa de acesso de escrita ao starter).
 
