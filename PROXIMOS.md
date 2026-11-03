@@ -6,7 +6,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 - PRs abertos, um em cima do outro: #1 `configuracao-inicial` (docs) → #2 `fase1-base`
   (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda) →
-  #4 `fase1-soletrar` (treino de alfabeto e números, página pública).
+  #4 `fase1-soletrar` (treino de alfabeto e números, página pública) → #5 `fase1-roteiro`
+  (roteiro das 12 unidades, listas de estudo e links de dicionário; D6 e D7).
   Migrações testadas só no Postgres local (`npm run test:banco`); **não aplicadas** no Supabase.
   Ainda **sem** Supabase nem Vercel do app.
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
@@ -18,6 +19,9 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   Questionário: https://questionario-libras-blue.vercel.app.
 
 ## O André precisa
+
+0. Testar no celular se https://www.spreadthesign.com/pt.br/search/?q=casa abre a busca
+   por "casa" e qual é o endereço atual do dicionário do INES (`lib/curso/dicionarios.ts`).
 
 1. Criar o projeto no Supabase (região São Paulo) e o OAuth do Google (`docs/SETUP.md`).
    Decidido (2026-11-03): projeto `Incluir` na organização **Zeus-AI** (grátis, tem vaga).

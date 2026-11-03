@@ -61,6 +61,8 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   Atkinson Hyperlegible + Bricolage Grotesque via `next/font` em `app/layout.tsx`.
 - App instalável: `app/manifest.ts` (abre em `/painel`), ícones em `public/icons/`,
   `app/icon.svg` e `app/apple-icon.png`. `app/painel` é o menu principal (áreas "em breve").
+- `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema
+  (`vocabulario.ts`, D7; acentos contam) e links para dicionários (`dicionarios.ts`).
 - `app/soletrar` (pública, sem dados dela) + `lib/soletrar/sequencia.ts` — treino de
   datilologia e números, item a item, com modo "esconder a palavra".
 
