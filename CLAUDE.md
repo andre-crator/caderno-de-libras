@@ -43,7 +43,13 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   No Next.js 16 o antigo `middleware.ts` se chama `proxy.ts`.
 - `lib/supabase/client.ts` (navegador) e `lib/supabase/server.ts` (servidor).
 - `lib/routes.ts` — rotas privadas (`PRIVATE_PREFIXES`) e `safeNextPath`.
-- `supabase/migrations/` — toda mudança de banco, em ordem, versionada.
+- `supabase/migrations/` — toda mudança de banco, em ordem, versionada. Tabela `signs`
+  (sinal/frase, mídia, agenda de revisão) e bucket privado `sign-media` (`<user_id>/<arquivo>`).
+- `supabase/tests/` + `scripts/testar-banco.sh` (`npm run test:banco`) — aplica as migrações
+  num Postgres temporário com imitação mínima do Supabase e testa a RLS. Toda tabela nova
+  ganha um teste aqui (outra usuária e anon não leem nem alteram).
+- `lib/revisao/agenda.ts` — agenda de Leitner (0, 1, 2, 4, 8, 16 dias; vence à meia-noite
+  de Brasília).
 - `docs/SETUP.md` — configuração de Supabase, Google e Vercel.
 - `docs/REQUISITOS.md` — levantamento de requisitos (questionário dela + o que já se sabe).
 - `docs/ROADMAP.md` — o que vem depois do MVP; `docs/decisoes/` — uma nota por decisão.
@@ -97,7 +103,7 @@ pela sua revisão de exatidão antes de entrar no projeto.
 
 ## Comandos
 - `npm run dev` — rodar local (http://localhost:3000)
-- `npm run typecheck` · `npm run lint` · `npm test` · `npm run build`
+- `npm run typecheck` · `npm run lint` · `npm test` · `npm run test:banco` · `npm run build`
 
 ## Definição de pronto
 typecheck, lint, testes e build passando; migração testada; `docs/` atualizado se

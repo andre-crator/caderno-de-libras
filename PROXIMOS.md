@@ -4,7 +4,9 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 ## Onde paramos (2026-11-03)
 
-- PR #1 `configuracao-inicial` (docs) e PR #2 `fase1-base` (identidade, home, PWA) abertos.
+- PRs abertos, um em cima do outro: #1 `configuracao-inicial` (docs) → #2 `fase1-base`
+  (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda).
+  Migrações testadas só no Postgres local (`npm run test:banco`); **não aplicadas** no Supabase.
   Ainda **sem** Supabase nem Vercel do app.
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
   por semana, professora surda, Android, login Google, tela clara com letras maiores, azul e
@@ -17,6 +19,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 ## O André precisa
 
 1. Criar o projeto no Supabase (região São Paulo) e o OAuth do Google (`docs/SETUP.md`).
+   A organização já tem 2 projetos ativos (limite do plano grátis): pausar um, usar outra
+   organização ou plano pago.
 2. Ligar o repositório à Vercel.
 3. Levar o questionário para o `starter-andre` (precisa de acesso de escrita ao starter).
 

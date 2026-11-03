@@ -18,4 +18,6 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
+      # Migrações + RLS num Postgres temporário (o runner Ubuntu já traz o PostgreSQL).
+      - run: npm run test:banco
       - run: npm run build
