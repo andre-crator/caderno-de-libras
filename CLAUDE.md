@@ -11,7 +11,7 @@ Sinais) para a esposa do André, que está começando um curso (básico, profess
 Ela guarda os sinais de cada aula com foto/vídeo, revisa com cartões (repetição espaçada)
 e treina datilologia e números. Interface em português, pensada para o celular.
 
-**MVP:** proposta de fases em `docs/REQUISITOS.md` (D3, aguardando OK). Ela usa Android,
+**MVP:** fases aprovadas em `docs/REQUISITOS.md` (D3); plano em `docs/PLANO_FASE1.md`. Ela usa Android,
 entra com Google, prefere tela clara com letras maiores, azul e branco.
 Não definir telas nem tabelas novas sem o OK do André.
 

@@ -1,6 +1,6 @@
 ---
 data: 2026-11-03
-status: pendente
+status: valida
 ---
 
 # D4 — O app se chama "Incluir"

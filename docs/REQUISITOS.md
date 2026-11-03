@@ -4,8 +4,8 @@
 em `docs/prototipo/questionario.html`). **Versão do André:** https://claude.ai/artifact/VgCFfYRmU1vMQqgjU1Hmkc
 
 ## Status
-Respostas recebidas em 2026-11-03. Proposta de MVP e fases abaixo, **aguardando o OK do André**
-(decisões D3 a D5 em `docs/decisoes/`).
+Respostas recebidas em 2026-11-03. Fases **aprovadas** pelo André em 2026-11-03 (D3 a D5).
+Plano técnico: `docs/PLANO_FASE1.md`.
 
 ## O que aprendemos
 Ela está no **básico**, faz **1 aula por semana** no Instituto Chaves com **professora surda**, e
@@ -29,7 +29,7 @@ Hoje guarda o que aprende **na memória e em fotos**, e estuda 1 ou 2 vezes por 
 Ela marcou **"Preciso" nas 11 funções**. A ordem abaixo é proposta nossa, pelo que destrava o
 objetivo dela primeiro (lembrar sinais e entender quem sinaliza) e pelo esforço técnico.
 
-## Proposta de fases (D3 — pendente)
+## Fases (D3)
 
 ### Fase 1 — MVP "Incluir" (ela usa no dia a dia)
 - [ ] Login com Google.
