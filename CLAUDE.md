@@ -27,6 +27,8 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - Descrição de sinal segue os 5 parâmetros da Libras: configuração de mão (CM), ponto de
   articulação (PA), movimento (M), orientação da palma (Or) e expressão não manual (ENM).
 - Fotos e vídeos dela são dados pessoais: privados por padrão (RLS + Storage privado).
+- **Apostila do curso (D6):** direitos reservados. Nada dela entra no app ou no repositório
+  (texto, imagem, PDF). Só a sequência de unidades e temas, em `lib/curso/unidades.ts`.
 
 ## Stack
 - Next.js 16 (App Router, Server Components) + TypeScript estrito.

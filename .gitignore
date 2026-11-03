@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Material de terceiros (ex.: apostila do curso, D6) nunca vai para o repositório
+*.pdf

@@ -10,3 +10,4 @@ Uma nota por decisão (modelo em `_modelo.md`). Status: `pendente` (aguarda o An
 | 2026-11-03 | [D3 — MVP e fases](2026-11-03-d3-mvp-e-fases.md) | valida |
 | 2026-11-03 | [D4 — O app se chama "Incluir"](2026-11-03-d4-nome-incluir.md) | valida |
 | 2026-11-03 | [D5 — Fotos e vídeos no Supabase Storage](2026-11-03-d5-midia.md) | valida |
+| 2026-11-03 | [D6 — Como usar a apostila do curso](2026-11-03-d6-apostila.md) | valida |
