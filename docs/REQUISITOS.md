@@ -1,7 +1,9 @@
 # Levantamento de requisitos
 
 **Questionário para ela (celular, uma pergunta por tela):**
-https://claude.ai/artifact/FK9jYopoedneZJXh6hanbm — cópia em `docs/prototipo/questionario.html`.
+https://questionario-libras-blue.vercel.app (projeto `questionario-libras` na Vercel, página estática;
+fonte em `docs/prototipo/questionario.html`). O Artifact https://claude.ai/artifact/FK9jYopoedneZJXh6hanbm
+é privado e serve só de cópia de trabalho.
 No fim ela envia as respostas pelo WhatsApp. Cole as respostas aqui, abaixo de "Respostas".
 
 **Versão para o André (tabelas, decisões técnicas):**

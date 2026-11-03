@@ -10,7 +10,7 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   cópia em `docs/prototipo/`. Tem: lista de sinais com os 5 parâmetros, revisão com cartões
   (caixas de Leitner: 0, 1, 2, 4, 8, 16 dias) e treino de datilologia.
 - **Questionário** para ela (celular, envia pelo WhatsApp):
-  https://claude.ai/artifact/FK9jYopoedneZJXh6hanbm. Versão do André, com as decisões
+  https://questionario-libras-blue.vercel.app (Vercel, sem login). Versão do André, com as decisões
   técnicas: https://claude.ai/artifact/VgCFfYRmU1vMQqgjU1Hmkc. Ver `docs/REQUISITOS.md`.
 
 ## O André precisa
