@@ -7,10 +7,10 @@ typecheck, lint, testes e build passando.
 | --- | --- | --- |
 | 1. Base ✅ | Identidade (azul e branco, tema claro, letra 18px), nome Incluir, home, PWA instalável (manifest + ícones) | — |
 | 2. Banco ✅ | Tabela `signs` (sinal + agenda de revisão), bucket privado `sign-media`, RLS, regras da agenda (Leitner) com testes | — (testado em Postgres local) |
-| 3. Caderno | `/caderno` (lista, busca, categorias), `/caderno/novo` e `/caderno/[id]` (foto/vídeo da galeria ou câmera, palavra, aula, tipo sinal/frase, 5 parâmetros opcionais) | 2 + projeto Supabase |
-| 4. Revisar | `/revisar`: cartões com a mídia, Errei / Com dúvida / Acertei, limite diário | 2, 3 |
+| 3. Caderno ✅ (falta testar no Supabase real) | `/caderno` (lista, busca, categorias = temas de `lib/curso/unidades.ts`, D6), `/caderno/temas` (lista de estudo por tema com progresso e "ver o sinal", D7), `/caderno/novo` e `/caderno/[id]` (foto/vídeo da galeria ou câmera, palavra, aula, tipo sinal/frase, 5 parâmetros opcionais) | 2 + projeto Supabase |
+| 4. Revisar ✅ (falta testar no Supabase real) | `/revisar`: cartões com a mídia, Errei / Com dúvida / Acertei, limite diário | 2, 3 |
 | 5. Treinos ✅ | `/soletrar`: alfabeto manual e números (letras ou dígitos um a um) | 1 |
-| 6. Offline básico | Service worker com cache do app e das mídias já vistas | 1–5 |
+| 6. Offline básico ✅ | Service worker com cache do app e das mídias já vistas | 1–5 |
 
 ## Banco (parte 2)
 `signs` — um sinal ou frase do caderno dela.

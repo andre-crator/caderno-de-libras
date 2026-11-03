@@ -27,6 +27,7 @@
 - [ ] Caderno da turma, com convite.
 
 ## Ideias soltas
+- [ ] Limpeza periódica de arquivos do `sign-media` sem linha em `signs` (ex.: aba fechada no meio do cadastro).
 - [ ] Ao apagar a conta, apagar também os arquivos dela no bucket `sign-media` (hoje só as linhas de `signs` saem em cascata).
 - [ ] Importar os sinais anotados no protótipo.
 - [ ] Levar o questionário de requisitos para o `starter-andre`.
