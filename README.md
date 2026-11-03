@@ -1,18 +1,14 @@
-# starter-andre
+# Caderno de Libras
 
-Ponto de partida padrão para apps **Next.js 16 + Supabase + Vercel**.
-Todo projeto novo começa daqui, já com o que todo app precisa:
+Caderno de estudo de Libras: anotar os sinais de cada aula, revisar com cartões e
+treinar a datilologia (alfabeto manual).
 
-- Login por **e-mail e senha** e **Google**, com rotas privadas protegidas
-- Tabela `profiles` criada automaticamente no cadastro, com **RLS**
-- Clientes Supabase prontos para navegador e servidor (`@supabase/ssr`)
-- Proteção contra *open redirect* no login, logout por POST
-- **Design tokens** (`design/tokens.css`) com modo claro/escuro
-- **Testes** (Vitest) e **CI** no GitHub Actions: typecheck, lint, testes e build
-- **CLAUDE.md** e skill `nova-tabela` para o Claude Code trabalhar no padrão
+Feito a partir do `starter-andre`: **Next.js 16 + Supabase + Vercel**.
 
-## Começar um projeto novo
-Siga **[docs/SETUP.md](docs/SETUP.md)** (≈ 20 minutos).
+- Configuração do Supabase, Google e Vercel: [docs/SETUP.md](docs/SETUP.md)
+- Levantamento de requisitos: [docs/REQUISITOS.md](docs/REQUISITOS.md)
+- Onde paramos: [PROXIMOS.md](PROXIMOS.md) · Decisões: [docs/decisoes/](docs/decisoes/README.md)
+- Ideias para depois: [docs/ROADMAP.md](docs/ROADMAP.md)
 
 ## Comandos
 | Comando | O que faz |
@@ -23,5 +19,4 @@ Siga **[docs/SETUP.md](docs/SETUP.md)** (≈ 20 minutos).
 | `npm test` | roda os testes |
 | `npm run build` | gera a versão de produção |
 
-## Requisitos
-Node.js 22 ou mais novo (`.nvmrc`).
+Requisitos: Node.js 22 ou mais novo (`.nvmrc`).

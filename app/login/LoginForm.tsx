@@ -5,6 +5,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { limparCacheDaConta } from "@/components/RegistrarSW";
 import styles from "./login.module.css";
 
 type Mode = "entrar" | "criar";
@@ -30,6 +31,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       setLoading(false);
       if (error) return setMessage({ kind: "erro", text: "E-mail ou senha incorretos." });
+      limparCacheDaConta(); // nada da conta anterior fica guardado para uso offline
       router.replace(nextPath);
       router.refresh(); // faz os Server Components lerem a sessão nova
       return;

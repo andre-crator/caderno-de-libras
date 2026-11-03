@@ -1,0 +1,75 @@
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: var(--spacing-6) max(var(--spacing-4), env(safe-area-inset-right)) var(--spacing-12)
+    max(var(--spacing-4), env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  font-family: var(--font-family-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.titulo {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  font-weight: 800;
+}
+
+.cta {
+  align-self: flex-start;
+  min-height: var(--touch-target);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--spacing-8);
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
+  text-decoration: none;
+}
+.cta:hover { background: var(--primary-hover); }
+
+.passos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-3);
+}
+
+.passo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.passo strong { color: var(--primary); font-family: var(--font-family-display); font-size: 1.2rem; }
+.passo span { color: var(--muted-foreground); }

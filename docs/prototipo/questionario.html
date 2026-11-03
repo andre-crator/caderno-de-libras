@@ -1,0 +1,318 @@
+<title>Seu app de Libras</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: uma pergunta por tela, coluna única de até 560px, botões grandes para o polegar. */
+:root {
+  --bg: #F2F4F8; --surface: #FFFFFF; --ink: #18202E; --muted: #5A6478; --line: #D9DEE8;
+  --accent: #2346D8; --accent-ink: #FFFFFF; --accent-soft: #E3E8FC; --sun: #F2B632; --sun-soft: #FCF0D2;
+  --good: #1F8A55;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1420; --surface: #182031; --ink: #EBEEF5; --muted: #A2ABBF; --line: #2A3448;
+    --accent: #7D94FF; --accent-ink: #0F1420; --accent-soft: #232E52; --sun: #F5C452; --sun-soft: #3A3120; --good: #4CC28A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1420; --surface: #182031; --ink: #EBEEF5; --muted: #A2ABBF; --line: #2A3448;
+  --accent: #7D94FF; --accent-ink: #0F1420; --accent-soft: #232E52; --sun: #F5C452; --sun-soft: #3A3120; --good: #4CC28A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5; }
+.wrap {
+  max-width: 560px; margin: 0 auto; min-height: 100%;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 40px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+h1, h2 { font-family: var(--font-display); margin: 0; text-wrap: balance; line-height: 1.15; }
+h1 { font-size: 2rem; font-weight: 800; }
+h2 { font-size: 1.5rem; font-weight: 800; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.top { display: flex; align-items: center; gap: 12px; }
+.top .count { margin-left: auto; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.hand { width: 40px; height: 40px; flex: none; }
+
+.screen { display: flex; flex-direction: column; gap: 18px; }
+.hint { font-size: 0.92rem; color: var(--muted); }
+.options { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  font: inherit; text-align: left; cursor: pointer; width: 100%;
+  background: var(--surface); color: var(--ink); border: 2px solid var(--line); border-radius: 16px;
+  padding: 14px 16px; display: flex; align-items: center; gap: 12px; min-height: 56px;
+}
+.opt .box { width: 24px; height: 24px; flex: none; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; }
+.opt.multi .box { border-radius: 7px; }
+.opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.opt[aria-pressed="true"] .box { background: var(--accent); border-color: var(--accent); }
+.opt[aria-pressed="true"] .box::after { content: ""; width: 10px; height: 6px; border: 2.5px solid var(--accent-ink); border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px, -1px); }
+
+textarea, input[type="text"] {
+  font: inherit; color: var(--ink); background: var(--surface); width: 100%;
+  border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px;
+}
+textarea { min-height: 96px; resize: vertical; }
+.extra summary { cursor: pointer; color: var(--accent); font-weight: 700; padding: 4px 0; }
+.extra[open] summary { margin-bottom: 8px; }
+
+/* funções com prioridade */
+.feat { background: var(--surface); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.feat .t { font-weight: 700; }
+.prio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.prio button {
+  font: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; border-radius: 12px; padding: 10px 4px;
+  background: var(--bg); color: var(--ink); border: 2px solid var(--line);
+}
+.prio button[aria-pressed="true"][data-v="Preciso"] { background: var(--good); border-color: var(--good); color: #fff; }
+.prio button[aria-pressed="true"][data-v="Seria bom"] { background: var(--sun); border-color: var(--sun); color: #18202E; }
+.prio button[aria-pressed="true"][data-v="Não preciso"] { background: var(--muted); border-color: var(--muted); color: var(--bg); }
+
+.nav { display: flex; gap: 10px; margin-top: 4px; }
+.btn {
+  font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 999px;
+  padding: 14px 22px; background: var(--accent); color: var(--accent-ink); min-height: 52px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+}
+.btn.big { width: 100%; font-size: 1.05rem; }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+.btn.wa { background: #1FA855; color: #fff; }
+.nav .btn:last-child { flex: 1; }
+button:focus-visible, a:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+.intro-card { background: var(--surface); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.facts { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.facts li { display: flex; gap: 10px; align-items: baseline; }
+.facts li b { font-family: var(--font-display); color: var(--accent); min-width: 1.2em; }
+.summary { background: var(--surface); border-radius: 16px; padding: 14px 16px; white-space: pre-wrap; font-size: 0.9rem; max-height: 260px; overflow: auto; overflow-wrap: anywhere; }
+.note { background: var(--sun-soft); border-radius: 14px; padding: 12px 14px; font-size: 0.92rem; }
+.pop { animation: pop .25s ease-out; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pop { animation: none; } .bar > div { transition: none; } }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <svg class="hand" viewBox="0 0 34 34" aria-hidden="true">
+      <rect width="34" height="34" rx="10" fill="var(--accent)"></rect>
+      <path d="M11 25V13.5a1.6 1.6 0 0 1 3.2 0V19 10a1.6 1.6 0 0 1 3.2 0v9-8a1.6 1.6 0 0 1 3.2 0v8-5.5a1.6 1.6 0 0 1 3.2 0V21c0 3.6-2.6 6-6.4 6h-.8C13.6 27 11 26.2 11 25Z" fill="var(--accent-ink)"></path>
+    </svg>
+    <strong>Seu app de Libras</strong>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="bar" id="barWrap"><div id="bar"></div></div>
+  <main id="screen" class="screen" aria-live="polite"></main>
+</div>
+
+<script>
+(() => {
+  const KEY = "questionario-libras-v1";
+  // Perguntas. type: one (uma escolha), many (várias), text (escrever), prio (prioridade por item)
+  const Q = [
+    { id: "local", type: "text", q: "Onde você faz o curso de Libras?", hint: "Pode ser o nome da escola, igreja ou site.", ph: "Ex.: curso na igreja, às terças" },
+    { id: "nivel", type: "one", q: "Em que nível você está?", opts: ["Básico (começando)", "Intermediário", "Avançado", "Não sei"] },
+    { id: "frequencia", type: "one", q: "Quantas aulas você tem por semana?", opts: ["1 aula", "2 aulas", "3 ou mais", "Varia"] },
+    { id: "professora", type: "one", q: "Sua professora ou professor é…", opts: ["Surdo(a)", "Ouvinte", "Não sei"] },
+    { id: "material", type: "many", q: "O curso passa algum material?", hint: "Pode marcar mais de um.", opts: ["Apostila", "Vídeos", "Grupo de WhatsApp", "Lista de sinais", "Nenhum"] },
+    { id: "motivo", type: "many", q: "Por que você quer aprender Libras?", hint: "Pode marcar mais de um.", opts: ["Trabalho", "Igreja", "Família", "Amigo(a) surdo(a)", "Curiosidade", "Ajudar as pessoas"] },
+    { id: "objetivo", type: "text", q: "Daqui a um ano, o que você gostaria de conseguir fazer em Libras?", ph: "Ex.: conversar com uma pessoa surda na igreja" },
+    { id: "guarda", type: "many", q: "Depois da aula, como você guarda o que aprendeu?", hint: "Pode marcar mais de um.", opts: ["Anoto no caderno", "Tiro foto", "Gravo vídeo", "Fica só na memória"] },
+    { id: "estuda", type: "one", q: "Você estuda fora da aula?", opts: ["Quase nunca", "1 ou 2 vezes por semana", "Quase todo dia"] },
+    { id: "dificil", type: "many", q: "O que está mais difícil até agora?", hint: "Pode marcar mais de um.", opts: ["Lembrar os sinais", "O alfabeto manual", "Entender quem sinaliza rápido", "A expressão do rosto", "Montar frases", "Números"] },
+    { id: "funcoes", type: "prio", q: "O que o app precisa ter?", hint: "Para cada ideia, toque em uma opção.", items: [
+      "Anotar os sinais de cada aula",
+      "Cartões para revisar e não esquecer",
+      "Treinar o alfabeto manual",
+      "Guardar foto ou vídeo do sinal",
+      "Me gravar fazendo o sinal",
+      "Quiz: ver o sinal e adivinhar a palavra",
+      "Treinar números, datas e horas",
+      "Frases prontas do dia a dia",
+      "Lembrete para estudar",
+      "Funcionar sem internet",
+      "Compartilhar sinais com a turma",
+    ] },
+    { id: "ideias", type: "text", q: "Tem mais alguma ideia para o app?", hint: "Qualquer coisa vale. Se não tiver, toque em Próxima.", ph: "Escreva aqui…" },
+    { id: "aparelho", type: "many", q: "Onde você vai usar o app?", opts: ["Celular Android", "iPhone", "Computador", "Tablet"] },
+    { id: "momento", type: "many", q: "Em que momento você estudaria?", hint: "Pode marcar mais de um.", opts: ["No ônibus ou carro", "No intervalo do trabalho", "Antes de dormir", "No fim de semana", "Logo depois da aula"] },
+    { id: "tempo", type: "one", q: "Quanto tempo de cada vez?", opts: ["5 minutos", "10 a 15 minutos", "Meia hora ou mais"] },
+    { id: "internet", type: "one", q: "Nesses momentos você tem internet?", opts: ["Sempre", "Às vezes não", "Quase nunca"] },
+    { id: "login", type: "one", q: "Como prefere entrar no app?", opts: ["Com a conta Google", "Com e-mail e senha", "Tanto faz"] },
+    { id: "mostrar", type: "many", q: "Com quem você gostaria de compartilhar seu caderno?", opts: ["Só comigo", "Com o André", "Com a professora", "Com colegas da turma"] },
+    { id: "tema", type: "one", q: "Você prefere a tela…", opts: ["Clara", "Escura", "Tanto faz"] },
+    { id: "letra", type: "one", q: "As letras precisam ser maiores?", opts: ["Sim, maiores", "Do tamanho normal"] },
+    { id: "cores", type: "text", q: "Quais cores você gostaria no app?", hint: "E se tiver alguma de que não gosta, conte também.", ph: "Ex.: azul e amarelo" },
+    { id: "nome", type: "text", q: "Que nome você daria ao app?", hint: "Hoje o nome provisório é “Caderno de Libras”.", ph: "Escreva um nome ou deixe em branco" },
+    { id: "prototipo", type: "text", q: "Você já mexeu no Caderno de Libras? O que achou?", hint: "Se ainda não usou, pode pular.", ph: "O que gostou, o que ficou confuso…" },
+  ];
+
+  let st = { i: -1, a: {}, notes: {} };
+  try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && typeof s === "object") st = { i: -1, a: s.a || {}, notes: s.notes || {}, saved: s.i }; } catch {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ i: st.i, a: st.a, notes: st.notes })); } catch {} };
+
+  const $ = (id) => document.getElementById(id);
+  function el(tag, attrs = {}, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    }
+    for (const k of kids) if (k != null) n.append(k);
+    return n;
+  }
+
+  function progress() {
+    const inQ = st.i >= 0 && st.i < Q.length;
+    $("count").textContent = inQ ? (st.i + 1) + " de " + Q.length : "";
+    $("bar").style.width = (st.i < 0 ? 0 : Math.min(100, Math.round((st.i) / Q.length * 100))) + "%";
+    if (st.i >= Q.length) $("bar").style.width = "100%";
+  }
+
+  function go(i) { st.i = i; save(); render(); window.scrollTo(0, 0); }
+
+  function render() {
+    progress();
+    const sc = $("screen"); sc.replaceChildren(); sc.classList.remove("pop"); void sc.offsetWidth; sc.classList.add("pop");
+    if (st.i < 0) return renderIntro(sc);
+    if (st.i >= Q.length) return renderEnd(sc);
+    const q = Q[st.i];
+    sc.append(el("h2", { text: q.q }));
+    if (q.hint) sc.append(el("p", { class: "hint", text: q.hint }));
+
+    if (q.type === "one" || q.type === "many") {
+      const box = el("div", { class: "options", role: "group", "aria-label": q.q });
+      const cur = st.a[q.id] || (q.type === "many" ? [] : "");
+      for (const o of q.opts) {
+        const on = q.type === "many" ? cur.includes(o) : cur === o;
+        box.append(el("button", { type: "button", class: "opt" + (q.type === "many" ? " multi" : ""), "aria-pressed": String(on), onclick: () => {
+          if (q.type === "many") {
+            const arr = new Set(st.a[q.id] || []);
+            arr.has(o) ? arr.delete(o) : arr.add(o);
+            st.a[q.id] = [...arr];
+            save(); render();
+          } else {
+            st.a[q.id] = o; save();
+            render();
+            setTimeout(() => { if (Q[st.i] === q) go(st.i + 1); }, 260);
+          }
+        } }, el("span", { class: "box" }), el("span", { text: o })));
+      }
+      sc.append(box);
+      const det = el("details", { class: "extra" }, el("summary", { text: "Quer explicar melhor ou dar outra resposta?" }));
+      const ta = el("textarea", { id: "note-" + q.id, placeholder: "Escreva aqui…", "aria-label": "Comentário" });
+      ta.value = st.notes[q.id] || "";
+      if (ta.value) det.open = true;
+      ta.addEventListener("input", () => { st.notes[q.id] = ta.value; save(); });
+      det.append(ta); sc.append(det);
+    } else if (q.type === "text") {
+      const ta = el("textarea", { id: "ans-" + q.id, placeholder: q.ph || "", "aria-label": q.q });
+      ta.value = st.a[q.id] || "";
+      ta.addEventListener("input", () => { st.a[q.id] = ta.value; save(); });
+      sc.append(ta);
+    } else if (q.type === "prio") {
+      const cur = st.a[q.id] || {};
+      for (const it of q.items) {
+        const row = el("div", { class: "prio", role: "group", "aria-label": it });
+        for (const v of ["Preciso", "Seria bom", "Não preciso"]) {
+          row.append(el("button", { type: "button", "data-v": v, "aria-pressed": String(cur[it] === v), onclick: () => {
+            const m = { ...(st.a[q.id] || {}) }; m[it] = m[it] === v ? undefined : v;
+            if (!m[it]) delete m[it];
+            st.a[q.id] = m; save(); render();
+          } }, v));
+        }
+        sc.append(el("div", { class: "feat" }, el("span", { class: "t", text: it }), row));
+      }
+    }
+
+    const last = st.i === Q.length - 1;
+    const answered = has(q);
+    sc.append(el("div", { class: "nav" },
+      el("button", { type: "button", class: "btn ghost", onclick: () => go(st.i - 1) }, "← Voltar"),
+      el("button", { type: "button", class: "btn", onclick: () => go(st.i + 1) }, last ? "Terminar" : (answered ? "Próxima →" : "Pular →"))));
+  }
+
+  function has(q) {
+    const v = st.a[q.id];
+    if (q.type === "many") return Array.isArray(v) && v.length > 0;
+    if (q.type === "prio") return v && Object.keys(v).length > 0;
+    return typeof v === "string" && v.trim() !== "";
+  }
+
+  function renderIntro(sc) {
+    const card = el("div", { class: "intro-card" },
+      el("h1", { text: "Vamos montar o seu app de Libras?" }),
+      el("p", { text: "O André está criando um app para te ajudar no curso. Antes, ele quer saber como você estuda e o que te ajudaria." }),
+      el("ul", { class: "facts" },
+        el("li", {}, el("b", { text: "1" }), el("span", { text: "São " + Q.length + " perguntas curtas. Quase todas são só tocar na resposta." })),
+        el("li", {}, el("b", { text: "2" }), el("span", { text: "Não existe resposta certa. Se não souber, toque em Pular." })),
+        el("li", {}, el("b", { text: "3" }), el("span", { text: "No fim, você manda as respostas para o André pelo WhatsApp." }))),
+      el("p", { class: "muted", text: "Leva uns 5 minutos. Se fechar a página, suas respostas ficam guardadas neste celular." }));
+    sc.append(card);
+    const resume = typeof st.saved === "number" && st.saved > 0 && st.saved < Q.length;
+    sc.append(el("button", { type: "button", class: "btn big", onclick: () => go(resume ? st.saved : 0) }, resume ? "Continuar de onde parei" : "Começar"));
+    if (resume) sc.append(el("button", { type: "button", class: "btn ghost big", onclick: () => go(0) }, "Ver desde o início"));
+  }
+
+  function summaryText() {
+    const lines = ["*Respostas do questionário do app de Libras*", ""];
+    Q.forEach((q, n) => {
+      const v = st.a[q.id];
+      let ans = "";
+      if (q.type === "many") ans = (v || []).join(", ");
+      else if (q.type === "prio") {
+        const m = v || {};
+        ans = q.items.filter(it => m[it]).map(it => "\n  - " + it + ": " + m[it]).join("");
+      } else ans = (v || "").trim();
+      const note = (st.notes[q.id] || "").trim();
+      lines.push((n + 1) + ". " + q.q);
+      lines.push("→ " + (ans || "(pulou)") + (note ? "\n  Obs.: " + note : ""));
+      lines.push("");
+    });
+    return lines.join("\n").trim();
+  }
+
+  async function saveCloud(text) {
+    try {
+      if (!window.claude || !window.claude.use) return;
+      const db = await window.claude.use("db");
+      if (!db) return;
+      await db.doc("respostas/questionario").set({ respostas: st.a, observacoes: st.notes, texto: text, enviadoEm: Date.now() });
+    } catch {}
+  }
+
+  function renderEnd(sc) {
+    const text = summaryText();
+    saveCloud(text);
+    sc.append(el("h1", { text: "Pronto, obrigado!" }),
+      el("p", { text: "Agora é só mandar as respostas para o André. Toque no botão verde e escolha a conversa com ele." }));
+    const wa = "https://wa.me/?text=" + encodeURIComponent(text);
+    sc.append(el("a", { class: "btn wa big", href: wa, target: "_blank", rel: "noopener" }, "Enviar pelo WhatsApp"));
+    const status = el("p", { class: "muted", role: "status" });
+    const sum = el("div", { class: "summary", id: "resumo", tabindex: "0", text: text });
+    sc.append(el("button", { type: "button", class: "btn ghost big", onclick: async () => {
+      try { await navigator.clipboard.writeText(text); status.textContent = "Copiado. Agora cole na conversa com o André."; }
+      catch {
+        const r = document.createRange(); r.selectNodeContents(sum);
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+        status.textContent = "Texto selecionado. Toque em Copiar e cole na conversa com o André.";
+      }
+    } }, "Copiar as respostas"), status);
+    sc.append(el("p", { class: "note", text: "Se o botão verde não abrir o WhatsApp, use “Copiar as respostas” e cole na conversa." }));
+    sc.append(el("details", { class: "extra" }, el("summary", { text: "Ver minhas respostas" }), sum));
+    sc.append(el("button", { type: "button", class: "btn ghost", onclick: () => go(0) }, "Revisar alguma resposta"));
+  }
+
+  render();
+})();
+</script>

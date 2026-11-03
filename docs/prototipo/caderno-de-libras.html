@@ -1,0 +1,713 @@
+<title>Caderno de Libras</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: app de uma coluna (max 640px) com barra de abas fixa embaixo; cada aba é uma tela. */
+:root {
+  --bg: #F2F4F8;
+  --surface: #FFFFFF;
+  --ink: #18202E;
+  --muted: #5A6478;
+  --line: #D9DEE8;
+  --accent: #2346D8;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E3E8FC;
+  --sun: #F2B632;
+  --sun-soft: #FCF0D2;
+  --good: #1F8A55;
+  --bad: #C2413A;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1420; --surface: #182031; --ink: #EBEEF5; --muted: #A2ABBF; --line: #2A3448;
+    --accent: #7D94FF; --accent-ink: #0F1420; --accent-soft: #232E52;
+    --sun: #F5C452; --sun-soft: #3A3120; --good: #4CC28A; --bad: #F0776F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1420; --surface: #182031; --ink: #EBEEF5; --muted: #A2ABBF; --line: #2A3448;
+  --accent: #7D94FF; --accent-ink: #0F1420; --accent-soft: #232E52;
+  --sun: #F5C452; --sun-soft: #3A3120; --good: #4CC28A; --bad: #F0776F;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+}
+.wrap {
+  max-width: 640px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 120px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; font-weight: 800; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+
+header.top { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.mark { display: inline-flex; align-items: center; gap: 10px; }
+.mark svg { width: 34px; height: 34px; flex: none; }
+.sync { font-size: 0.75rem; color: var(--muted); text-align: right; }
+
+.banner { background: var(--sun-soft); border-radius: var(--r); padding: 12px 14px; font-size: 0.9rem; margin-bottom: 16px; }
+.banner[hidden] { display: none; }
+
+.stack { display: flex; flex-direction: column; gap: 14px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+button, .btn {
+  font: inherit; font-weight: 700; border: 0; cursor: pointer; border-radius: 999px;
+  padding: 10px 18px; background: var(--accent); color: var(--accent-ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+}
+button.ghost, .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+button.soft { background: var(--accent-soft); color: var(--ink); }
+button.danger { background: transparent; color: var(--bad); box-shadow: inset 0 0 0 1.5px var(--bad); }
+button:disabled { opacity: .5; cursor: default; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid var(--sun); outline-offset: 2px;
+}
+
+input, textarea, select {
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%;
+}
+textarea { resize: vertical; min-height: 64px; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 0.9rem; }
+label .hint { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
+
+/* Lista de sinais */
+.search { position: relative; }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.chip {
+  flex: none; padding: 6px 14px; border-radius: 999px; font-size: 0.875rem; font-weight: 700;
+  background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line);
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); box-shadow: none; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat { background: var(--surface); border-radius: var(--r); padding: 12px; }
+.stat b { font-family: var(--font-display); font-size: 1.6rem; display: block; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 0.8rem; color: var(--muted); }
+
+.list { display: flex; flex-direction: column; gap: 8px; }
+.sign {
+  background: var(--surface); border-radius: var(--r); padding: 14px 16px;
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; cursor: pointer; text-align: left;
+  color: var(--ink); font-weight: 400; width: 100%;
+}
+.sign .w { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; min-width: 0; overflow-wrap: anywhere; }
+.sign .meta { grid-column: 1 / -1; font-size: 0.85rem; color: var(--muted); min-width: 0; overflow-wrap: anywhere; }
+.level { display: inline-flex; gap: 3px; align-items: center; }
+.level i { width: 7px; height: 14px; border-radius: 2px; background: var(--line); display: block; }
+.level i.on { background: var(--accent); }
+.tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--sun-soft); color: var(--ink); }
+
+.empty { background: var(--surface); border-radius: var(--r); padding: 24px; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+/* Detalhe / formulário */
+.sheet { background: var(--surface); border-radius: 20px; padding: 20px; }
+.params { display: grid; gap: 10px; }
+.param { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; }
+.param .ab {
+  font-family: var(--font-display); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.04em;
+  background: var(--accent-soft); color: var(--ink); border-radius: 8px; text-align: center; padding: 6px 0;
+}
+.param .v { min-width: 0; overflow-wrap: anywhere; }
+.param .v .n { font-size: 0.78rem; color: var(--muted); font-weight: 700; }
+details summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
+.confirm { background: var(--sun-soft); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Revisar */
+.card {
+  background: var(--surface); border-radius: 22px; padding: 28px 22px; min-height: 280px;
+  display: flex; flex-direction: column; gap: 16px; justify-content: center; text-align: center;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(24, 32, 46, .35);
+}
+.card .big { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 9vw, 3.2rem); line-height: 1.05; overflow-wrap: anywhere; }
+.card .answer { text-align: left; border-top: 1.5px dashed var(--line); padding-top: 16px; }
+.grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.grade button { border-radius: 14px; padding: 12px 6px; flex-direction: column; gap: 0; }
+.grade button small { font-weight: 400; font-size: 0.75rem; opacity: .85; }
+.g-bad { background: var(--bad); color: #fff; }
+.g-mid { background: var(--sun); color: #18202E; }
+.g-good { background: var(--good); color: #fff; }
+.progress { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.progress > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.seg { display: inline-flex; background: var(--surface); border-radius: 999px; padding: 4px; box-shadow: inset 0 0 0 1.5px var(--line); flex-wrap: wrap; }
+.seg button { background: transparent; color: var(--ink); padding: 7px 14px; font-size: 0.875rem; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Soletrar */
+.letter-stage {
+  background: var(--ink); color: var(--bg); border-radius: 22px; aspect-ratio: 4 / 3; max-width: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; position: relative; overflow: hidden;
+}
+.letter-stage .L { font-family: var(--font-display); font-weight: 800; font-size: clamp(6rem, 34vw, 11rem); line-height: 1; }
+.letter-stage .word { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; letter-spacing: 0.3em; opacity: .9; }
+.letter-stage .word span.cur { color: var(--sun); }
+.letter-stage .word span.done { opacity: .45; }
+.pop { animation: pop .22s ease-out; }
+@keyframes pop { from { transform: scale(.82); opacity: .2; } to { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .pop { animation: none; } .progress > div { transition: none; } }
+input[type="range"] { padding: 0; border: 0; background: transparent; accent-color: var(--accent); }
+
+.links { display: grid; gap: 8px; }
+.links a { color: var(--accent); font-weight: 700; }
+
+/* Abas */
+nav.tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: max(8px, env(safe-area-inset-left, 0px));
+  padding-right: max(8px, env(safe-area-inset-right, 0px));
+}
+nav.tabs .in { max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+nav.tabs button {
+  background: transparent; color: var(--muted); border-radius: 0; padding: 10px 4px 12px;
+  flex-direction: column; gap: 2px; font-size: 0.8rem;
+}
+nav.tabs button svg { width: 24px; height: 24px; }
+nav.tabs button[aria-current="page"] { color: var(--accent); }
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px)); z-index: 6;
+  background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 700; font-size: 0.9rem;
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="mark">
+      <svg viewBox="0 0 34 34" aria-hidden="true">
+        <rect width="34" height="34" rx="10" fill="var(--accent)"></rect>
+        <path d="M11 25V13.5a1.6 1.6 0 0 1 3.2 0V19 10a1.6 1.6 0 0 1 3.2 0v9-8a1.6 1.6 0 0 1 3.2 0v8-5.5a1.6 1.6 0 0 1 3.2 0V21c0 3.6-2.6 6-6.4 6h-.8C13.6 27 11 26.2 11 25Z" fill="var(--accent-ink)"></path>
+      </svg>
+      <div>
+        <div class="eyebrow">Língua Brasileira de Sinais</div>
+        <h1>Caderno de Libras</h1>
+      </div>
+    </div>
+    <div class="sync" id="sync">Carregando…</div>
+  </header>
+
+  <div class="banner" id="localBanner" hidden>Seus sinais estão salvos só neste navegador. Abra o caderno pelo link do Claude, com sua conta, para guardar tudo na nuvem.</div>
+
+  <!-- ABA: SINAIS -->
+  <section id="view-sinais" class="stack">
+    <div class="stats">
+      <div class="stat"><b id="stTotal">0</b><span>sinais anotados</span></div>
+      <div class="stat"><b id="stDue">0</b><span>para revisar hoje</span></div>
+      <div class="stat"><b id="stDone">0</b><span>bem fixados</span></div>
+    </div>
+    <div class="row" style="flex-wrap: nowrap;">
+      <input id="q" type="search" placeholder="Buscar palavra…" aria-label="Buscar palavra">
+      <button id="btnNew" type="button" style="flex:none;">+ Sinal</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria"></div>
+    <div class="list" id="list"></div>
+  </section>
+
+  <!-- DETALHE / FORM -->
+  <section id="view-form" class="stack" hidden>
+    <div class="row" style="justify-content: space-between;">
+      <button class="ghost" type="button" id="btnBack">← Voltar</button>
+      <span class="eyebrow" id="formEyebrow">Novo sinal</span>
+    </div>
+    <form class="sheet stack" id="form" autocomplete="off">
+      <label>Palavra ou expressão em português
+        <input id="f-palavra" required maxlength="80" placeholder="Ex.: Bom dia">
+      </label>
+      <div class="row" style="flex-wrap: nowrap;">
+        <label style="flex:1; min-width:0;">Categoria
+          <input id="f-categoria" list="cats" maxlength="40" placeholder="Ex.: Cumprimentos">
+        </label>
+        <label style="flex:1; min-width:0;">Aula
+          <input id="f-aula" maxlength="40" placeholder="Ex.: Aula 3">
+        </label>
+      </div>
+      <datalist id="cats"></datalist>
+
+      <details id="f-params" open>
+        <summary>Os 5 parâmetros do sinal</summary>
+        <div class="stack" style="margin-top: 8px;">
+          <p class="muted small">Descreva com suas palavras, como a professora ensinou. Pode deixar em branco o que não lembrar.</p>
+          <label>CM · Configuração de mão <span class="hint">Formato da mão (ex.: mão em “A”, dedos abertos)</span>
+            <textarea id="f-cm" maxlength="400"></textarea></label>
+          <label>PA · Ponto de articulação <span class="hint">Onde o sinal acontece (testa, queixo, peito, espaço neutro…)</span>
+            <textarea id="f-pa" maxlength="400"></textarea></label>
+          <label>M · Movimento <span class="hint">Como a mão se move (para frente, circular, repetido…)</span>
+            <textarea id="f-mov" maxlength="400"></textarea></label>
+          <label>Or · Orientação da palma <span class="hint">Para onde a palma aponta</span>
+            <textarea id="f-ori" maxlength="400"></textarea></label>
+          <label>ENM · Expressão não manual <span class="hint">Rosto e corpo (sobrancelhas, boca, cabeça)</span>
+            <textarea id="f-enm" maxlength="400"></textarea></label>
+        </div>
+      </details>
+
+      <label>Dica para lembrar <span class="hint">Uma associação sua: “parece que estou…”</span>
+        <textarea id="f-dica" maxlength="600"></textarea></label>
+      <label>Link de vídeo <span class="hint">Opcional: vídeo da aula, do dicionário ou do YouTube</span>
+        <input id="f-video" type="url" inputmode="url" maxlength="500" placeholder="https://…"></label>
+
+      <div class="row">
+        <button type="submit" id="btnSave">Salvar sinal</button>
+        <button type="button" class="danger" id="btnDelete" hidden>Apagar</button>
+      </div>
+      <div class="confirm" id="confirmDel" hidden>
+        <p>Apagar este sinal do caderno? Isso não pode ser desfeito.</p>
+        <div class="row">
+          <button type="button" class="danger" id="btnDelYes">Sim, apagar</button>
+          <button type="button" class="ghost" id="btnDelNo">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- ABA: REVISAR -->
+  <section id="view-revisar" class="stack" hidden>
+    <div>
+      <h2>Revisar</h2>
+      <p class="muted small" style="margin-top:4px;">Veja a palavra, faça o sinal com as mãos e só depois confira sua anotação. Sinais que você erra voltam antes.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Modo de revisão">
+      <button type="button" data-mode="palavra" aria-pressed="true">Palavra → sinal</button>
+      <button type="button" data-mode="descricao" aria-pressed="false">Descrição → palavra</button>
+    </div>
+    <div id="reviewArea" class="stack"></div>
+  </section>
+
+  <!-- ABA: SOLETRAR -->
+  <section id="view-soletrar" class="stack" hidden>
+    <div>
+      <h2>Datilologia</h2>
+      <p class="muted small" style="margin-top:4px;">Treine o alfabeto manual: as letras aparecem uma a uma no ritmo escolhido e você soletra junto. Comece pelo seu nome.</p>
+    </div>
+    <div class="letter-stage" aria-live="polite">
+      <div class="L" id="bigLetter">A</div>
+      <div class="word" id="wordLine"></div>
+    </div>
+    <div class="progress"><div id="spellBar"></div></div>
+    <div class="row" style="flex-wrap: nowrap;">
+      <input id="spellInput" maxlength="30" placeholder="Digite uma palavra ou nome" aria-label="Palavra para soletrar">
+      <button type="button" class="soft" id="btnRandom" style="flex:none;">Sortear</button>
+    </div>
+    <label>Tempo por letra: <span id="speedLabel">1,2 s</span>
+      <input type="range" id="speed" min="0.5" max="2.5" step="0.1" value="1.2">
+    </label>
+    <div class="row">
+      <button type="button" id="btnPlay">▶ Soletrar</button>
+      <button type="button" class="ghost" id="btnHide" aria-pressed="false">Esconder a palavra</button>
+    </div>
+    <p class="muted small">Com “Esconder a palavra”, peça para alguém sortear e soletrar para você: tente ler as letras antes de ver a resposta.</p>
+
+    <div class="sheet stack">
+      <h3>Dicionários para conferir sinais</h3>
+      <div class="links">
+        <a href="https://www.ines.gov.br/dicionario-de-libras/" target="_blank" rel="noopener">Dicionário de Libras do INES</a>
+        <a href="https://www.spreadthesign.com/pt.br/" target="_blank" rel="noopener">Spread The Sign (português do Brasil)</a>
+        <a href="https://www.vlibras.gov.br/" target="_blank" rel="noopener">VLibras (tradutor do governo)</a>
+      </div>
+      <p class="muted small">Sinais variam por região. Na dúvida, siga o que a professora ensinou.</p>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="in">
+    <button type="button" data-tab="sinais" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"></path><path d="M5 17a3 3 0 0 1 3-3h11"></path></svg>
+      Meus sinais
+    </button>
+    <button type="button" data-tab="revisar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="6" width="13" height="15" rx="2"></rect><path d="M8 3h10a2 2 0 0 1 2 2v12"></path></svg>
+      Revisar
+    </button>
+    <button type="button" data-tab="soletrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21v-9.5a1.5 1.5 0 0 1 3 0V10 4.5a1.5 1.5 0 0 1 3 0V11 6.5a1.5 1.5 0 0 1 3 0V15c0 3.3-2.4 6-5.5 6H11"></path><path d="M8 14 6 12.5a1.5 1.5 0 0 0-2 2.2L8 19"></path></svg>
+      Soletrar
+    </button>
+  </div>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const DAY = 86400000;
+  const INTERVALS = [0, 1, 2, 4, 8, 16]; // dias por nível (Leitner)
+  const MAX_LEVEL = INTERVALS.length - 1;
+  const LS_KEY = "caderno-libras-v1";
+
+  let signs = [];          // [{id, ...data}]
+  let store = null;        // { add, update, remove }
+  let editingId = null;
+  let filterCat = "";
+
+  /* ---------- armazenamento ---------- */
+  function lsRead() { try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch { return []; } }
+  function lsWrite(arr) { try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch {} }
+  function newId() { return "s" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function useLocal() {
+    $("localBanner").hidden = false;
+    $("sync").textContent = "Neste aparelho";
+    signs = lsRead();
+    store = {
+      async add(data) { const id = newId(); signs.push({ id, ...data }); lsWrite(signs); render(); return id; },
+      async update(id, data) { signs = signs.map(s => s.id === id ? { ...s, ...data } : s); lsWrite(signs); render(); },
+      async remove(id) { signs = signs.filter(s => s.id !== id); lsWrite(signs); render(); },
+    };
+    render();
+  }
+
+  async function useCloud(db) {
+    const col = db.collection("sinais");
+    let loaded = false;
+    const timer = setTimeout(() => { if (!loaded) $("sync").textContent = "Sem conexão ainda…"; }, 10000);
+    col.onSnapshot((snap) => {
+      signs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (!snap.metadata.fromCache) { loaded = true; clearTimeout(timer); $("sync").textContent = "Salvo na nuvem"; }
+      render();
+    }, (err) => {
+      clearTimeout(timer);
+      $("sync").textContent = "Erro ao carregar";
+      toast("Não consegui carregar os sinais (" + err.code + ").");
+    });
+    const wrap = async (fn) => {
+      try { return await fn(); }
+      catch (e) {
+        if (e && e.code === "invalid_argument") toast("Você só pode ver este caderno. Peça acesso de editor para anotar.");
+        else if (e && e.code === "quota_exceeded") toast("O caderno está cheio. Apague alguns sinais.");
+        else toast("Não deu para salvar. Tente de novo.");
+        throw e;
+      }
+    };
+    store = {
+      add: (data) => wrap(async () => (await col.add(data)).id),
+      update: (id, data) => wrap(() => col.doc(id).update(data)),
+      remove: (id) => wrap(() => col.doc(id).delete()),
+    };
+  }
+
+  async function init() {
+    render();
+    let db = null;
+    try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch { db = null; }
+    if (db) useCloud(db); else useLocal();
+  }
+
+  /* ---------- utilidades ---------- */
+  function isDue(s, now = Date.now()) { return !s.proxima || s.proxima <= now; }
+  function norm(t) { return (t || "").toString().normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
+  function el(tag, attrs = {}, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    }
+    for (const k of kids) if (k != null) n.append(k);
+    return n;
+  }
+  function levelBars(lv) {
+    const w = el("span", { class: "level", "aria-label": "Nível " + (lv || 0) + " de " + MAX_LEVEL });
+    for (let i = 1; i <= MAX_LEVEL; i++) w.append(el("i", { class: i <= (lv || 0) ? "on" : "" }));
+    return w;
+  }
+  let toastT;
+  function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 2600); }
+  function safeUrl(u) { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; } }
+
+  const PARAMS = [
+    ["cm", "CM", "Configuração de mão"],
+    ["pa", "PA", "Ponto de articulação"],
+    ["mov", "M", "Movimento"],
+    ["ori", "Or", "Orientação da palma"],
+    ["enm", "ENM", "Expressão não manual"],
+  ];
+
+  /* ---------- abas ---------- */
+  let currentTab = "sinais";
+  function showTab(tab) {
+    currentTab = tab;
+    for (const b of document.querySelectorAll("nav.tabs button")) b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false");
+    $("view-sinais").hidden = tab !== "sinais";
+    $("view-revisar").hidden = tab !== "revisar";
+    $("view-soletrar").hidden = tab !== "soletrar";
+    $("view-form").hidden = true;
+    if (tab === "revisar") startReview();
+    if (tab !== "soletrar") stopSpell();
+    window.scrollTo(0, 0);
+  }
+  for (const b of document.querySelectorAll("nav.tabs button")) b.addEventListener("click", () => showTab(b.dataset.tab));
+
+  /* ---------- lista ---------- */
+  function render() {
+    const now = Date.now();
+    $("stTotal").textContent = signs.length;
+    $("stDue").textContent = signs.filter(s => isDue(s, now)).length;
+    $("stDone").textContent = signs.filter(s => (s.nivel || 0) >= 4).length;
+
+    const cats = [...new Set(signs.map(s => (s.categoria || "").trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt"));
+    if (filterCat && !cats.includes(filterCat)) filterCat = "";
+    const chips = $("chips"); chips.replaceChildren();
+    const mk = (label, val) => el("button", { type: "button", class: "chip", "aria-pressed": String(filterCat === val), onclick: () => { filterCat = val; render(); } }, label);
+    chips.append(mk("Todos", ""));
+    cats.forEach(c => chips.append(mk(c, c)));
+    chips.hidden = cats.length === 0;
+    const dl = $("cats"); dl.replaceChildren(...cats.map(c => el("option", { value: c })));
+
+    const q = norm($("q").value.trim());
+    const list = $("list"); list.replaceChildren();
+    const shown = signs
+      .filter(s => !filterCat || (s.categoria || "").trim() === filterCat)
+      .filter(s => !q || norm(s.palavra).includes(q) || norm(s.dica).includes(q))
+      .sort((a, b) => (b.criado || 0) - (a.criado || 0));
+
+    if (store === null) { list.append(el("div", { class: "empty" }, el("p", { class: "muted", text: "Abrindo o caderno…" }))); return; }
+    if (signs.length === 0) {
+      list.append(el("div", { class: "empty" },
+        el("h3", { text: "Nenhum sinal anotado ainda" }),
+        el("p", { class: "muted small", text: "Depois de cada aula, anote os sinais novos: a palavra, como a mão fica e onde o movimento acontece. Eles entram na revisão automaticamente." }),
+        el("button", { type: "button", onclick: () => openForm(null) }, "Anotar o primeiro sinal")));
+      return;
+    }
+    if (shown.length === 0) { list.append(el("div", { class: "empty" }, el("p", { class: "muted", text: "Nada encontrado com esse filtro." }))); return; }
+
+    for (const s of shown) {
+      const bits = [s.categoria, s.aula].filter(Boolean).join(" · ");
+      const meta = el("div", { class: "meta" });
+      if (s.exemplo) meta.append(el("span", { class: "tag", text: "exemplo" }), " ");
+      meta.append(bits || "Sem categoria");
+      if (isDue(s, now)) meta.append(" · ", el("strong", { text: "revisar hoje" }));
+      list.append(el("button", { type: "button", class: "sign", onclick: () => openForm(s.id) },
+        el("span", { class: "w", text: s.palavra || "(sem nome)" }),
+        levelBars(s.nivel),
+        meta));
+    }
+  }
+  $("q").addEventListener("input", render);
+  $("btnNew").addEventListener("click", () => openForm(null));
+
+  /* ---------- formulário ---------- */
+  const F = ["palavra", "categoria", "aula", "cm", "pa", "mov", "ori", "enm", "dica", "video"];
+  function openForm(id) {
+    editingId = id;
+    const s = id ? signs.find(x => x.id === id) : null;
+    for (const k of F) $("f-" + k).value = s ? (s[k] || "") : "";
+    if (!s && filterCat) $("f-categoria").value = filterCat;
+    $("formEyebrow").textContent = s ? "Editar sinal" : "Novo sinal";
+    $("btnDelete").hidden = !s;
+    $("confirmDel").hidden = true;
+    $("view-sinais").hidden = true;
+    $("view-form").hidden = false;
+    window.scrollTo(0, 0);
+    if (!s) $("f-palavra").focus();
+  }
+  function closeForm() { $("view-form").hidden = true; $("view-sinais").hidden = false; editingId = null; }
+  $("btnBack").addEventListener("click", closeForm);
+
+  let saving = false;
+  $("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (saving || !store) return;
+    const data = {};
+    for (const k of F) data[k] = $("f-" + k).value.trim();
+    if (!data.palavra) { $("f-palavra").focus(); return; }
+    if (data.video && !safeUrl(data.video)) { toast("O link do vídeo precisa começar com https://"); return; }
+    saving = true; $("btnSave").disabled = true;
+    try {
+      if (editingId) {
+        data.exemplo = false;
+        await store.update(editingId, data);
+        toast("Sinal atualizado");
+      } else {
+        await store.add({ ...data, nivel: 0, proxima: 0, criado: Date.now(), exemplo: false });
+        toast("Sinal anotado");
+      }
+      closeForm();
+    } catch {} finally { saving = false; $("btnSave").disabled = false; }
+  });
+  $("btnDelete").addEventListener("click", () => { $("confirmDel").hidden = false; });
+  $("btnDelNo").addEventListener("click", () => { $("confirmDel").hidden = true; });
+  $("btnDelYes").addEventListener("click", async () => {
+    if (!editingId) return;
+    try { await store.remove(editingId); toast("Sinal apagado"); closeForm(); } catch {}
+  });
+
+  /* ---------- revisão ---------- */
+  let mode = "palavra", queue = [], qi = 0, revealed = false, sessionTotal = 0;
+  for (const b of document.querySelectorAll(".seg button")) b.addEventListener("click", () => {
+    mode = b.dataset.mode;
+    for (const x of document.querySelectorAll(".seg button")) x.setAttribute("aria-pressed", String(x === b));
+    startReview(queue.length > 0 && qi < queue.length ? queue.slice(qi) : null);
+  });
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function hasDescription(s) { return PARAMS.some(([k]) => s[k]) || s.dica; }
+
+  function startReview(ids, all = false) {
+    const now = Date.now();
+    let pool = ids ? ids.map(id => signs.find(s => s.id === id)).filter(Boolean)
+                   : signs.filter(s => all || isDue(s, now));
+    if (mode === "descricao") pool = pool.filter(hasDescription);
+    queue = shuffle(pool.map(s => s.id)); qi = 0; revealed = false; sessionTotal = queue.length;
+    drawReview();
+  }
+
+  function answerBlock(s) {
+    const box = el("div", { class: "answer stack" });
+    const p = el("div", { class: "params" });
+    let any = false;
+    for (const [k, ab, name] of PARAMS) {
+      if (!s[k]) continue; any = true;
+      p.append(el("div", { class: "param" }, el("span", { class: "ab", text: ab }),
+        el("div", { class: "v" }, el("div", { class: "n", text: name }), el("div", { text: s[k] }))));
+    }
+    if (any) box.append(p);
+    if (s.dica) box.append(el("p", {}, el("strong", { text: "Dica: " }), s.dica));
+    const url = safeUrl(s.video);
+    if (url) box.append(el("a", { href: url, target: "_blank", rel: "noopener", class: "btn ghost" }, "Ver vídeo do sinal"));
+    if (!any && !s.dica && !url) box.append(el("p", { class: "muted small", text: "Sem anotação ainda. Edite o sinal para descrever como ele é feito." }));
+    return box;
+  }
+
+  function drawReview() {
+    const area = $("reviewArea"); area.replaceChildren();
+    if (!store) { area.append(el("div", { class: "empty" }, el("p", { class: "muted", text: "Abrindo o caderno…" }))); return; }
+    if (signs.length === 0) {
+      area.append(el("div", { class: "empty" }, el("h3", { text: "Anote alguns sinais primeiro" }),
+        el("p", { class: "muted small", text: "A revisão usa os sinais do seu caderno." }),
+        el("button", { type: "button", onclick: () => { showTab("sinais"); openForm(null); } }, "Anotar sinal")));
+      return;
+    }
+    if (qi >= queue.length) {
+      const done = sessionTotal > 0;
+      area.append(el("div", { class: "empty" },
+        el("h3", { text: done ? "Revisão do dia concluída" : "Nada para revisar agora" }),
+        el("p", { class: "muted small", text: done
+          ? "Você revisou " + sessionTotal + (sessionTotal === 1 ? " sinal" : " sinais") + ". Os que você acertou voltam daqui a alguns dias."
+          : (mode === "descricao" ? "Nenhum sinal pendente tem descrição anotada." : "Todos os sinais estão em dia. Volte amanhã ou pratique tudo agora.") }),
+        el("button", { type: "button", class: "soft", onclick: () => startReview(null, true) }, "Praticar todos os sinais")));
+      return;
+    }
+    const s = signs.find(x => x.id === queue[qi]);
+    if (!s) { qi++; drawReview(); return; }
+
+    const bar = el("div", { class: "progress" }, el("div", { style: "width:" + Math.round(qi / queue.length * 100) + "%" }));
+    area.append(el("div", { class: "row", style: "justify-content:space-between" },
+      el("span", { class: "eyebrow", text: (qi + 1) + " de " + queue.length }), levelBars(s.nivel)), bar);
+
+    const card = el("div", { class: "card" });
+    if (mode === "palavra") {
+      card.append(el("span", { class: "eyebrow", text: [s.categoria, s.aula].filter(Boolean).join(" · ") || "Faça o sinal de" }),
+        el("div", { class: "big", text: s.palavra }));
+      if (revealed) card.append(answerBlock(s));
+    } else {
+      card.append(el("span", { class: "eyebrow", text: "Que sinal é este?" }), answerBlock(s));
+      if (revealed) card.append(el("div", { class: "big", text: s.palavra }));
+    }
+    area.append(card);
+
+    if (!revealed) {
+      area.append(el("button", { type: "button", onclick: () => { revealed = true; drawReview(); } },
+        mode === "palavra" ? "Fiz o sinal. Mostrar anotação" : "Mostrar a palavra"));
+    } else {
+      area.append(el("div", { class: "grade" },
+        el("button", { type: "button", class: "g-bad", onclick: () => grade(s, 0) }, "Errei", el("small", { text: "volta já" })),
+        el("button", { type: "button", class: "g-mid", onclick: () => grade(s, 1) }, "Com dúvida", el("small", { text: "amanhã" })),
+        el("button", { type: "button", class: "g-good", onclick: () => grade(s, 2) }, "Acertei",
+          el("small", { text: "em " + INTERVALS[Math.min(MAX_LEVEL, (s.nivel || 0) + 1)] + " dias" }))));
+    }
+  }
+
+  let grading = false;
+  async function grade(s, g) {
+    if (grading) return; grading = true;
+    const lv = s.nivel || 0;
+    const now = Date.now();
+    let nivel, proxima;
+    if (g === 0) { nivel = 0; proxima = now; queue.push(s.id); }
+    else if (g === 1) { nivel = Math.max(1, lv); proxima = now + DAY; }
+    else { nivel = Math.min(MAX_LEVEL, lv + 1); proxima = now + INTERVALS[nivel] * DAY; }
+    try { await store.update(s.id, { nivel, proxima }); } catch {}
+    qi++; revealed = false; grading = false;
+    drawReview();
+  }
+
+  /* ---------- datilologia ---------- */
+  const WORDS = ["CASA", "AMOR", "ESCOLA", "LIBRAS", "SURDO", "FAMÍLIA", "ÁGUA", "CAFÉ", "AMIGO", "FELIZ", "JANELA", "CACHORRO", "GATO", "LIVRO", "PRAIA", "BRASIL", "VERDE", "QUEIJO", "ZEBRA", "XÍCARA", "KIWI", "YOGA", "HORA", "PÃO", "MAÇÃ", "WIFI"];
+  let spellTimer = null, spellWord = "", spellIdx = -1, hideWord = false;
+  const speed = $("speed");
+  speed.addEventListener("input", () => { $("speedLabel").textContent = Number(speed.value).toLocaleString("pt-BR", { minimumFractionDigits: 1 }) + " s"; });
+
+  function letters(w) { return [...w.toUpperCase()].filter(ch => /\p{L}/u.test(ch)); }
+  function drawWord(final = false) {
+    const line = $("wordLine"); line.replaceChildren();
+    const ls = letters(spellWord);
+    if (hideWord && !final) { line.textContent = ls.map((_, i) => i < spellIdx ? "•" : (i === spellIdx ? "•" : "·")).join(""); }
+    else ls.forEach((ch, i) => line.append(el("span", { class: final ? "" : (i < spellIdx ? "done" : i === spellIdx ? "cur" : ""), text: ch })));
+    $("spellBar").style.width = ls.length ? Math.round(Math.max(0, spellIdx + 1) / ls.length * 100) + "%" : "0%";
+  }
+  function stopSpell() { clearTimeout(spellTimer); spellTimer = null; $("btnPlay").textContent = "▶ Soletrar"; }
+  function step() {
+    const ls = letters(spellWord);
+    spellIdx++;
+    if (spellIdx >= ls.length) {
+      stopSpell();
+      $("bigLetter").textContent = "✓";
+      drawWord(true);
+      return;
+    }
+    const big = $("bigLetter");
+    big.textContent = ls[spellIdx];
+    big.classList.remove("pop"); void big.offsetWidth; big.classList.add("pop");
+    drawWord();
+    spellTimer = setTimeout(step, Number(speed.value) * 1000);
+  }
+  function play() {
+    if (spellTimer) { stopSpell(); return; }
+    let w = $("spellInput").value.trim();
+    if (!letters(w).length) { randomWord(); w = $("spellInput").value; }
+    spellWord = w; spellIdx = -1;
+    $("btnPlay").textContent = "■ Parar";
+    step();
+  }
+  function randomWord() {
+    const mine = signs.map(s => s.palavra).filter(p => p && letters(p).length >= 2 && letters(p).length <= 12 && !/\s/.test(p.trim()));
+    const pool = [...WORDS, ...mine];
+    const w = pool[Math.floor(Math.random() * pool.length)].toUpperCase();
+    $("spellInput").value = hideWord ? "" : w;
+    if (hideWord) { spellWord = w; spellIdx = -1; stopSpell(); $("btnPlay").textContent = "■ Parar"; step(); }
+  }
+  $("btnPlay").addEventListener("click", () => {
+    if (hideWord && !$("spellInput").value.trim() && !spellTimer) { randomWord(); return; }
+    play();
+  });
+  $("btnRandom").addEventListener("click", () => { stopSpell(); randomWord(); if (!hideWord) { spellWord = $("spellInput").value; spellIdx = -1; drawWord(); $("bigLetter").textContent = letters(spellWord)[0] || "A"; } });
+  $("spellInput").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); stopSpell(); play(); } });
+  $("btnHide").addEventListener("click", () => {
+    hideWord = !hideWord;
+    $("btnHide").setAttribute("aria-pressed", String(hideWord));
+    $("btnHide").textContent = hideWord ? "Mostrar a palavra" : "Esconder a palavra";
+    $("spellInput").type = hideWord ? "password" : "text";
+    drawWord();
+  });
+  spellWord = "LIBRAS"; $("spellInput").value = "LIBRAS"; spellIdx = -1; drawWord(); $("bigLetter").textContent = "L";
+
+  init();
+})();
+</script>
