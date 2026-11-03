@@ -4,7 +4,7 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 ## Onde paramos (2026-11-03)
 
-- Repositório criado a partir do `starter-andre` (branch `configuracao-inicial`, ainda sem PR).
+- PR #1 `configuracao-inicial` (docs) e PR #2 `fase1-base` (identidade, home, PWA) abertos.
   Ainda **sem** Supabase nem Vercel do app.
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
   por semana, professora surda, Android, login Google, tela clara com letras maiores, azul e

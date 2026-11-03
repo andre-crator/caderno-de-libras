@@ -48,6 +48,11 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - `docs/REQUISITOS.md` — levantamento de requisitos (questionário dela + o que já se sabe).
 - `docs/ROADMAP.md` — o que vem depois do MVP; `docs/decisoes/` — uma nota por decisão.
 - `docs/prototipo/` — protótipo em HTML (só referência, não é código do app).
+- `docs/PLANO_FASE1.md` — partes da Fase 1 (um PR cada) e desenho do banco.
+- Identidade: `design/tokens.css` (só tema claro, base 18px, alvo de toque 48px), fontes
+  Atkinson Hyperlegible + Bricolage Grotesque via `next/font` em `app/layout.tsx`.
+- App instalável: `app/manifest.ts` (abre em `/painel`), ícones em `public/icons/`,
+  `app/icon.svg` e `app/apple-icon.png`. `app/painel` é o menu principal (áreas "em breve").
 
 ## Começo e fim de sessão
 `PROXIMOS.md` diz onde paramos e o que vem a seguir. Leia no começo e atualize no fim
