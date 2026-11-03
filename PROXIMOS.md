@@ -20,8 +20,12 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 ## O André precisa
 
 1. Criar o projeto no Supabase (região São Paulo) e o OAuth do Google (`docs/SETUP.md`).
-   Decidido: criar na organização **Zeus-AI** (grátis, tem vaga). O conector do Supabase
-   do Claude precisa ser reconectado incluindo a Zeus-AI e a sessão reiniciada.
+   Decidido (2026-11-03): projeto `Incluir` na organização **Zeus-AI** (grátis, tem vaga).
+   O conector do Supabase do Claude vale para UMA organização (hoje a andre-crator's Org,
+   onde estão Bíblia da Noiva e minhas-financas) — por isso o Claude não vê a Zeus-AI.
+   Caminho escolhido, sem trocar o conector: o André cria o projeto pelo painel e manda a
+   Project URL + Publishable key; o Claude configura a Vercel e junta os PRs #1–#4 no `main`
+   (com OK), e a integração Supabase↔GitHub aplica as migrações. CI dos 4 PRs: verde.
 2. Ligar o repositório à Vercel.
 3. Levar o questionário para o `starter-andre` (precisa de acesso de escrita ao starter).
 
