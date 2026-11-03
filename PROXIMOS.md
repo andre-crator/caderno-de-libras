@@ -8,8 +8,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda) →
   #4 `fase1-soletrar` (treino de alfabeto e números, página pública) → #5 `fase1-roteiro`
   (roteiro das 12 unidades, listas de estudo e links de dicionário; D6 e D7) → #6
-  `fase1-caderno` (caderno com foto/vídeo e listas de estudo). Testado com um Supabase
-  falso local (telas, salvar, progresso, teclado); falta o teste no Supabase real.
+  `fase1-caderno` (caderno com foto/vídeo e listas de estudo) → #7 `fase1-revisar` (revisão
+  com cartões). Testados com um Supabase falso local; falta o teste no Supabase real.
   Migrações testadas só no Postgres local (`npm run test:banco`); **não aplicadas** no Supabase.
   Ainda **sem** Supabase nem Vercel do app.
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
@@ -36,5 +36,4 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 - Com o Supabase dela pronto: configurar a Vercel (URL + publishable key), juntar os PRs,
   testar o caderno de ponta a ponta no banco real (envio de foto/vídeo, RLS).
-- Parte 4 (Revisar: cartões com a mídia, usando `lib/revisao/agenda.ts`) — pode começar já.
-- Parte 6 (offline básico) depois da 4.
+- Parte 6 (offline básico: service worker com cache do app e das mídias já vistas) — próxima.

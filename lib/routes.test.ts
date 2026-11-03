@@ -24,6 +24,7 @@ describe("isPrivatePath", () => {
     expect(isPrivatePath("/painel/perfil")).toBe(true);
     expect(isPrivatePath("/caderno")).toBe(true);
     expect(isPrivatePath("/caderno/novo")).toBe(true);
+    expect(isPrivatePath("/revisar")).toBe(true);
   });
 
   it("não protege rotas públicas nem nomes parecidos", () => {

@@ -79,3 +79,19 @@ export async function getSinal(id: string): Promise<Sinal | null> {
   const [sinal] = await comUrls(supabase, [data as Linha]);
   return sinal;
 }
+
+/**
+ * Cartões da revisão: os vencidos (ou todos, no treino livre), mais atrasados primeiro.
+ * `soComMidia` (modo "sinal → palavra") já filtra no banco, antes do limite.
+ */
+export async function listarParaRevisar(todos: boolean, soComMidia = false): Promise<Sinal[] | null> {
+  const user = await getCurrentUser();
+  if (!user) return null;
+  const supabase = await createClient();
+  let consulta = supabase.from("signs").select(COLUNAS).eq("user_id", user.id);
+  if (!todos) consulta = consulta.lte("review_due_at", new Date().toISOString());
+  if (soComMidia) consulta = consulta.not("media_path", "is", null);
+  const { data, error } = await consulta.order("review_due_at", { ascending: true }).limit(todos ? 500 : 100);
+  if (error) throw new Error(`Falha ao ler revisão: ${error.message}`);
+  return comUrls(supabase, (data ?? []) as Linha[]);
+}
