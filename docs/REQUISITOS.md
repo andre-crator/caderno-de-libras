@@ -14,7 +14,7 @@ Hoje guarda o que aprende **na memória e em fotos**, e estuda 1 ou 2 vezes por 
 
 | Tema | Resposta | O que significa para o app |
 | --- | --- | --- |
-| Material do curso | Apostila e grupo de WhatsApp | Fotos e vídeos chegam pelo WhatsApp: importar da galeria precisa ser fácil |
+| Material do curso | Apostila (12 unidades; uso em D6) e grupo de WhatsApp | Fotos e vídeos chegam pelo WhatsApp: importar da galeria precisa ser fácil |
 | Como guarda | Memória e fotos | O cadastro do sinal começa pela **foto/vídeo**, texto é opcional |
 | Dificuldades | Lembrar sinais, alfabeto, entender quem sinaliza rápido, números | Revisão com mídia, datilologia, **leitura de sinais** (quiz) e números |
 | Aparelho | Celular Android | App instalável (PWA) funciona bem no Android |

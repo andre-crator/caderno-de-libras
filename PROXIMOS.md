@@ -2,9 +2,16 @@
 
 Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
-## Onde paramos (2026-11-03)
+## Onde paramos (2026-11-04)
 
-- PR #1 `configuracao-inicial` (docs) e PR #2 `fase1-base` (identidade, home, PWA) abertos.
+- PRs abertos, um em cima do outro: #1 `configuracao-inicial` (docs) → #2 `fase1-base`
+  (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda) →
+  #4 `fase1-soletrar` (treino de alfabeto e números, página pública) → #5 `fase1-roteiro`
+  (roteiro das 12 unidades, listas de estudo e links de dicionário; D6 e D7) → #6
+  `fase1-caderno` (caderno com foto/vídeo e listas de estudo) → #7 `fase1-revisar` (revisão
+  com cartões) → #8 `fase1-offline` (abre sem internet). **Fase 1 completa no código.**
+  Testados com um Supabase falso local; falta o teste no Supabase real e no celular dela.
+  Migrações testadas só no Postgres local (`npm run test:banco`); **não aplicadas** no Supabase.
   Ainda **sem** Supabase nem Vercel do app.
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
   por semana, professora surda, Android, login Google, tela clara com letras maiores, azul e
@@ -16,11 +23,19 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 ## O André precisa
 
-1. Criar o projeto no Supabase (região São Paulo) e o OAuth do Google (`docs/SETUP.md`).
+0. Testar no celular se https://www.spreadthesign.com/pt.br/search/?q=casa abre a busca
+   por "casa" e qual é o endereço atual do dicionário do INES (`lib/curso/dicionarios.ts`).
+
+1. **Supabase na conta dela (D8):** ela cria conta e o projeto `Incluir` (São Paulo),
+   convida o André como Developer; o André manda ao Claude a Project URL e a Publishable key
+   e liga a integração Supabase ↔ GitHub ao repositório. Depois: login Google (`docs/SETUP.md`).
+   A organização vazia "Incluir" na conta do André pode ser apagada.
 2. Ligar o repositório à Vercel.
 3. Levar o questionário para o `starter-andre` (precisa de acesso de escrita ao starter).
 
 ## Depois (Claude)
 
-- Com o OK: plano técnico da Fase 1 (tabelas `signs` e `reviews`, bucket de mídia, telas),
-  depois implementar em partes pequenas, cada uma com PR.
+- Com o Supabase dela pronto: configurar a Vercel (URL + publishable key), juntar os PRs,
+  testar o caderno de ponta a ponta no banco real (envio de foto/vídeo, RLS).
+- Depois do teste real: Fase 2 (quiz, câmera lenta, datas e horas, lembrete, offline completo).
+- Vídeos ainda não ficam guardados offline (respostas com Range); avaliar na Fase 2.
