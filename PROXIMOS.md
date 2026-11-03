@@ -4,15 +4,14 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 ## Onde paramos (2026-11-04)
 
-- PRs abertos, um em cima do outro: #1 `configuracao-inicial` (docs) → #2 `fase1-base`
-  (identidade, home, PWA) → #3 `fase1-banco` (tabela `signs`, bucket `sign-media`, agenda) →
-  #4 `fase1-soletrar` (treino de alfabeto e números, página pública) → #5 `fase1-roteiro`
-  (roteiro das 12 unidades, listas de estudo e links de dicionário; D6 e D7) → #6
-  `fase1-caderno` (caderno com foto/vídeo e listas de estudo) → #7 `fase1-revisar` (revisão
-  com cartões) → #8 `fase1-offline` (abre sem internet). **Fase 1 completa no código.**
-  Testados com um Supabase falso local; falta o teste no Supabase real e no celular dela.
-  Migrações testadas só no Postgres local (`npm run test:banco`); **não aplicadas** no Supabase.
-  Ainda **sem** Supabase nem Vercel do app.
+- **Fase 1 completa e no `main`** (PRs #1–#8 juntados em 2026-11-04, CI verde): identidade e
+  app instalável, banco (`signs` + `sign-media`), soletrar, roteiro e listas de estudo (D6/D7),
+  caderno com foto/vídeo, revisão com cartões e offline básico. Testado com um Supabase falso
+  local; **falta o teste no Supabase real e no celular dela**. Ainda sem Supabase nem Vercel do app.
+- **Atenção:** o repositório está ligado à integração Supabase ↔ GitHub de um projeto
+  `dpeluwtwvifkhnxwwves` (provavelmente o "Zeus-AI", pausado). No merge, o "Supabase Preview"
+  falhou pelo limite de projetos grátis e **nada foi aplicado**. Desligar essa ligação e ligar
+  no projeto dela quando existir (D8).
 - **Respostas do questionário recebidas** e organizadas em `docs/REQUISITOS.md`: básico, 1 aula
   por semana, professora surda, Android, login Google, tela clara com letras maiores, azul e
   branco, nome **Incluir**. Marcou "Preciso" em todas as funções.
@@ -27,8 +26,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
    por "casa" e qual é o endereço atual do dicionário do INES (`lib/curso/dicionarios.ts`).
 
 1. **Supabase na conta dela (D8):** ela cria conta e o projeto `Incluir` (São Paulo),
-   convida o André como Developer; o André manda ao Claude a Project URL e a Publishable key
-   e liga a integração Supabase ↔ GitHub ao repositório. Depois: login Google (`docs/SETUP.md`).
+   convida o André como Developer; o André manda ao Claude a Project URL e a Publishable key,
+   desliga a integração do projeto antigo e liga a do projeto dela ao repositório. Depois: login Google (`docs/SETUP.md`).
    A organização vazia "Incluir" na conta do André pode ser apagada.
 2. Ligar o repositório à Vercel.
 3. Levar o questionário para o `starter-andre` (precisa de acesso de escrita ao starter).
