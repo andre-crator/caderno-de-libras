@@ -6,13 +6,14 @@
 > específicas vão para skills em `.claude/skills/`.
 
 ## O que é este app
-Caderno de estudo de Libras (Língua Brasileira de Sinais) para a esposa do André, que
-está começando um curso. Ela anota os sinais de cada aula, revisa com cartões
-(repetição espaçada) e treina a datilologia (alfabeto manual). Interface em português,
-pensada para o celular.
+**Incluir** (nome escolhido por ela, D4) — caderno de estudo de Libras (Língua Brasileira de
+Sinais) para a esposa do André, que está começando um curso (básico, professora surda).
+Ela guarda os sinais de cada aula com foto/vídeo, revisa com cartões (repetição espaçada)
+e treina datilologia e números. Interface em português, pensada para o celular.
 
-**Antes do MVP:** levantamento de requisitos em andamento (`docs/REQUISITOS.md`).
-Não definir telas nem tabelas novas sem as respostas dela e o OK do André.
+**MVP:** proposta de fases em `docs/REQUISITOS.md` (D3, aguardando OK). Ela usa Android,
+entra com Google, prefere tela clara com letras maiores, azul e branco.
+Não definir telas nem tabelas novas sem o OK do André.
 
 **Protótipo de referência:** `docs/prototipo/caderno-de-libras.html` (página única,
 publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletrar.
