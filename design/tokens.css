@@ -1,8 +1,8 @@
 /*
- * Tokens de design do projeto: cores, fontes, espaçamentos, raios, sombras.
- * Cada projeto troca SÓ este arquivo para ter a sua identidade visual; todas as
- * telas usam as variáveis (var(--primary) etc.), nunca cores soltas no código.
- * Modo escuro automático pelo sistema do usuário (prefers-color-scheme).
+ * Tokens de design do Incluir: cores, fontes, espaçamentos, raios, sombras.
+ * Todas as telas usam as variáveis (var(--primary) etc.), nunca cores soltas.
+ * Identidade pedida por ela (docs/REQUISITOS.md): tela clara, azul e branco,
+ * letras maiores. Por isso o app é só claro (sem modo escuro automático).
  */
 :root {
   --spacing-1: 0.25rem;
@@ -14,52 +14,40 @@
   --spacing-12: 3rem;
   --spacing-16: 4rem;
 
-  --background: #f6f5f1;
-  --foreground: #1b1f24;
-  --card: #fdfcf9;
-  --muted: #ebe9e2;
-  --muted-foreground: #646a70;
-  --border: #dcd9cf;
+  /* Base de texto maior (18px) e alvos de toque de 48px. */
+  --font-size-base: 1.125rem;
+  --touch-target: 3rem;
 
-  --primary: #24507a;
-  --primary-foreground: #f6f5f1;
+  --background: #f3f6fc;
+  --foreground: #142036;
+  --card: #ffffff;
+  --muted: #e4eaf6;
+  --muted-foreground: #4f5b73;
+  --border: #d3dbeb;
 
-  --success: #2f7a55;
-  --error: #b0442f;
-  --warning: #a8741c;
+  --primary: #1f4fd1;
+  --primary-hover: #183fa8;
+  --primary-foreground: #ffffff;
+  --primary-soft: #e2e9fd;
 
-  /* Fontes do sistema: rápidas e sem download. Para usar Google Fonts,
-     adicione next/font no app/layout.tsx e troque estas variáveis. */
-  --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-family-display: Georgia, "Times New Roman", serif;
+  /* Destaque quente para marcar "hoje" e foco do teclado. */
+  --highlight: #f2b632;
+  --highlight-soft: #fcf0d2;
+
+  --success: #1d7f4e;
+  --error: #b3372c;
+  --warning: #8a5d0b;
+
+  /* As fontes vêm do next/font em app/layout.tsx (variáveis --font-*). */
+  --font-family-base: var(--font-body), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-family-display: var(--font-display), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-family-monospace: ui-monospace, "SF Mono", Consolas, monospace;
 
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-lg: 12px;
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
   --radius-full: 9999px;
 
-  --shadow: 0 1px 2px rgba(27, 31, 36, 0.06);
-  --shadow-focus: 0 0 0 3px rgba(36, 80, 122, 0.3);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #111418;
-    --foreground: #e8e6e1;
-    --card: #181c21;
-    --muted: #20252b;
-    --muted-foreground: #99a0a7;
-    --border: #2b3138;
-
-    --primary: #7fb0dd;
-    --primary-foreground: #0f1215;
-
-    --success: #6cc496;
-    --error: #e58a74;
-    --warning: #e0b05c;
-
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-focus: 0 0 0 3px rgba(127, 176, 221, 0.35);
-  }
+  --shadow: 0 1px 2px rgba(20, 32, 54, 0.06), 0 8px 24px -16px rgba(20, 32, 54, 0.25);
+  --shadow-focus: 0 0 0 3px var(--highlight);
 }

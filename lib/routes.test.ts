@@ -22,6 +22,9 @@ describe("isPrivatePath", () => {
   it("protege o prefixo e as subrotas", () => {
     expect(isPrivatePath("/painel")).toBe(true);
     expect(isPrivatePath("/painel/perfil")).toBe(true);
+    expect(isPrivatePath("/caderno")).toBe(true);
+    expect(isPrivatePath("/caderno/novo")).toBe(true);
+    expect(isPrivatePath("/revisar")).toBe(true);
   });
 
   it("não protege rotas públicas nem nomes parecidos", () => {

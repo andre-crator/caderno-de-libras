@@ -2,12 +2,20 @@
 // mas a página confere de novo: defesa em camadas (se alguém mudar o proxy,
 // a página continua protegida).
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import styles from "./painel.module.css";
 
-export const metadata: Metadata = { title: "Painel" };
+export const metadata: Metadata = { title: "Início" };
+
+// Áreas do app. Sem `href` = ainda não existe ("em breve"), conforme docs/PLANO_FASE1.md.
+const AREAS: { titulo: string; texto: string; href?: string }[] = [
+  { titulo: "Meu caderno", texto: "Sinais e frases de cada aula, com foto ou vídeo.", href: "/caderno" },
+  { titulo: "Revisar", texto: "Cartões de 10 a 15 minutos para não esquecer.", href: "/revisar" },
+  { titulo: "Soletrar", texto: "Treino do alfabeto manual e dos números.", href: "/soletrar" },
+];
 
 // A casca (layout da página e botão Sair) é estática; os dados do usuário
 // chegam dentro do <Suspense>, que mostra um esqueleto enquanto carrega.
@@ -24,7 +32,21 @@ export default function PainelPage() {
           </button>
         </form>
       </header>
-      <p>Comece o seu app a partir daqui.</p>
+      <ul className={styles.areas}>
+        {AREAS.map((a) => (
+          <li key={a.titulo} className={styles.area} data-breve={!a.href ? "" : undefined}>
+            {a.href ? (
+              <Link href={a.href} className={styles.link}>
+                {a.titulo}
+              </Link>
+            ) : (
+              <strong>{a.titulo}</strong>
+            )}
+            <span>{a.texto}</span>
+            {!a.href && <em className={styles.breve}>em breve</em>}
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

@@ -36,5 +36,13 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  // Marca de qual conta é esta resposta (resumo do id, não o id). O service worker
+  // (public/sw.js) apaga as telas e fotos guardadas quando a conta muda (privacidade).
+  response.headers.set("x-incluir-conta", isLoggedIn ? await marcaDaConta(String(data!.claims.sub)) : "anon");
   return response;
+}
+
+async function marcaDaConta(id: string): Promise<string> {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`incluir:${id}`));
+  return Array.from(new Uint8Array(bytes).slice(0, 8), (b) => b.toString(16).padStart(2, "0")).join("");
 }

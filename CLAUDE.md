@@ -27,6 +27,8 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - Descrição de sinal segue os 5 parâmetros da Libras: configuração de mão (CM), ponto de
   articulação (PA), movimento (M), orientação da palma (Or) e expressão não manual (ENM).
 - Fotos e vídeos dela são dados pessoais: privados por padrão (RLS + Storage privado).
+- **Apostila do curso (D6):** direitos reservados. Nada dela entra no app ou no repositório
+  (texto, imagem, PDF). Só a sequência de unidades e temas, em `lib/curso/unidades.ts`.
 
 ## Stack
 - Next.js 16 (App Router, Server Components) + TypeScript estrito.
@@ -43,11 +45,42 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   No Next.js 16 o antigo `middleware.ts` se chama `proxy.ts`.
 - `lib/supabase/client.ts` (navegador) e `lib/supabase/server.ts` (servidor).
 - `lib/routes.ts` — rotas privadas (`PRIVATE_PREFIXES`) e `safeNextPath`.
-- `supabase/migrations/` — toda mudança de banco, em ordem, versionada.
+- `supabase/migrations/` — toda mudança de banco, em ordem, versionada. Tabela `signs`
+  (sinal/frase, mídia, agenda de revisão) e bucket privado `sign-media` (`<user_id>/<arquivo>`).
+- `supabase/tests/` + `scripts/testar-banco.sh` (`npm run test:banco`) — aplica as migrações
+  num Postgres temporário com imitação mínima do Supabase e testa a RLS. Toda tabela nova
+  ganha um teste aqui (outra usuária e anon não leem nem alteram).
+- `lib/revisao/agenda.ts` — agenda de Leitner (0, 1, 2, 4, 8, 16 dias; vence à meia-noite
+  de Brasília).
 - `docs/SETUP.md` — configuração de Supabase, Google e Vercel.
 - `docs/REQUISITOS.md` — levantamento de requisitos (questionário dela + o que já se sabe).
 - `docs/ROADMAP.md` — o que vem depois do MVP; `docs/decisoes/` — uma nota por decisão.
 - `docs/prototipo/` — protótipo em HTML (só referência, não é código do app).
+- `docs/PLANO_FASE1.md` — partes da Fase 1 (um PR cada) e desenho do banco.
+- Identidade: `design/tokens.css` (só tema claro, base 18px, alvo de toque 48px), fontes
+  Atkinson Hyperlegible + Bricolage Grotesque via `next/font` em `app/layout.tsx`.
+- App instalável: `app/manifest.ts` (abre em `/painel`), ícones em `public/icons/`,
+  `app/icon.svg` e `app/apple-icon.png`. `app/painel` é o menu principal (caderno, revisar, soletrar).
+- Caderno (parte 3): `app/caderno` (lista com busca e filtro por tema, `novo`, `[id]`,
+  `[id]/editar`, `temas` = listas de estudo com progresso), `components/caderno/`
+  (`FormSinal` envia a mídia do celular direto para a pasta dela no bucket; `MidiaSinal`
+  mostra por URL assinada de 1 h) e `lib/sinais/` (`formato.ts` regras puras, `dados.ts`
+  leituras, `acoes.ts` Server Actions; arquivo só é apagado se nenhum sinal o usa).
+- Revisão (parte 4): `app/revisar` (modos "palavra → sinal" e "sinal → palavra", `?todos=1`
+  = treino livre), `components/revisar/Revisao.tsx` (sessão; "errei" volta ao fim uma vez),
+  `lib/revisao/fila.ts` (vencidos primeiro, 20 por sessão) e `lib/revisao/acoes.ts`
+  (`responderCartao`: nível lido do banco, grava nível + próxima data).
+- Offline (parte 6): `public/sw.js` (telas: internet primeiro, cópia guardada sem internet,
+  senão `/offline`; `/_next/static` guardado; fotos do bucket guardadas via CORS sem o
+  token; vídeos e Server Actions só online). Privacidade: o proxy marca cada resposta com
+  `x-incluir-conta` e o SW apaga telas/fotos quando a conta muda; o login manda "limpar";
+  `/auth/signout` manda `Clear-Site-Data`. Versão do SW = `NEXT_PUBLIC_VERSAO_APP`
+  (`next.config.ts`), registrado em `components/RegistrarSW.tsx` só em produção.
+  **Não** pôr Content-Security-Policy no `/sw.js`: bloqueia as fotos do Supabase.
+- `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema
+  (`vocabulario.ts`, D7; acentos contam) e links para dicionários (`dicionarios.ts`).
+- `app/soletrar` (pública, sem dados dela) + `lib/soletrar/sequencia.ts` — treino de
+  datilologia e números, item a item, com modo "esconder a palavra".
 
 ## Começo e fim de sessão
 `PROXIMOS.md` diz onde paramos e o que vem a seguir. Leia no começo e atualize no fim
@@ -92,7 +125,7 @@ pela sua revisão de exatidão antes de entrar no projeto.
 
 ## Comandos
 - `npm run dev` — rodar local (http://localhost:3000)
-- `npm run typecheck` · `npm run lint` · `npm test` · `npm run build`
+- `npm run typecheck` · `npm run lint` · `npm test` · `npm run test:banco` · `npm run build`
 
 ## Definição de pronto
 typecheck, lint, testes e build passando; migração testada; `docs/` atualizado se
