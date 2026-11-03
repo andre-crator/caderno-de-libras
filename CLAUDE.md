@@ -70,6 +70,13 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   = treino livre), `components/revisar/Revisao.tsx` (sessão; "errei" volta ao fim uma vez),
   `lib/revisao/fila.ts` (vencidos primeiro, 20 por sessão) e `lib/revisao/acoes.ts`
   (`responderCartao`: nível lido do banco, grava nível + próxima data).
+- Offline (parte 6): `public/sw.js` (telas: internet primeiro, cópia guardada sem internet,
+  senão `/offline`; `/_next/static` guardado; fotos do bucket guardadas via CORS sem o
+  token; vídeos e Server Actions só online). Privacidade: o proxy marca cada resposta com
+  `x-incluir-conta` e o SW apaga telas/fotos quando a conta muda; o login manda "limpar";
+  `/auth/signout` manda `Clear-Site-Data`. Versão do SW = `NEXT_PUBLIC_VERSAO_APP`
+  (`next.config.ts`), registrado em `components/RegistrarSW.tsx` só em produção.
+  **Não** pôr Content-Security-Policy no `/sw.js`: bloqueia as fotos do Supabase.
 - `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema
   (`vocabulario.ts`, D7; acentos contam) e links para dicionários (`dicionarios.ts`).
 - `app/soletrar` (pública, sem dados dela) + `lib/soletrar/sequencia.ts` — treino de

@@ -10,7 +10,7 @@ typecheck, lint, testes e build passando.
 | 3. Caderno ✅ (falta testar no Supabase real) | `/caderno` (lista, busca, categorias = temas de `lib/curso/unidades.ts`, D6), `/caderno/temas` (lista de estudo por tema com progresso e "ver o sinal", D7), `/caderno/novo` e `/caderno/[id]` (foto/vídeo da galeria ou câmera, palavra, aula, tipo sinal/frase, 5 parâmetros opcionais) | 2 + projeto Supabase |
 | 4. Revisar ✅ (falta testar no Supabase real) | `/revisar`: cartões com a mídia, Errei / Com dúvida / Acertei, limite diário | 2, 3 |
 | 5. Treinos ✅ | `/soletrar`: alfabeto manual e números (letras ou dígitos um a um) | 1 |
-| 6. Offline básico | Service worker com cache do app e das mídias já vistas | 1–5 |
+| 6. Offline básico ✅ | Service worker com cache do app e das mídias já vistas | 1–5 |
 
 ## Banco (parte 2)
 `signs` — um sinal ou frase do caderno dela.
