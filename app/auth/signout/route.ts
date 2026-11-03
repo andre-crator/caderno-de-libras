@@ -6,5 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return NextResponse.redirect(new URL("/login", request.url), { status: 303 });
+  const resposta = NextResponse.redirect(new URL("/login", request.url), { status: 303 });
+  // Apaga do celular as telas e fotos guardadas para uso offline (privacidade).
+  resposta.headers.set("Clear-Site-Data", '"cache", "storage"');
+  return resposta;
 }
