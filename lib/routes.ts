@@ -1,7 +1,7 @@
 // Regras de rotas num lugar só (fácil de testar e de mudar por projeto).
 
 /** Rotas que exigem login. Adicione aqui as áreas privadas do seu app. */
-export const PRIVATE_PREFIXES = ["/painel"];
+export const PRIVATE_PREFIXES = ["/painel", "/caderno"];
 
 export function isPrivatePath(pathname: string): boolean {
   return PRIVATE_PREFIXES.some(

@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Início" };
 
 // Áreas do app. Sem `href` = ainda não existe ("em breve"), conforme docs/PLANO_FASE1.md.
 const AREAS: { titulo: string; texto: string; href?: string }[] = [
-  { titulo: "Meu caderno", texto: "Sinais e frases de cada aula, com foto ou vídeo." },
+  { titulo: "Meu caderno", texto: "Sinais e frases de cada aula, com foto ou vídeo.", href: "/caderno" },
   { titulo: "Revisar", texto: "Cartões de 10 a 15 minutos para não esquecer." },
   { titulo: "Soletrar", texto: "Treino do alfabeto manual e dos números.", href: "/soletrar" },
 ];

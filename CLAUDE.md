@@ -61,6 +61,11 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   Atkinson Hyperlegible + Bricolage Grotesque via `next/font` em `app/layout.tsx`.
 - App instalável: `app/manifest.ts` (abre em `/painel`), ícones em `public/icons/`,
   `app/icon.svg` e `app/apple-icon.png`. `app/painel` é o menu principal (áreas "em breve").
+- Caderno (parte 3): `app/caderno` (lista com busca e filtro por tema, `novo`, `[id]`,
+  `[id]/editar`, `temas` = listas de estudo com progresso), `components/caderno/`
+  (`FormSinal` envia a mídia do celular direto para a pasta dela no bucket; `MidiaSinal`
+  mostra por URL assinada de 1 h) e `lib/sinais/` (`formato.ts` regras puras, `dados.ts`
+  leituras, `acoes.ts` Server Actions; arquivo só é apagado se nenhum sinal o usa).
 - `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema
   (`vocabulario.ts`, D7; acentos contam) e links para dicionários (`dicionarios.ts`).
 - `app/soletrar` (pública, sem dados dela) + `lib/soletrar/sequencia.ts` — treino de
