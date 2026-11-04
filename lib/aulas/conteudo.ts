@@ -171,7 +171,7 @@ export const AULAS: readonly Aula[] = [
     unidade: 2,
     titulo: "Saudações e cumprimentos",
     objetivo: "Cumprimentar uma pessoa surda e se apresentar com naturalidade.",
-    temas: ["Saudações", "Cumprimentos"],
+    temas: ["Saudações", "Cumprimentos", "Frases para conversar"],
     secoes: [
       {
         titulo: "Antes de sinalizar: chamar a atenção",

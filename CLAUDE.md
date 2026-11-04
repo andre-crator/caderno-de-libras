@@ -95,9 +95,11 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   (`PlayerYoutube`: miniatura → player youtube-nocookie no toque). `npm run verificar:videos`
   confere no YouTube se os vídeos existem (no CI, sem travar o PR).
 - `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema
-  (`vocabulario.ts`, D7; acentos contam) e links para dicionários (`dicionarios.ts`).
+  (`vocabulario.ts`, D7; acentos contam; `TEMAS_EXTRA` = listas fora da ementa, como
+  "Frases para conversar", que abrem como frase via `linkGuardar`) e links para dicionários.
 - `app/soletrar` (pública, sem dados dela) + `lib/soletrar/sequencia.ts` — treino de
-  datilologia e números, item a item, com modo "esconder a palavra".
+  datilologia e números, item a item, com modo "esconder a palavra". Data, hora e dinheiro
+  vão em grupos ("25/12" → 25, 12); telefone e códigos, dígito a dígito.
 
 ## Começo e fim de sessão
 `PROXIMOS.md` diz onde paramos e o que vem a seguir. Leia no começo e atualize no fim

@@ -9,7 +9,7 @@ import styles from "../caderno.module.css";
 
 export const metadata: Metadata = { title: "Guardar sinal" };
 
-type SearchParams = Promise<{ palavra?: string; tema?: string }>;
+type SearchParams = Promise<{ palavra?: string; tema?: string; tipo?: string }>;
 
 export default function NovoSinalPage({ searchParams }: { searchParams: SearchParams }) {
   return (
@@ -28,12 +28,13 @@ export default function NovoSinalPage({ searchParams }: { searchParams: SearchPa
 async function Conteudo({ searchParams }: { searchParams: SearchParams }) {
   const user = await getCurrentUser();
   if (!user) redirect("/login?next=/caderno/novo");
-  const { palavra = "", tema = "" } = await searchParams;
+  const { palavra = "", tema = "", tipo = "" } = await searchParams;
   const unidade = tema ? unidadeDoTema(tema) : null;
   return (
     <FormSinal
       userId={user.id}
       inicial={{
+        kind: tipo === "frase" ? "frase" : "sinal",
         word: palavra.slice(0, 120),
         category: tema.slice(0, 40),
         lesson: unidade ? rotuloUnidade(unidade) : "",

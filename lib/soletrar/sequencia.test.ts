@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FAIXAS, PALAVRAS, itensParaSoletrar, limitarTempo, sortearNumero, sortearPalavra } from "./sequencia";
+import { CONTEXTOS, FAIXAS, PALAVRAS, itensParaSoletrar, limitarTempo, sortearNumero, sortearPalavra } from "./sequencia";
 
 describe("itensParaSoletrar", () => {
   it("mantém acentos e cedilha, em maiúsculas, e ignora espaços e sinais", () => {
@@ -41,5 +41,20 @@ describe("limitarTempo", () => {
     expect(limitarTempo(9)).toBe(2.5);
     expect(limitarTempo(1.23)).toBe(1.2);
     expect(limitarTempo(Number.NaN)).toBe(1.2);
+  });
+});
+
+describe("datas, horas e dinheiro", () => {
+  it("sorteia no formato do dia a dia", () => {
+    expect(sortearNumero("data", () => 0)).toBe("01/01");
+    expect(sortearNumero("hora", () => 1 - Number.EPSILON)).toBe("23:55");
+    expect(sortearNumero("dinheiro", () => 0)).toBe("R$ 1,00");
+    expect(CONTEXTOS.map((c) => c.id)).toEqual(["data", "hora", "dinheiro"]);
+  });
+  it("mostra em grupos, não dígito por dígito", () => {
+    expect(itensParaSoletrar("25/12", "numeros")).toEqual(["25", "12"]);
+    expect(itensParaSoletrar("14:30", "numeros")).toEqual(["14", "30"]);
+    expect(itensParaSoletrar("R$ 37,50", "numeros")).toEqual(["37", "50"]);
+    expect(itensParaSoletrar("987654321", "numeros")).toHaveLength(9);
   });
 });
