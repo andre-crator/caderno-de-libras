@@ -2,6 +2,7 @@
 // Jogo da memória: vira duas cartas; par = mídia do sinal + a palavra dele.
 // Erros não mexem na revisão sozinhos: no fim ela escolhe mandar os difíceis.
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { responderCartao } from "@/lib/revisao/acoes";
 import { type Carta, formamPar, formatarTempo, paresDificeis } from "@/lib/jogos/memoria";
@@ -23,7 +24,7 @@ export function Memoria({ cartas }: { cartas: Carta<Sinal>[] }) {
   const [inicio, setInicio] = useState<number | null>(null);
   const [agora, setAgora] = useState(0);
   const [fimEm, setFimEm] = useState<number | null>(null);
-  const [enviado, setEnviado] = useState<"nao" | "enviando" | "ok">("nao");
+  const [enviado, setEnviado] = useState<"nao" | "enviando" | "ok" | "erro">("nao");
   const espera = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const totalPares = cartas.length / 2;
@@ -70,8 +71,8 @@ export function Memoria({ cartas }: { cartas: Carta<Sinal>[] }) {
     const nomes = dificeis.map((id) => cartas.find((c) => c.item.id === id)!.item.word);
     async function mandar() {
       setEnviado("enviando");
-      await Promise.all(dificeis.map((id) => responderCartao(id, "errei").catch(() => null)));
-      setEnviado("ok");
+      const r = await Promise.all(dificeis.map((id) => responderCartao(id, "errei").catch(() => ({ ok: false }))));
+      setEnviado(r.every((x) => x.ok) ? "ok" : "erro");
     }
     return (
       <div className={base.vazio}>
@@ -88,9 +89,12 @@ export function Memoria({ cartas }: { cartas: Carta<Sinal>[] }) {
             {enviado === "ok" ? (
               <p role="status">Pronto: eles aparecem na revisão de hoje.</p>
             ) : (
-              <button type="button" className={base.botaoSecundario} onClick={mandar} disabled={enviado === "enviando"}>
-                {enviado === "enviando" ? "Mandando…" : "Mandar para a revisão de hoje"}
-              </button>
+              <>
+                {enviado === "erro" && <p role="alert">Não deu para salvar. Confira a internet e tente de novo.</p>}
+                <button type="button" className={base.botaoSecundario} onClick={mandar} disabled={enviado === "enviando"}>
+                  {enviado === "enviando" ? "Mandando…" : "Mandar para a revisão de hoje"}
+                </button>
+              </>
             )}
           </div>
         )}
@@ -98,9 +102,9 @@ export function Memoria({ cartas }: { cartas: Carta<Sinal>[] }) {
           <button type="button" className={base.botaoPrincipal} onClick={() => router.refresh()}>
             Jogar de novo
           </button>
-          <a href="/revisar/jogos" className={base.botaoSecundario}>
+          <Link href="/revisar/jogos" className={base.botaoSecundario}>
             Outros jogos
-          </a>
+          </Link>
         </div>
       </div>
     );

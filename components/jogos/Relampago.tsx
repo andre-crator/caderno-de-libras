@@ -2,6 +2,7 @@
 // Sinal relâmpago: vídeo do caderno + 3 palavras. Começa em 0,5× e acelera a cada
 // 5 acertos. 3 vidas. Erros não mexem na revisão sozinhos: no fim ela escolhe.
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
 import { responderCartao } from "@/lib/revisao/acoes";
 import {
   ACERTOS_POR_NIVEL,
@@ -37,7 +38,8 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
   const [pontos, setPontos] = useState(0);
   const [recordeAntes, setRecordeAntes] = useState(0);
   const [errados, setErrados] = useState<Sinal[]>([]);
-  const [enviado, setEnviado] = useState<"nao" | "enviando" | "ok">("nao");
+  const [enviado, setEnviado] = useState<"nao" | "enviando" | "ok" | "erro">("nao");
+  const [rodada, setRodada] = useState(0);
   const espera = useRef<ReturnType<typeof setTimeout> | null>(null);
   const video = useRef<HTMLVideoElement>(null);
 
@@ -51,6 +53,7 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
   }, [velocidade, pergunta]);
 
   function comecar() {
+    if (espera.current) clearTimeout(espera.current);
     setRecordeAntes(lerRecorde());
     setVidas(VIDAS);
     setAcertos(0);
@@ -60,6 +63,7 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
     setEnviado("nao");
     setEscolha(null);
     setPergunta(proximaPergunta(videos, todos, null));
+    setRodada((n) => n + 1);
     setFase("jogando");
   }
 
@@ -68,10 +72,11 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
     setEscolha(palavra);
     const certo = palavra === pergunta.item.word;
     let vidasDepois = vidas;
+    const pontosDepois = certo ? pontos + pontosDoAcerto(velocidade, combo + 1) : pontos;
     if (certo) {
       setAcertos((n) => n + 1);
       setCombo((n) => n + 1);
-      setPontos((p) => p + pontosDoAcerto(velocidade, combo + 1));
+      setPontos(pontosDepois);
     } else {
       vidasDepois = vidas - 1;
       setVidas(vidasDepois);
@@ -81,15 +86,13 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
     espera.current = setTimeout(
       () => {
         if (vidasDepois <= 0) {
+          if (pontosDepois > lerRecorde()) salvarRecorde(pontosDepois);
           setFase("fim");
-          setPontos((p) => {
-            if (p > lerRecorde()) salvarRecorde(p);
-            return p;
-          });
           return;
         }
         setEscolha(null);
         setPergunta(proximaPergunta(videos, todos, pergunta.item.id));
+        setRodada((n) => n + 1);
       },
       certo ? ESPERA_ACERTO_MS : ESPERA_ERRO_MS,
     );
@@ -121,8 +124,8 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
     const bateu = pontos > recordeAntes && pontos > 0;
     async function mandar() {
       setEnviado("enviando");
-      await Promise.all(errados.map((s) => responderCartao(s.id, "errei").catch(() => null)));
-      setEnviado("ok");
+      const r = await Promise.all(errados.map((s) => responderCartao(s.id, "errei").catch(() => ({ ok: false }))));
+      setEnviado(r.every((x) => x.ok) ? "ok" : "erro");
     }
     return (
       <div className={base.vazio}>
@@ -140,9 +143,12 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
             {enviado === "ok" ? (
               <p role="status">Pronto: eles aparecem na revisão de hoje.</p>
             ) : (
-              <button type="button" className={base.botaoSecundario} onClick={mandar} disabled={enviado === "enviando"}>
-                {enviado === "enviando" ? "Mandando…" : "Mandar para a revisão de hoje"}
-              </button>
+              <>
+                {enviado === "erro" && <p role="alert">Não deu para salvar. Confira a internet e tente de novo.</p>}
+                <button type="button" className={base.botaoSecundario} onClick={mandar} disabled={enviado === "enviando"}>
+                  {enviado === "enviando" ? "Mandando…" : "Mandar para a revisão de hoje"}
+                </button>
+              </>
             )}
           </div>
         )}
@@ -150,9 +156,9 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
           <button type="button" className={base.botaoPrincipal} onClick={comecar}>
             Jogar de novo
           </button>
-          <a href="/revisar/jogos" className={base.botaoSecundario}>
+          <Link href="/revisar/jogos" className={base.botaoSecundario}>
             Outros jogos
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -163,7 +169,7 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
 
   return (
     <section className={base.sessao} aria-label="Sinal relâmpago">
-      <div className={styles.placar} aria-live="polite">
+      <div className={styles.placar}>
         <span aria-label={`${vidas} de ${VIDAS} vidas`}>
           {"♥".repeat(vidas)}
           <span className={styles.vidaPerdida}>{"♥".repeat(VIDAS - vidas)}</span>
@@ -176,7 +182,7 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
       <div className={base.cartao}>
         <p className={base.eyebrow}>Que sinal é este?</p>
         <VideoPausavel
-          key={`${pergunta.item.id}-${acertos}-${vidas}`}
+          key={rodada}
           ref={video}
           src={pergunta.item.media_url!}
           className={styles.videoRelampago}

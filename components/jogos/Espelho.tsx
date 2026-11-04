@@ -3,6 +3,7 @@
 // depois compara lado a lado com o vídeo/foto do caderno e diz como foi.
 // O vídeo dela fica só nesta tela (URL local): não é salvo nem enviado.
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { responderCartao } from "@/lib/revisao/acoes";
 import type { Resposta } from "@/lib/revisao/agenda";
 import type { Sinal } from "@/lib/sinais/dados";
@@ -24,6 +25,7 @@ export function Espelho({ sinais }: { sinais: Sinal[] }) {
   const [dupla, setDupla] = useState(false);
   const [feitos, setFeitos] = useState(0);
   const [salvando, setSalvando] = useState(false);
+  const [erro, setErro] = useState(false);
 
   // Solta o vídeo local da memória ao trocar ou sair.
   useEffect(() => () => {
@@ -39,8 +41,13 @@ export function Espelho({ sinais }: { sinais: Sinal[] }) {
   async function responder(r: Resposta) {
     if (!sinal) return;
     setSalvando(true);
-    await responderCartao(sinal.id, r).catch(() => null);
+    setErro(false);
+    const res = await responderCartao(sinal.id, r).catch(() => ({ ok: false }));
     setSalvando(false);
+    if (!res.ok) {
+      setErro(true);
+      return;
+    }
     setFeitos((n) => n + 1);
     setFase("feito");
   }
@@ -128,6 +135,11 @@ export function Espelho({ sinais }: { sinais: Sinal[] }) {
         <p className={styles.dicaDupla}>
           {dupla ? "Para quem confere: " : "Compare: "}formato da mão, lugar, movimento, palma e expressão do rosto.
         </p>
+        {erro && (
+          <p role="alert" className={base.aviso}>
+            Não deu para salvar. Confira a internet e toque de novo.
+          </p>
+        )}
         <div className={base.notas} role="group" aria-label="Como foi?">
           <button type="button" className={base.errei} disabled={salvando} onClick={() => responder("errei")}>
             Errei
@@ -151,9 +163,9 @@ export function Espelho({ sinais }: { sinais: Sinal[] }) {
         <button type="button" className={base.botaoPrincipal} onClick={proximo}>
           Próximo sinal
         </button>
-        <a href="/revisar/jogos" className={base.botaoSecundario}>
+        <Link href="/revisar/jogos" className={base.botaoSecundario}>
           Outros jogos
-        </a>
+        </Link>
       </div>
     </div>
   );

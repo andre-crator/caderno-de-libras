@@ -1,6 +1,8 @@
 // Sinal relâmpago (jogo 3, puro e testável): o vídeo do caderno começa em 0,5× e fica
 // mais rápido a cada 5 acertos, até o normal e um pouco além (como uma conversa de
 // verdade). 3 opções, 3 vidas, combo e recorde. Só vídeos: foto não tem velocidade.
+import { embaralhar } from "@/lib/revisao/quiz";
+
 export const VIDAS = 3;
 export const OPCOES_RELAMPAGO = 3;
 export const ACERTOS_POR_NIVEL = 5;
@@ -69,7 +71,7 @@ export function proximaPergunta<T extends ItemRelampago>(
   if (!candidatos.length) return null;
   const item = candidatos[Math.floor(aleatorio() * candidatos.length)];
   const vistas = new Set([chave(item.word)]);
-  const embaralhados = [...todos].sort(() => aleatorio() - 0.5);
+  const embaralhados = embaralhar(todos, aleatorio);
   const mesmoTema = embaralhados.filter((o) => o.category && o.category === item.category);
   const erradas: string[] = [];
   for (const o of [...mesmoTema, ...embaralhados]) {
@@ -79,6 +81,6 @@ export function proximaPergunta<T extends ItemRelampago>(
     vistas.add(k);
     erradas.push(o.word);
   }
-  const opcoes = [item.word, ...erradas].sort(() => aleatorio() - 0.5);
+  const opcoes = embaralhar([item.word, ...erradas], aleatorio);
   return { item, opcoes };
 }
