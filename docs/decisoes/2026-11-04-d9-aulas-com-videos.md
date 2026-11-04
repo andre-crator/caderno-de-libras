@@ -24,3 +24,4 @@ abre o YouTube, então os vídeos são achados pela busca e conferidos por pesso
 
 **Impacto:** tabela `lesson_progress` (aulas concluídas, RLS por usuária); rotas `/aulas` e
 `/aulas/[slug]` (privadas). Lote 1 = unidades 1 a 3 (ela estava na página 24 em 2026-11-04).
+Lote 2 (2026-11-04) = unidade 4.

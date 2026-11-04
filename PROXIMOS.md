@@ -35,8 +35,9 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   Vercel. O André cola no Supabase a migração `20261105120000_meta_e_lembrete.sql` + o insert
   do hash (mandado no chat). Depois: ela liga o lembrete no Início, **no app instalado**.
   Falta: sequência de semanas no topo da trilha (opcional).
-- **D. Aulas da unidade 4** (família, ser/estar, ir, sentimentos): mesmo formato do lote 1,
-  vídeos achados pela busca com domínio youtube.com e conferidos pelo CI.
+- **D. Aulas da unidade 4** — feito no PR `aulas-unidade-4` (3 aulas: família, ser/estar e ir,
+  sentimentos; 9 vídeos `conferido: false`, todos no ar segundo o CI).
+  Próximo lote (unidade 5) quando ela chegar lá.
 - **E. Mini questionário de opinião** (5 perguntas, como o primeiro, envio pelo WhatsApp).
 - **F. Guardar sinal sem internet** (fila no IndexedDB, sincroniza ao voltar a conexão) e
   vídeos offline — **perguntar ao André antes** (tamanho/espaço no celular).
