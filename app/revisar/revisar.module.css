@@ -39,7 +39,7 @@
 .sessao { display: flex; flex-direction: column; gap: var(--spacing-4); }
 .progresso { display: flex; align-items: center; gap: var(--spacing-3); font-weight: 700; font-variant-numeric: tabular-nums; }
 .barra { flex: 1; height: 8px; border-radius: var(--radius-full); background: var(--muted); overflow: hidden; }
-.barra span { display: block; height: 100%; background: var(--primary); transition: width 0.3s; }
+.barra span { display: block; height: 100%; background: var(--gradient-primary); transition: width 0.3s; }
 
 .cartao {
   display: flex;
@@ -94,7 +94,7 @@
   text-decoration: none;
   cursor: pointer;
 }
-.botaoPrincipal { border: 0; background: var(--primary); color: var(--primary-foreground); }
+.botaoPrincipal { border: 0; background: var(--gradient-primary); box-shadow: var(--shadow-primary); color: var(--primary-foreground); }
 .botaoPrincipal:hover { background: var(--primary-hover); }
 .botaoSecundario { border: 2px solid var(--border); background: var(--card); color: var(--foreground); }
 .largo { width: 100%; min-height: 56px; }

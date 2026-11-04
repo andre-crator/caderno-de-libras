@@ -60,7 +60,9 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - `docs/ROADMAP.md` — o que vem depois do MVP; `docs/decisoes/` — uma nota por decisão.
 - `docs/prototipo/` — protótipo em HTML (só referência, não é código do app).
 - `docs/PLANO_FASE1.md` — partes da Fase 1 (um PR cada) e desenho do banco.
-- Identidade: `design/tokens.css` (só tema claro, base 18px, alvo de toque 48px), fontes
+- Identidade: `design/tokens.css` (só tema claro, base 18px, alvo de toque 48px; azul com
+  degradê `--gradient-primary` nos destaques e uma cor por área: `--area-aulas`, `-caderno`,
+  `-revisar`, `-soletrar`), fontes
   Atkinson Hyperlegible + Bricolage Grotesque via `next/font` em `app/layout.tsx`.
 - App instalável: `app/manifest.ts` (abre em `/painel`), ícones em `public/icons/`,
   `app/icon.svg` e `app/apple-icon.png`.

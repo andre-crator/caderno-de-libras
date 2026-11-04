@@ -143,7 +143,7 @@ async function Conteudo() {
         <ul className={styles.atalhos}>
           {ATALHOS.map((a) => (
             <li key={a.href}>
-              <Link href={a.href} className={styles.atalho}>
+              <Link href={a.href} className={styles.atalho} data-area={a.icone}>
                 <span className={styles.atalhoIcone}>
                   <Icone nome={a.icone} tamanho={26} />
                 </span>
