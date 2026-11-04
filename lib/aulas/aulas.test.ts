@@ -41,7 +41,7 @@ describe("conteúdo das aulas", () => {
 
 describe("funções", () => {
   it("agrupa por unidade em ordem", () => {
-    expect(aulasPorUnidade().map((u) => u.unidade)).toEqual([1, 2, 3]);
+    expect(aulasPorUnidade().map((u) => u.unidade)).toEqual([1, 2, 3, 4]);
   });
   it("acha aula anterior e próxima", () => {
     const { anterior, proxima } = vizinhas("u2-parametros");

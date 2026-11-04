@@ -1,6 +1,7 @@
 // Aulas do Incluir (D9). Textos escritos por nós, nada da apostila (D6), e nenhum
 // sinal descrito (D2): como fazer cada sinal fica com os vídeos e a professora.
 // Lote 1: unidades 1 a 3 (ela estava na página 24, fim da unidade 2, em 2026-11-04).
+// Lote 2: unidade 4 (família, ser/estar, ir, sentimentos).
 // Negrito: **assim**. Vídeos ficam em content/aulas/videos.json.
 
 export type Secao = { titulo: string; paragrafos: string[]; itens?: string[] };
@@ -276,6 +277,114 @@ export const AULAS: readonly Aula[] = [
         titulo: "Treine",
         paragrafos: [
           "Expressão não é exagero: é gramática. Grave você mesma fazendo uma pergunta e uma afirmação com os mesmos sinais e compare. O caderno aceita vídeos de até 15 segundos.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "u4-familia",
+    unidade: 4,
+    titulo: "Família",
+    objetivo: "Apresentar a sua família e perguntar sobre a família de alguém.",
+    temas: ["Família", "Pronomes"],
+    secoes: [
+      {
+        titulo: "Um dos primeiros assuntos de conversa",
+        paragrafos: [
+          "Quando duas pessoas se conhecem, logo aparecem perguntas como \"você tem irmãos?\" ou \"você é casada?\". Por isso a família vem cedo no curso: com ela, você já consegue contar um pouco da sua vida.",
+        ],
+      },
+      {
+        titulo: "Sinais que se parecem",
+        paragrafos: [
+          "Muitos sinais de parentes são **parecidos entre si** ou formados juntando dois sinais. Repare nos vídeos o que muda de um para outro (pai e mãe, irmão e irmã, avô e avó) e anote no caderno a diferença que a professora mostrar.",
+          "Sinais de família variam bastante de uma região para outra. Se o vídeo mostrar um jeito diferente do da professora, vale o dela.",
+        ],
+      },
+      {
+        titulo: "Juntando com o que você já sabe",
+        paragrafos: ["Os pronomes da unidade 2 entram aqui o tempo todo:"],
+        itens: [
+          "**Meu, minha, seu, sua:** \"minha mãe\", \"seu irmão\".",
+          "**Números:** \"tenho dois irmãos\", \"meu filho tem cinco anos\".",
+          "**Perguntas:** lembre que a pergunta aparece no rosto (unidade 3).",
+        ],
+      },
+      {
+        titulo: "Treine",
+        paragrafos: [
+          "Guarde no caderno os parentes da lista e depois tente se apresentar: quem é da sua família, quantos irmãos você tem, se é casada. Grave e compare com a professora na próxima aula.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "u4-verbos-ser-estar-ir",
+    unidade: 4,
+    titulo: "Verbos ser, estar e ir",
+    objetivo: "Entender como a Libras diz \"eu sou\", \"eu estou\" e \"eu vou\", que funcionam diferente do português.",
+    temas: ["Verbo ir"],
+    secoes: [
+      {
+        titulo: "O verbo não muda de forma",
+        paragrafos: [
+          "Em português, o verbo muda conforme a pessoa e o tempo: \"eu sou\", \"ela é\", \"nós fomos\". Na Libras, o verbo **não ganha terminação**: quem faz a ação aparece pelo pronome ou pelo espaço, e o tempo aparece por sinais como ontem e amanhã (unidade 3).",
+        ],
+      },
+      {
+        titulo: "Ser e estar",
+        paragrafos: [
+          "Em muitas frases, a Libras **não usa um sinal para \"ser\" ou \"estar\"**: \"eu sou ouvinte\" pode ficar só \"eu ouvinte\", e \"ela está cansada\", só \"ela cansada\". Isso não é frase errada nem incompleta: é a gramática da língua.",
+          "Há também sinais para \"estar\" em alguns sentidos, como estar presente num lugar. Veja nos vídeos quando eles aparecem e anote o que a professora ensinar.",
+        ],
+      },
+      {
+        titulo: "Ir, vir e o espaço",
+        paragrafos: [
+          "Alguns verbos usam o **espaço** para mostrar de onde e para onde vai a ação. Eles são chamados de verbos **direcionais** (ou de concordância). Ir, vir e voltar costumam funcionar assim: o movimento do sinal mostra o caminho.",
+          "Outros verbos, como gostar ou conhecer, são **simples**: o sinal fica igual, e quem faz a ação vem pelo pronome. Repare nos vídeos a diferença entre os dois tipos.",
+        ],
+      },
+      {
+        titulo: "Treine",
+        paragrafos: [
+          "Monte frases curtas com o que você já sabe: \"eu ouvinte\", \"amanhã eu ir trabalhar\", \"ontem minha mãe vir casa\". Na Libras, a ordem das palavras pode ser diferente do português: siga a da professora.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "u4-sentimentos",
+    unidade: 4,
+    titulo: "Sentimentos",
+    objetivo: "Dizer como você está e entender como alguém se sente.",
+    temas: ["Sentimentos"],
+    secoes: [
+      {
+        titulo: "Sem o rosto, o sinal fica pela metade",
+        paragrafos: [
+          "Na unidade 3 você viu as expressões **afetivas**, que mostram sentimento. Nos sinais de sentimento elas são obrigatórias: sinalizar \"feliz\" com o rosto sério confunde quem está vendo.",
+        ],
+      },
+      {
+        titulo: "Mais ou menos intenso",
+        paragrafos: [
+          "Para dizer \"muito triste\" ou \"um pouco cansada\", a Libras costuma mudar a **intensidade** da expressão e do movimento, em vez de só acrescentar a palavra \"muito\". Repare nos vídeos como isso aparece.",
+        ],
+      },
+      {
+        titulo: "Na conversa",
+        paragrafos: [],
+        itens: [
+          "Responder a **tudo bem?** (unidade 2) com mais do que \"bem\": feliz, cansada, preocupada.",
+          "Perguntar como a pessoa se sente: lembre da expressão de pergunta.",
+          "Sem verbo \"estar\": \"eu cansada\" já é a frase completa (veja a aula de verbos).",
+        ],
+      },
+      {
+        titulo: "Treine",
+        paragrafos: [
+          "No jogo **Espelho**, grave você fazendo os sentimentos da lista e compare com o caderno. Preste atenção mais no rosto do que nas mãos.",
         ],
       },
     ],
