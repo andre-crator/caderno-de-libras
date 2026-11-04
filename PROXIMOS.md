@@ -4,26 +4,35 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
 ## Onde paramos (2026-11-04)
 
-- **App no ar e funcionando:** https://caderno-de-libras.vercel.app (Vercel `caderno-de-libras`,
-  deploy automático do `main`). Supabase **na conta dela** (D8), projeto `zgiqidfjddnxgicueqnv`;
-  banco criado colando o SQL das migrações no SQL Editor (a integração Supabase ↔ GitHub não
-  está ligada a este projeto). Login por e-mail testado por eles com sucesso.
-- **Aulas (D9), lote 1** em PR: unidades 1 a 3, 9 aulas, 20 vídeos sugeridos (`conferido: false`).
-  Ela estava na página 24 da apostila (fim da unidade 2).
-- Tela inicial nova (botão "Agora", progresso, primeiros passos, barra de navegação embaixo) e
-  correção do vídeo que seguia tocando ao sair da aula: PR `home-e-video`.
+- **App no ar:** https://caderno-de-libras.vercel.app (Vercel `caderno-de-libras`, deploy
+  automático do `main`). Supabase **na conta dela** (D8), projeto `zgiqidfjddnxgicueqnv`; a
+  integração Supabase ↔ GitHub NÃO está ligada a ele: migração nova = colar o SQL no SQL Editor.
+- No `main`: fase 1 completa, aulas das unidades 1–3 (D9), tela inicial nova com barra de
+  navegação, correção do vídeo que seguia tocando (Next 16 esconde a página: ver CLAUDE.md).
+- **Fase 2 — PRs prontos, aguardando o OK do André para juntar:**
+  - #13 frases para conversar + data/hora/dinheiro no Soletrar;
+  - #14 quiz "que sinal é este?" + vídeo em câmera lenta (este PR traz este PROXIMOS).
+  Os dois mexem no CLAUDE.md em pontos diferentes; se o segundo der conflito, rebase simples.
 
 ## O André precisa
 
-1. Colar no SQL Editor do projeto dela o SQL de `supabase/migrations/20261104120000_criar_lesson_progress.sql`
-   (antes de juntar o PR das aulas; sem ele, as aulas abrem mas não salvam "concluída").
-2. Assistir aos vídeos do lote 1 (com ela) e dizer quais trocar; os bons viram `conferido: true`.
+1. Dizer "pode juntar" para #13 e #14 (o Claude não junta sem OK explícito).
+2. Assistir aos vídeos das aulas (unidades 1–3) com ela e dizer quais trocar.
 3. Desligar a integração Supabase ↔ GitHub do projeto antigo `dpeluwtwvifkhnxwwves`.
-4. Login com Google (passo 3 do `docs/SETUP.md`), quando quiserem.
-5. Testar se https://www.spreadthesign.com/pt.br/search/?q=casa abre a busca (`lib/curso/dicionarios.ts`).
+4. Login com Google (passo 3 do `docs/SETUP.md`) — combinado para depois.
+5. Testar se https://www.spreadthesign.com/pt.br/search/?q=casa abre a busca.
 
-## Depois (Claude)
+## Depois (Claude) — Fase 2, na ordem combinada em 2026-11-04
 
-- Aulas: próximos lotes (unidade 4 em diante) conforme o curso; trocar vídeos reprovados.
-- Fase 2 (quiz, câmera lenta, datas e horas, lembrete, offline completo).
-- Vídeos ainda não ficam guardados offline (respostas com Range); avaliar na Fase 2.
+- **C. Meta da semana + lembrete diário:** tabela de dias estudados (sequência e meta, ex.:
+  3 dias/semana, no painel) e notificação diária no Android (Web Push: chaves VAPID nas
+  variáveis da Vercel, tabela de inscrições, Vercel Cron 1x/dia ~19h Brasília, que manda
+  "X sinais para revisar"). Migração nova → SQL para o André colar.
+- **D. Aulas da unidade 4** (família, ser/estar, ir, sentimentos): mesmo formato do lote 1,
+  vídeos achados pela busca com domínio youtube.com e conferidos pelo CI.
+- **E. Mini questionário de opinião** (5 perguntas, como o primeiro, envio pelo WhatsApp).
+- **F. Guardar sinal sem internet** (fila no IndexedDB, sincroniza ao voltar a conexão) e
+  vídeos offline — **perguntar ao André antes** (tamanho/espaço no celular).
+- **G. Compartilhar com o André e com a turma** — **decidir antes**: o caderno todo ou só
+  alguns sinais? só leitura? colegas precisam de conta no app (Supabase dela).
+- Vídeos ainda não ficam guardados offline (respostas com Range).

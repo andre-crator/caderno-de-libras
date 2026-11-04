@@ -47,6 +47,7 @@ async function Sessao({ searchParams }: { searchParams: SearchParams }) {
         <Link href={`/revisar?modo=sinal${todos ? "&todos=1" : ""}`} aria-current={modo === "sinal" ? "page" : undefined}>
           Sinal → palavra
         </Link>
+        <Link href="/revisar/quiz">Quiz</Link>
       </nav>
       {/* key: trocar de modo ou receber cartões novos (ex.: "revisar de novo") começa outra sessão */}
       <Revisao
