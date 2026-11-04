@@ -3,7 +3,25 @@
 // (D6) e não trazem sinal nenhum: o sinal é o que ela guarda com foto ou vídeo,
 // do jeito que a professora ensinou. Temas sem lista (teoria e gramática) ficam de fora.
 
+/** Listas que não são de uma unidade da ementa: valem para o curso todo. */
+export const TEMAS_EXTRA = ["Frases para conversar"] as const;
+
 export const VOCABULARIO: Readonly<Record<string, readonly string[]>> = {
+  // Frases que salvam uma conversa com uma pessoa surda (todas viram cartão do tipo "frase").
+  "Frases para conversar": [
+    "Estou aprendendo Libras",
+    "Não entendi",
+    "Pode repetir?",
+    "Mais devagar, por favor",
+    "Pode soletrar?",
+    "Como é o sinal de…?",
+    "O que significa?",
+    "Você é surdo?",
+    "Eu sou ouvinte",
+    "Qual é o seu sinal?",
+    "Obrigada pela paciência",
+    "Até mais",
+  ],
   Pronomes: ["eu", "você", "ele", "ela", "nós", "vocês", "eles", "meu", "seu", "nosso", "este", "aquele"],
   Saudações: ["oi", "tchau", "bom dia", "boa tarde", "boa noite", "obrigado", "por favor", "desculpa", "com licença"],
   Cumprimentos: ["tudo bem?", "bem", "mais ou menos", "prazer", "qual é o seu nome?", "até logo", "até amanhã"],
@@ -63,4 +81,10 @@ export function listaDoTema(tema: string, palavrasGuardadas: readonly string[]):
 export function progressoDoTema(tema: string, palavrasGuardadas: readonly string[]) {
   const lista = listaDoTema(tema, palavrasGuardadas);
   return { feitas: lista.filter((i) => i.guardada).length, total: lista.length };
+}
+
+/** Link para guardar a palavra no caderno; as listas extras (frases) já abrem como "frase". */
+export function linkGuardar(palavra: string, tema: string): string {
+  const frase = (TEMAS_EXTRA as readonly string[]).includes(tema);
+  return `/caderno/novo?palavra=${encodeURIComponent(palavra)}&tema=${encodeURIComponent(tema)}${frase ? "&tipo=frase" : ""}`;
 }

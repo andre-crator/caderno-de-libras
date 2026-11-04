@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  CONTEXTOS,
   FAIXAS,
   type FaixaId,
   type Modo,
@@ -24,6 +25,7 @@ export function Soletrar() {
   const [fim, setFim] = useState(false);
   const [rodando, setRodando] = useState(false);
   const itens = itensParaSoletrar(texto, modo);
+  const emGrupos = modo === "numeros" && /[/:,]|R\$/.test(texto);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -92,14 +94,28 @@ export function Soletrar() {
           {grande}
         </span>
         <span className={styles.linha} aria-label={esconder && !fim ? "Palavra escondida" : texto}>
-          {itens.map((c, i) => (
-            <span
-              key={i}
-              className={i === atual && !fim ? styles.atualItem : i < atual || fim ? styles.feito : undefined}
-            >
-              {esconder && !fim ? "•" : c}
-            </span>
-          ))}
+          {emGrupos
+            ? // Data, hora e dinheiro: mostra o texto como se escreve, destacando o grupo atual.
+              texto.split(/(\d+)/).map((parte, k) => {
+                if (!/^\d+$/.test(parte)) return <span key={k}>{esconder && !fim ? "" : parte}</span>;
+                const i = texto.split(/(\d+)/).slice(0, k).filter((x) => /^\d+$/.test(x)).length;
+                return (
+                  <span
+                    key={k}
+                    className={i === atual && !fim ? styles.atualItem : i < atual || fim ? styles.feito : undefined}
+                  >
+                    {esconder && !fim ? "•" : parte}
+                  </span>
+                );
+              })
+            : itens.map((c, i) => (
+                <span
+                  key={i}
+                  className={i === atual && !fim ? styles.atualItem : i < atual || fim ? styles.feito : undefined}
+                >
+                  {esconder && !fim ? "•" : c}
+                </span>
+              ))}
         </span>
       </div>
       <div className={styles.barra} aria-hidden="true">
@@ -108,7 +124,7 @@ export function Soletrar() {
 
       {modo === "numeros" && (
         <div className={styles.faixas} role="group" aria-label="Faixa de números">
-          {FAIXAS.map((f) => (
+          {[...FAIXAS, ...CONTEXTOS].map((f) => (
             <button
               key={f.id}
               type="button"
@@ -129,7 +145,7 @@ export function Soletrar() {
         <input
           id="soletrar-texto"
           type={esconder ? "password" : "text"}
-          inputMode={modo === "numeros" ? "numeric" : "text"}
+          inputMode="text"
           autoComplete="off"
           maxLength={30}
           value={texto}

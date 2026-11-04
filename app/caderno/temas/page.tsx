@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { listarPalavras } from "@/lib/sinais/dados";
 import { UNIDADES, rotuloUnidade } from "@/lib/curso/unidades";
-import { VOCABULARIO, listaDoTema } from "@/lib/curso/vocabulario";
+import { TEMAS_EXTRA, VOCABULARIO, linkGuardar, listaDoTema } from "@/lib/curso/vocabulario";
 import { DICIONARIOS } from "@/lib/curso/dicionarios";
 import styles from "../caderno.module.css";
 
@@ -37,6 +37,37 @@ async function Listas() {
 
   return (
     <div className={styles.unidades}>
+      <section className={styles.unidade}>
+        <h2>Para conversar</h2>
+        {TEMAS_EXTRA.map((tema) => {
+          const lista = listaDoTema(tema, palavras);
+          const feitas = lista.filter((i) => i.guardada).length;
+          return (
+            <details key={tema} className={styles.tema} open={feitas < lista.length}>
+              <summary>
+                <span>{tema}</span>
+                <span className={styles.progresso}>
+                  {feitas} de {lista.length}
+                </span>
+                <span className={styles.barraTema} aria-hidden="true">
+                  <span style={{ width: `${Math.round((feitas / lista.length) * 100)}%` }} />
+                </span>
+              </summary>
+              <ul className={styles.palavras}>
+                {lista.map((item) => (
+                  <li key={item.palavra} data-guardada={item.guardada ? "" : undefined}>
+                    <span className={styles.palavra}>
+                      {item.guardada && <span aria-label="já guardada">✓ </span>}
+                      {item.palavra}
+                    </span>
+                    {!item.guardada && <Link href={linkGuardar(item.palavra, tema)}>guardar</Link>}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          );
+        })}
+      </section>
       {UNIDADES.map((u) => {
         const temas = u.temas.filter((t) => VOCABULARIO[t]);
         if (temas.length === 0) return null;
@@ -68,9 +99,7 @@ async function Listas() {
                           ver o sinal
                         </a>
                         {!item.guardada && (
-                          <Link
-                            href={`/caderno/novo?palavra=${encodeURIComponent(item.palavra)}&tema=${encodeURIComponent(tema)}`}
-                          >
+                          <Link href={linkGuardar(item.palavra, tema)}>
                             guardar
                           </Link>
                         )}

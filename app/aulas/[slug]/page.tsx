@@ -5,7 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { buscaNoYoutube, getAula, videosDaAula, vizinhas } from "@/lib/aulas/aulas";
 import { aulasConcluidas } from "@/lib/aulas/progresso";
 import { listarPalavras } from "@/lib/sinais/dados";
-import { listaDoTema } from "@/lib/curso/vocabulario";
+import { TEMAS_EXTRA, linkGuardar, listaDoTema } from "@/lib/curso/vocabulario";
 import { DICIONARIOS } from "@/lib/curso/dicionarios";
 import { rotuloUnidade } from "@/lib/curso/unidades";
 import { PlayerYoutube } from "@/components/aulas/PlayerYoutube";
@@ -111,11 +111,13 @@ async function Conteudo({ params }: { params: Params }) {
                         {item.guardada && <span aria-label="já guardada">✓ </span>}
                         {item.palavra}
                       </span>
-                      <a href={dicionario.link(item.palavra)} target="_blank" rel="noopener noreferrer">
-                        ver o sinal
-                      </a>
+                      {!(TEMAS_EXTRA as readonly string[]).includes(tema) && (
+                        <a href={dicionario.link(item.palavra)} target="_blank" rel="noopener noreferrer">
+                          ver o sinal
+                        </a>
+                      )}
                       {!item.guardada && (
-                        <Link href={`/caderno/novo?palavra=${encodeURIComponent(item.palavra)}&tema=${encodeURIComponent(tema)}`}>
+                        <Link href={linkGuardar(item.palavra, tema)}>
                           guardar
                         </Link>
                       )}

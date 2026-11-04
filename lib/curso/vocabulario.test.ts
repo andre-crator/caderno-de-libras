@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { DICIONARIOS } from "./dicionarios";
 import { temasEmOrdem } from "./unidades";
-import { VOCABULARIO, listaDoTema, normalizarPalavra, progressoDoTema } from "./vocabulario";
+import { TEMAS_EXTRA, VOCABULARIO, linkGuardar, listaDoTema, normalizarPalavra, progressoDoTema } from "./vocabulario";
 
 describe("vocabulário", () => {
   it("toda lista pertence a um tema da ementa", () => {
-    const temas = new Set(temasEmOrdem());
+    const temas = new Set<string>([...temasEmOrdem(), ...TEMAS_EXTRA]);
     for (const tema of Object.keys(VOCABULARIO)) expect(temas.has(tema), tema).toBe(true);
   });
   it("nenhuma lista repete palavra", () => {
@@ -45,5 +45,14 @@ describe("dicionários", () => {
   it("monta o link do Spread The Sign com a palavra codificada", () => {
     const sts = DICIONARIOS.find((d) => d.id === "spreadthesign")!;
     expect(sts.link(" bom dia ")).toBe("https://www.spreadthesign.com/pt.br/search/?q=bom%20dia");
+  });
+});
+
+describe("linkGuardar", () => {
+  it("frases abrem o formulário como frase", () => {
+    expect(linkGuardar("Não entendi", "Frases para conversar")).toBe(
+      "/caderno/novo?palavra=N%C3%A3o%20entendi&tema=Frases%20para%20conversar&tipo=frase",
+    );
+    expect(linkGuardar("mãe", "Família")).not.toContain("tipo=");
   });
 });
