@@ -25,6 +25,7 @@ export default function QuizPage() {
         <Link href="/revisar/quiz" aria-current="page">
           Quiz
         </Link>
+        <Link href="/revisar/jogos">Jogos</Link>
       </nav>
       <Suspense fallback={<div className={styles.esqueleto} aria-busy="true" />}>
         <Conteudo />

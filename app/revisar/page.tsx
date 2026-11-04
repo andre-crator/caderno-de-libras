@@ -48,6 +48,7 @@ async function Sessao({ searchParams }: { searchParams: SearchParams }) {
           Sinal → palavra
         </Link>
         <Link href="/revisar/quiz">Quiz</Link>
+        <Link href="/revisar/jogos">Jogos</Link>
       </nav>
       {/* key: trocar de modo ou receber cartões novos (ex.: "revisar de novo") começa outra sessão */}
       <Revisao

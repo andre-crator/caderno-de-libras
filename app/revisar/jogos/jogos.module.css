@@ -1,0 +1,156 @@
+/* Jogos (memória, relâmpago, espelho, caça). Só tokens de design/tokens.css. */
+.placar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  font-variant-numeric: tabular-nums;
+}
+.tabuleiro {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2);
+}
+.carta {
+  width: 100%;
+  aspect-ratio: 1;
+  padding: var(--spacing-1);
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.15s, background 0.15s;
+}
+.carta[data-estado="fechada"] { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.carta[data-estado="fechada"]:active { transform: scale(0.96); }
+.carta[data-estado="aberta"] { border-color: var(--primary); }
+.carta[data-estado="achou"] { border-color: var(--success); background: var(--primary-soft); cursor: default; }
+.carta[data-estado="errou"] { border-color: var(--error); }
+.verso { font-family: var(--font-family-display); font-size: 2rem; font-weight: 800; }
+.palavraCarta { font-weight: 800; font-size: 1.05rem; overflow-wrap: anywhere; text-align: center; }
+.midiaCarta { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm); background: var(--muted); }
+.dificeis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3);
+  border-radius: var(--radius);
+  background: var(--highlight-soft);
+  text-align: left;
+}
+.dificeis p { margin: 0; color: var(--foreground); }
+.vidaPerdida { opacity: 0.25; }
+.placar [aria-label$="vidas"] { color: var(--error); font-size: 1.3rem; letter-spacing: 0.1em; }
+.combo { color: var(--success); font-weight: 800; }
+.velocidade {
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 800;
+}
+.videoRelampago {
+  width: 100%;
+  max-height: 36vh;
+  border-radius: var(--radius-lg);
+  object-fit: contain;
+  background: var(--foreground);
+}
+.opcoes3 { display: grid; gap: var(--spacing-2); }
+.opcoes3 button {
+  font: inherit;
+  font-weight: 700;
+  min-height: 60px;
+  padding: var(--spacing-2);
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.opcoes3 button[data-estado="certa"] { background: var(--success); border-color: var(--success); color: var(--primary-foreground); }
+.opcoes3 button[data-estado="errada"] { background: var(--error); border-color: var(--error); color: var(--primary-foreground); }
+.opcoes3 button[data-estado="neutra"] { opacity: 0.5; }
+
+/* Lista de jogos */
+.lista { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--spacing-3); }
+.jogo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  color: var(--foreground);
+  text-decoration: none;
+  min-height: 48px;
+}
+.jogo strong { font-size: 1.15rem; }
+.jogo span { color: var(--muted-foreground); }
+.jogo[aria-disabled="true"] { box-shadow: none; border: 2px dashed var(--border); background: transparent; }
+.falta { font-size: 0.9rem; color: var(--warning); }
+
+/* Espelho */
+.escolha { display: flex; align-items: center; gap: var(--spacing-2); min-height: 48px; font-weight: 700; cursor: pointer; }
+.escolha input { width: 24px; height: 24px; accent-color: var(--primary); }
+.dicaDupla { margin: 0; padding: var(--spacing-3); border-radius: var(--radius); background: var(--primary-soft); color: var(--foreground); text-align: left; }
+.botaoArquivo { position: relative; cursor: pointer; }
+.arquivoEscondido { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+.ladoALado { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2); }
+.quadro { margin: 0; display: flex; flex-direction: column; gap: var(--spacing-1); text-align: center; font-weight: 700; }
+.videoComparar {
+  width: 100%;
+  max-height: 50vh;
+  border-radius: var(--radius);
+  object-fit: contain;
+  background: var(--foreground);
+}
+
+/* Caça ao sinal */
+.caca {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-lg);
+  background: var(--primary-soft);
+}
+.caca h2 { margin: 0; font-size: 1.2rem; }
+.caca > p { margin: 0; color: var(--muted-foreground); }
+.missoes { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--spacing-2); }
+.missao {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.missao[data-feita] { opacity: 0.75; }
+.missao > span:first-child { font-size: 1.3rem; width: 28px; text-align: center; }
+.missao div { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.missao div small { color: var(--muted-foreground); }
+.missao a { font-weight: 700; color: var(--primary); }
+.missao a.guardar {
+  flex: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--spacing-3);
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-decoration: none;
+}
+.feita { flex: none; font-weight: 700; color: var(--success); }

@@ -84,6 +84,13 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   `app/revisar/quiz` (`lib/revisao/quiz.ts`: mídia + 4 palavras, erradas do mesmo tema;
   errou → `responderCartao("errei")`). Vídeo de sinal = `components/VideoLento.tsx`
   (0,5×/0,75×/normal + repetir; pausa ao esconder).
+- Jogos (Fase 2): `app/revisar/jogos` (lista + "Caça ao sinal da semana"), `revisar/memoria`
+  (6 pares mídia ↔ palavra), `revisar/relampago` (só vídeos; 0,5× → 1,5× a cada 5 acertos;
+  3 vidas; recorde só no `localStorage`), `revisar/espelho` (ela grava com `capture="user"`,
+  compara com o caderno e responde errei/quase/igual; vídeo dela é URL local, nunca enviado).
+  Regras puras em `lib/jogos/` (`caca.ts`: 3 palavras do tema da aula atual, fixas na semana
+  que começa segunda 0h de Brasília). Erros dos jogos só vão para a revisão se ela tocar em
+  "Mandar para a revisão". A trilha de estrelas (jogo 1) fica em `/aulas`.
 - Offline (parte 6): `public/sw.js` (telas: internet primeiro, cópia guardada sem internet,
   senão `/offline`; `/_next/static` guardado; fotos do bucket guardadas via CORS sem o
   token; vídeos e Server Actions só online). Privacidade: o proxy marca cada resposta com
