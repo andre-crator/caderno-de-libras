@@ -1,4 +1,5 @@
 import styles from "@/app/caderno/caderno.module.css";
+import { VideoPausavel } from "@/components/VideoPausavel";
 
 // Mostra a foto ou o vídeo privado do sinal (URL assinada, vale 1 hora).
 export function MidiaSinal({
@@ -27,6 +28,6 @@ export function MidiaSinal({
   return pequena ? (
     <video src={`${url}#t=0.1`} className={classe} muted playsInline preload="metadata" aria-hidden />
   ) : (
-    <video src={url} className={classe} controls playsInline loop preload="metadata" aria-label={`Sinal de ${palavra}`} />
+    <VideoPausavel src={url} className={classe} controls playsInline loop preload="metadata" aria-label={`Sinal de ${palavra}`} />
   );
 }

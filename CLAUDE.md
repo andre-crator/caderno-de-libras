@@ -63,7 +63,15 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - Identidade: `design/tokens.css` (só tema claro, base 18px, alvo de toque 48px), fontes
   Atkinson Hyperlegible + Bricolage Grotesque via `next/font` em `app/layout.tsx`.
 - App instalável: `app/manifest.ts` (abre em `/painel`), ícones em `public/icons/`,
-  `app/icon.svg` e `app/apple-icon.png`. `app/painel` é o menu principal (caderno, revisar, soletrar).
+  `app/icon.svg` e `app/apple-icon.png`.
+- Tela inicial `app/painel`: botão "Agora" (`lib/painel/agora.ts`: revisar o que venceu >
+  próxima aula > guardar 1º sinal > treinar), 3 números (`lib/painel/resumo.ts`), "Primeiros
+  passos" (some quando os 3 estão feitos) e atalhos. `components/BarraNavegacao.tsx`: barra fixa
+  embaixo em todas as telas do app (não na home pública, login, auth e offline), dentro de
+  `<Suspense>` no layout. Ícones próprios em `components/Icone.tsx`.
+- **Next 16 esconde a página anterior em vez de desmontar (Activity):** toda mídia que toca
+  precisa parar ao esconder. Use `components/VideoPausavel.tsx` para `<video>`; o
+  `PlayerYoutube` limpa o iframe num `useLayoutEffect` com deps vazias.
 - Caderno (parte 3): `app/caderno` (lista com busca e filtro por tema, `novo`, `[id]`,
   `[id]/editar`, `temas` = listas de estudo com progresso), `components/caderno/`
   (`FormSinal` envia a mídia do celular direto para a pasta dela no bucket; `MidiaSinal`

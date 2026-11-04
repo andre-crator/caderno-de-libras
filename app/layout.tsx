@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import "@/design/tokens.css";
 import "./globals.css";
 import { RegistrarSW } from "@/components/RegistrarSW";
+import { BarraNavegacao } from "@/components/BarraNavegacao";
 
 // Atkinson Hyperlegible: fonte feita para leitura fácil (letras maiores, pedido dela).
 const body = Atkinson_Hyperlegible({
@@ -37,6 +39,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="pt-BR" className={`${body.variable} ${display.variable}`}>
       <body>
         {children}
+        {/* A barra lê o endereço da página: no Next 16 isso precisa de Suspense. */}
+        <Suspense fallback={null}>
+          <BarraNavegacao />
+        </Suspense>
         <RegistrarSW />
       </body>
     </html>
