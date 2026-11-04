@@ -2,6 +2,7 @@
 // Marcar e desmarcar aula concluída: só a dona, só aulas que existem.
 import { revalidatePath } from "next/cache";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
+import { registrarDia } from "@/lib/meta/registrar";
 import { getAula } from "./aulas";
 
 export async function marcarAula(slug: string, concluida: boolean): Promise<{ ok: boolean }> {
@@ -18,6 +19,7 @@ export async function marcarAula(slug: string, concluida: boolean): Promise<{ ok
     console.error("marcarAula:", error.message);
     return { ok: false };
   }
+  if (concluida) await registrarDia(supabase, user.id);
   revalidatePath("/aulas", "layout");
   return { ok: true };
 }

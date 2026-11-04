@@ -4,6 +4,7 @@
 // dela no bucket; aqui só gravamos o caminho, depois de conferir que é da pasta dela.
 import { revalidatePath } from "next/cache";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
+import { registrarDia } from "@/lib/meta/registrar";
 import { BUCKET_MIDIA, type EntradaSinal, midiaNaPastaDe, validarSinal } from "./formato";
 
 export type Resultado = { ok: true; id: string } | { ok: false; erros: string[] };
@@ -47,6 +48,7 @@ export async function criarSinal(entrada: EntradaSinal): Promise<Resultado> {
     console.error("criarSinal:", error?.message);
     return FALHA;
   }
+  await registrarDia(supabase, user.id);
   revalidatePath("/caderno", "layout");
   return { ok: true, id: data.id as string };
 }

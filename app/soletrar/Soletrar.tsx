@@ -11,7 +11,10 @@ import {
   sortearNumero,
   sortearPalavra,
 } from "@/lib/soletrar/sequencia";
+import { registrarEstudo } from "@/lib/meta/acoes";
 import styles from "./soletrar.module.css";
+
+let diaRegistrado = false;
 
 // Treino de datilologia e números: mostra um item por vez, no ritmo escolhido,
 // para ela sinalizar junto. "Esconder" serve para alguém soletrar e ela ler.
@@ -48,6 +51,11 @@ export function Soletrar() {
     setFim(false);
     setAtual(0);
     setRodando(true);
+    // Conta o dia como estudado (uma vez por visita; sem login ou sem internet, nada).
+    if (!diaRegistrado) {
+      diaRegistrado = true;
+      void registrarEstudo().catch(() => {});
+    }
   }
 
   function parar() {

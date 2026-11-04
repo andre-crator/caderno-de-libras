@@ -198,3 +198,41 @@ self.addEventListener("fetch", (event) => {
     return event.respondWith(foto(event));
   }
 });
+
+// Lembrete diário (Web Push): o servidor manda { titulo, texto, url }.
+self.addEventListener("push", (event) => {
+  let dados = {};
+  try {
+    dados = event.data ? event.data.json() : {};
+  } catch {
+    dados = {};
+  }
+  const url = typeof dados.url === "string" && dados.url.startsWith("/") ? dados.url : "/painel";
+  event.waitUntil(
+    self.registration.showNotification(dados.titulo || "Incluir", {
+      body: dados.texto || "Que tal 5 minutos de Libras?",
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      tag: "lembrete-diario",
+      data: { url },
+    }),
+  );
+});
+
+// Toque na notificação: abre (ou foca) o app na tela certa.
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = new URL(event.notification.data?.url || "/painel", self.location.origin).href;
+  event.waitUntil(
+    (async () => {
+      const janelas = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      for (const j of janelas) {
+        if (new URL(j.url).origin === self.location.origin) {
+          await j.focus();
+          return j.navigate(url);
+        }
+      }
+      return self.clients.openWindow(url);
+    })(),
+  );
+});

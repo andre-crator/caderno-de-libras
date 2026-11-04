@@ -14,3 +14,4 @@ Uma nota por decisão (modelo em `_modelo.md`). Status: `pendente` (aguarda o An
 | 2026-11-03 | [D7 — Listas de estudo por tema e links para dicionários](2026-11-03-d7-listas-de-estudo.md) | valida |
 | 2026-11-04 | [D8 — Projeto Supabase na conta dela](2026-11-04-d8-supabase-conta-dela.md) | valida |
 | 2026-11-04 | [D9 — Aulas com texto nosso e vídeos do YouTube no app](2026-11-04-d9-aulas-com-videos.md) | valida |
+| 2026-11-05 | [D10 — Meta da semana e lembrete diário](2026-11-05-d10-meta-e-lembrete.md) | valida |

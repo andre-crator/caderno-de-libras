@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { responderCartao } from "@/lib/revisao/acoes";
+import { registrarEstudo } from "@/lib/meta/acoes";
 import { type Carta, formamPar, formatarTempo, paresDificeis } from "@/lib/jogos/memoria";
 import type { Sinal } from "@/lib/sinais/dados";
 import { VideoPausavel } from "@/components/VideoPausavel";
@@ -53,7 +54,10 @@ export function Memoria({ cartas }: { cartas: Carta<Sinal>[] }) {
       const novos = new Set(achados).add(c.item.id);
       setAchados(novos);
       setViradas([]);
-      if (novos.size === totalPares) setFimEm(relogio());
+      if (novos.size === totalPares) {
+        setFimEm(relogio());
+        void registrarEstudo().catch(() => {});
+      }
     } else {
       setErros((e) => ({
         ...e,
