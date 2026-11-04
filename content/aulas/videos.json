@@ -1,25 +1,145 @@
 {
   "_leia": "Vídeos do YouTube das aulas (D9). Só o ID; o player oficial toca no app, com crédito do canal. 'conferido' = o André ou ela assistiram e o sinal bate com o da professora. 'canal' vem da verificação automática (npm run verificar:videos).",
   "videos": [
-    { "id": "Y7mxW5UAsu0", "aula": "u1-historia-dos-surdos", "titulo": "História do Surdo", "canal": "TV INES", "conferido": false },
-    { "id": "fb1VgJZUVck", "aula": "u1-historia-dos-surdos", "titulo": "Primeira escola para surdos do Brasil completa 160 anos", "canal": null, "conferido": false },
-    { "id": "cbDdTNTurjQ", "aula": "u1-libras-e-uma-lingua", "titulo": "Língua Brasileira de Sinais (Libras) completa 24 anos de reconhecimento oficial no Brasil", "canal": null, "conferido": false },
-    { "id": "9XP9tZOh300", "aula": "u1-libras-e-uma-lingua", "titulo": "Libras: cultura e identidade surda", "canal": null, "conferido": false },
-    { "id": "8m9nvxRLvoo", "aula": "u2-parametros", "titulo": "5 parâmetros da Libras", "canal": null, "conferido": false },
-    { "id": "JtD31lXhAE0", "aula": "u2-parametros", "titulo": "Parâmetros da Libras", "canal": null, "conferido": false },
-    { "id": "xmFBwG-5dh4", "aula": "u2-alfabeto-manual", "titulo": "Alfabeto em Libras (alfabeto manual), com tradução", "canal": null, "conferido": false },
-    { "id": "hj-IffUptPM", "aula": "u2-alfabeto-manual", "titulo": "Como fazer a datilologia com mais facilidade e rapidez", "canal": "Madson Barreto", "conferido": false },
-    { "id": "2Ko1tChPXw8", "aula": "u2-pronomes", "titulo": "Como são os pronomes pessoais em Libras", "canal": "Universidade da Libras", "conferido": false },
-    { "id": "ZsQuPAmGkFI", "aula": "u2-pronomes", "titulo": "Pronomes em Libras: pessoais, possessivos, demonstrativos", "canal": null, "conferido": false },
-    { "id": "ckvOUO4044g", "aula": "u2-saudacoes-e-cumprimentos", "titulo": "Saudações e cumprimentos em Libras para iniciantes", "canal": null, "conferido": false },
-    { "id": "5HsmMvokixI", "aula": "u2-saudacoes-e-cumprimentos", "titulo": "Cumprimentos em Libras: oi, olá, tudo bem, prazer em te conhecer", "canal": null, "conferido": false },
-    { "id": "q8i5eNACeC8", "aula": "u2-numeros", "titulo": "Básico de Libras, aula 2: números", "canal": null, "conferido": false },
-    { "id": "gv_vfSnLPvs", "aula": "u2-numeros", "titulo": "Números em Libras e treino com frases", "canal": null, "conferido": false },
-    { "id": "u01_HrpMW-A", "aula": "u3-tempo-e-calendario", "titulo": "Noções de tempo e calendário em Libras", "canal": null, "conferido": false },
-    { "id": "8jffnlq6YWQ", "aula": "u3-tempo-e-calendario", "titulo": "Dias da semana, meses e anos em Libras", "canal": null, "conferido": false },
-    { "id": "d9mk8hN9_9Q", "aula": "u3-tempo-e-calendario", "titulo": "Glossário de Libras: clima", "canal": "IFSP", "conferido": false },
-    { "id": "U8u70zxqvng", "aula": "u3-expressoes-e-frases", "titulo": "Tipos de frases em Libras", "canal": null, "conferido": false },
-    { "id": "LsnWN0m9AGE", "aula": "u3-expressoes-e-frases", "titulo": "Interrogação por meio da expressão facial e corporal", "canal": null, "conferido": false },
-    { "id": "v67-XPqjWsU", "aula": "u3-expressoes-e-frases", "titulo": "A linguística das línguas de sinais: expressões faciais e estruturas", "canal": null, "conferido": false }
+    {
+      "id": "ijRfkhrFx9E",
+      "aula": "u1-historia-dos-surdos",
+      "titulo": "História da educação de surdos no Brasil",
+      "canal": null,
+      "conferido": false
+    },
+    {
+      "id": "l_9aVb-Mtkc",
+      "aula": "u1-historia-dos-surdos",
+      "titulo": "História da educação de surdos",
+      "canal": null,
+      "conferido": false
+    },
+    {
+      "id": "cbDdTNTurjQ",
+      "aula": "u1-libras-e-uma-lingua",
+      "titulo": "Língua Brasileira de Sinais (Libras) completa 24 anos de reconhecimento oficial no Brasil",
+      "canal": "TV Equinócio",
+      "conferido": false
+    },
+    {
+      "id": "9XP9tZOh300",
+      "aula": "u1-libras-e-uma-lingua",
+      "titulo": "Libras: cultura e identidade surda",
+      "canal": "Nead Unicentro",
+      "conferido": false
+    },
+    {
+      "id": "8m9nvxRLvoo",
+      "aula": "u2-parametros",
+      "titulo": "5 parâmetros da Libras",
+      "canal": "Neto Libras",
+      "conferido": false
+    },
+    {
+      "id": "JtD31lXhAE0",
+      "aula": "u2-parametros",
+      "titulo": "Parâmetros da Libras",
+      "canal": "Prof. Anderson Pereira",
+      "conferido": false
+    },
+    {
+      "id": "xmFBwG-5dh4",
+      "aula": "u2-alfabeto-manual",
+      "titulo": "Alfabeto em Libras (alfabeto manual), com tradução",
+      "canal": "menezes jr",
+      "conferido": false
+    },
+    {
+      "id": "hj-IffUptPM",
+      "aula": "u2-alfabeto-manual",
+      "titulo": "Como fazer a datilologia com mais facilidade e rapidez",
+      "canal": "Universidade da Libras (Madson Barreto)",
+      "conferido": false
+    },
+    {
+      "id": "2Ko1tChPXw8",
+      "aula": "u2-pronomes",
+      "titulo": "Como são os pronomes pessoais em Libras",
+      "canal": "Universidade da Libras",
+      "conferido": false
+    },
+    {
+      "id": "ZsQuPAmGkFI",
+      "aula": "u2-pronomes",
+      "titulo": "Pronomes em Libras: pessoais, possessivos, demonstrativos",
+      "canal": "Academia de Libras",
+      "conferido": false
+    },
+    {
+      "id": "ckvOUO4044g",
+      "aula": "u2-saudacoes-e-cumprimentos",
+      "titulo": "Saudações e cumprimentos em Libras para iniciantes",
+      "canal": "Max Rhuan Libras",
+      "conferido": false
+    },
+    {
+      "id": "5HsmMvokixI",
+      "aula": "u2-saudacoes-e-cumprimentos",
+      "titulo": "Cumprimentos em Libras: oi, olá, tudo bem, prazer em te conhecer",
+      "canal": "Academia de Libras",
+      "conferido": false
+    },
+    {
+      "id": "q8i5eNACeC8",
+      "aula": "u2-numeros",
+      "titulo": "Básico de Libras, aula 2: números",
+      "canal": "Libras A2 - Gesiel e Kérima",
+      "conferido": false
+    },
+    {
+      "id": "gv_vfSnLPvs",
+      "aula": "u2-numeros",
+      "titulo": "Números em Libras e treino com frases",
+      "canal": "Integra Surdos",
+      "conferido": false
+    },
+    {
+      "id": "u01_HrpMW-A",
+      "aula": "u3-tempo-e-calendario",
+      "titulo": "Noções de tempo e calendário em Libras",
+      "canal": "Katia Lourenço",
+      "conferido": false
+    },
+    {
+      "id": "8jffnlq6YWQ",
+      "aula": "u3-tempo-e-calendario",
+      "titulo": "Dias da semana, meses e anos em Libras",
+      "canal": "Estudando Libras",
+      "conferido": false
+    },
+    {
+      "id": "d9mk8hN9_9Q",
+      "aula": "u3-tempo-e-calendario",
+      "titulo": "Glossário de Libras: clima",
+      "canal": "IFSP - Câmpus Registro",
+      "conferido": false
+    },
+    {
+      "id": "U8u70zxqvng",
+      "aula": "u3-expressoes-e-frases",
+      "titulo": "Tipos de frases em Libras",
+      "canal": "Se Liga Nas Mãos",
+      "conferido": false
+    },
+    {
+      "id": "LsnWN0m9AGE",
+      "aula": "u3-expressoes-e-frases",
+      "titulo": "Interrogação por meio da expressão facial e corporal",
+      "canal": "Libras Interpretar",
+      "conferido": false
+    },
+    {
+      "id": "v67-XPqjWsU",
+      "aula": "u3-expressoes-e-frases",
+      "titulo": "A linguística das línguas de sinais: expressões faciais e estruturas",
+      "canal": "UNIVESP",
+      "conferido": false
+    }
   ]
 }
