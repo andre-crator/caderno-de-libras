@@ -94,7 +94,9 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - Aulas (D9): `lib/aulas/conteudo.ts` (textos, um por tema; nunca descrever como fazer um
   sinal), `content/aulas/videos.json` (vídeos por aula, `conferido` = alguém assistiu),
   `lib/aulas/aulas.ts` (puras + testes de integridade), `lib/aulas/progresso.ts` e `acoes.ts`
-  (tabela `lesson_progress`), `app/aulas` (lista por unidade e aula), `components/aulas/`
+  (tabela `lesson_progress`), `app/aulas` (trilha de estrelas por unidade + aula; estrelas em
+  `lib/trilha/estrelas.ts`: assistiu / guardou 3 sinais do tema / 3 com nível ≥ 2; nada
+  trancado, porque ela segue o curso de verdade), `components/aulas/`
   (`PlayerYoutube`: miniatura → player youtube-nocookie no toque). `npm run verificar:videos`
   confere no YouTube se os vídeos existem (no CI, sem travar o PR).
 - `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema

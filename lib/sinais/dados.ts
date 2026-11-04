@@ -95,3 +95,19 @@ export async function listarParaRevisar(todos: boolean, soComMidia = false): Pro
   if (error) throw new Error(`Falha ao ler revisão: ${error.message}`);
   return comUrls(supabase, (data ?? []) as Linha[]);
 }
+
+/** Resumo leve de todos os sinais (sem URLs), para a trilha de estrelas. */
+export async function listarResumoSinais(): Promise<
+  { word: string; category: string | null; lesson: string | null; review_level: number }[] | null
+> {
+  const user = await getCurrentUser();
+  if (!user) return null;
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("signs")
+    .select("word, category, lesson, review_level")
+    .eq("user_id", user.id)
+    .limit(5000);
+  if (error) throw new Error(`Falha ao ler sinais: ${error.message}`);
+  return (data ?? []) as { word: string; category: string | null; lesson: string | null; review_level: number }[];
+}

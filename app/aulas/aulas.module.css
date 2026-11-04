@@ -161,3 +161,45 @@
 .navAulas { display: flex; justify-content: space-between; gap: var(--spacing-4); }
 .navAulas a { color: var(--primary); font-weight: 700; min-height: var(--touch-target); display: inline-flex; align-items: center; }
 .aviso { margin: 0; padding: var(--spacing-3) var(--spacing-4); border-radius: var(--radius); background: var(--highlight-soft); }
+
+/* Trilha de estrelas */
+.trilhaPagina { display: flex; flex-direction: column; gap: var(--spacing-6); }
+.resumoTrilha {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--spacing-3);
+  padding: var(--spacing-4); border-radius: var(--radius-lg); background: var(--card); box-shadow: var(--shadow);
+}
+.resumoTrilha strong { font-family: var(--font-family-display); font-size: 1.6rem; color: var(--highlight); text-shadow: 0 1px 0 var(--foreground); }
+.botaoPrincipalPeq {
+  min-height: var(--touch-target); display: inline-flex; align-items: center; padding: 0 var(--spacing-4);
+  border-radius: var(--radius-full); background: var(--primary); color: var(--primary-foreground); font-weight: 700; text-decoration: none;
+}
+.legenda { padding: var(--spacing-3) var(--spacing-4); border-radius: var(--radius); background: var(--highlight-soft); }
+.legenda summary { cursor: pointer; font-weight: 700; min-height: 32px; }
+.legenda ul { margin: var(--spacing-2) 0; padding-left: 1.1em; display: grid; gap: var(--spacing-1); }
+.legenda p { margin: 0; color: var(--muted-foreground); font-size: 0.95rem; }
+.unidadeTrilha h2 {
+  margin: 0 0 var(--spacing-2); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground);
+  text-align: center;
+}
+.caminho { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-2); }
+.parada { display: flex; }
+.parada[data-lado="esq"] { justify-content: flex-start; padding-left: 8%; }
+.parada[data-lado="meio"] { justify-content: center; }
+.parada[data-lado="dir"] { justify-content: flex-end; padding-right: 8%; }
+.paradaLink {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; width: 150px; max-width: 45vw;
+  text-align: center; color: var(--foreground); text-decoration: none;
+}
+.bolha {
+  width: 72px; height: 72px; border-radius: var(--radius-full); display: grid; place-items: center;
+  font-family: var(--font-family-display); font-weight: 800; font-size: 1.5rem;
+  border: 4px solid var(--card); box-shadow: 0 5px 0 rgba(20, 32, 54, 0.18);
+}
+.bolha[data-estado="aberta"] { background: var(--primary); color: var(--primary-foreground); }
+.bolha[data-estado="completa"] { background: var(--success); color: var(--primary-foreground); }
+.bolha[data-estado="atual"] { background: var(--highlight); color: var(--foreground); width: 84px; height: 84px; }
+.bolha[data-estado="fechada"] { background: var(--primary-soft); color: var(--primary); }
+.estrelas { color: var(--highlight); font-size: 1.05rem; letter-spacing: 2px; text-shadow: 0 1px 0 var(--foreground); }
+.apagada { color: var(--muted); text-shadow: none; }
+.nomeParada { font-weight: 700; font-size: 0.95rem; line-height: 1.2; }
+.aqui { font-size: 0.78rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.06em; }
