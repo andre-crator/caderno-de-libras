@@ -5,6 +5,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { mensagemDeErro } from "@/lib/auth-erros";
 import { limparCacheDaConta } from "@/components/RegistrarSW";
 import styles from "./login.module.css";
 
@@ -30,7 +31,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
     if (mode === "entrar") {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       setLoading(false);
-      if (error) return setMessage({ kind: "erro", text: "E-mail ou senha incorretos." });
+      if (error) return setMessage({ kind: "erro", text: mensagemDeErro(error, "entrar") });
       limparCacheDaConta(); // nada da conta anterior fica guardado para uso offline
       router.replace(nextPath);
       router.refresh(); // faz os Server Components lerem a sessão nova
@@ -43,7 +44,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
       options: { emailRedirectTo: callbackUrl() },
     });
     setLoading(false);
-    if (error) return setMessage({ kind: "erro", text: error.message });
+    if (error) return setMessage({ kind: "erro", text: mensagemDeErro(error, "criar") });
     setMessage({ kind: "ok", text: "Conta criada! Confira seu e-mail para confirmar." });
   }
 
@@ -58,7 +59,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
     // Em caso de sucesso o navegador sai desta página; só chega aqui se falhar.
     if (error) {
       setLoading(false);
-      setMessage({ kind: "erro", text: "Não foi possível entrar com o Google." });
+      setMessage({ kind: "erro", text: mensagemDeErro(error, "google") });
     }
   }
 

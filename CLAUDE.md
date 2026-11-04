@@ -44,6 +44,8 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - `proxy.ts` + `lib/supabase/proxy.ts` — renova a sessão e barra rotas privadas.
   No Next.js 16 o antigo `middleware.ts` se chama `proxy.ts`.
 - `lib/supabase/client.ts` (navegador) e `lib/supabase/server.ts` (servidor).
+- `lib/auth-erros.ts` — traduz erros do login (sem internet, senha errada, conta já existe…)
+  para português; nunca mostrar `error.message` cru.
 - `lib/routes.ts` — rotas privadas (`PRIVATE_PREFIXES`) e `safeNextPath`.
 - `supabase/migrations/` — toda mudança de banco, em ordem, versionada. Tabela `signs`
   (sinal/frase, mídia, agenda de revisão) e bucket privado `sign-media` (`<user_id>/<arquivo>`).
