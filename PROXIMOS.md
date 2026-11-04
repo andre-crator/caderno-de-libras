@@ -26,9 +26,9 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 ## Depois (Claude) — Fase 2, na ordem combinada em 2026-11-04
 
 - **Jogos (todos aprovados), nesta ordem:**
-  1. **Trilha de estrelas** (a preferida do André): cada aula vira parada; 3 estrelas =
-     assistiu, guardou 3 sinais do tema, ≥ 80% no quiz do tema; próxima abre com 1 estrela;
-     sequência de dias no topo. Fazer junto com a parte C (meta da semana).
+  1. **Trilha de estrelas** — v1 feita (PR `jogo-trilha`): `/aulas` virou trilha; estrelas =
+     assistiu / guardou 3 sinais do tema / 3 desses com nível ≥ 2. Sem cadeado (ela já teve
+     aulas no curso). Falta: sequência de dias no topo (precisa da tabela da parte C).
   2. **Jogo da memória**: 6 pares mídia do caderno ↔ palavra; tempo e tentativas; pares
      difíceis vão para a revisão.
   3. **Sinal relâmpago**: vídeo do caderno começa em 0,5× e acelera a cada 5 acertos;
