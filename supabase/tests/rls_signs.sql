@@ -9,7 +9,9 @@ insert into auth.users (id, email) values (:'ana', 'ana@teste'), (:'bia', 'bia@t
 
 -- Perfis criados pelo gatilho de cadastro.
 do $$ begin
-  assert (select count(*) from public.profiles) = 2, 'gatilho de perfil não rodou';
+  assert (select count(*) from public.profiles
+          where id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222')) = 2,
+         'gatilho de perfil não rodou';
 end $$;
 
 -- ---------- Ana cria os próprios sinais ----------

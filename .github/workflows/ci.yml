@@ -20,4 +20,8 @@ jobs:
       - run: npm test
       # Migrações + RLS num Postgres temporário (o runner Ubuntu já traz o PostgreSQL).
       - run: npm run test:banco
+      # Vídeos das aulas: existem e tocam dentro do app? (oEmbed do YouTube).
+      # Não trava o PR (vídeo pode sair do ar a qualquer momento); veja o resultado no log.
+      - run: npm run verificar:videos
+        continue-on-error: true
       - run: npm run build
