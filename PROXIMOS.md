@@ -10,7 +10,8 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   está ligada a este projeto). Login por e-mail testado por eles com sucesso.
 - **Aulas (D9), lote 1** em PR: unidades 1 a 3, 9 aulas, 20 vídeos sugeridos (`conferido: false`).
   Ela estava na página 24 da apostila (fim da unidade 2).
-- PR #10 (mensagens de login em português) aguardando OK para juntar. O #9 foi substituído por este PROXIMOS.
+- Tela inicial nova (botão "Agora", progresso, primeiros passos, barra de navegação embaixo) e
+  correção do vídeo que seguia tocando ao sair da aula: PR `home-e-video`.
 
 ## O André precisa
 

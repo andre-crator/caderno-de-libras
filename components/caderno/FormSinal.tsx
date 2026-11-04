@@ -18,6 +18,7 @@ import {
 } from "@/lib/sinais/formato";
 import { rotuloUnidade, temasEmOrdem, unidadeDoTema } from "@/lib/curso/unidades";
 import styles from "@/app/caderno/caderno.module.css";
+import { VideoPausavel } from "@/components/VideoPausavel";
 
 export type ValoresIniciais = EntradaSinal & { id?: string; media_url?: string | null };
 
@@ -180,7 +181,7 @@ export function FormSinal({ userId, inicial }: { userId: string; inicial: Valore
               // eslint-disable-next-line @next/next/no-img-element
               <img src={preview.url} alt="Foto do sinal" className={styles.previewMidia} />
             ) : (
-              <video src={preview.url} className={styles.previewMidia} controls playsInline loop />
+              <VideoPausavel src={preview.url} className={styles.previewMidia} controls playsInline loop />
             )}
             <button type="button" className={styles.botaoSecundario} onClick={tirarMidia}>
               Tirar {preview.tipo === "foto" ? "a foto" : "o vídeo"}
