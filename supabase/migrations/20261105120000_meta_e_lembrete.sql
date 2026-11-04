@@ -28,9 +28,9 @@ create policy "Usuária lê os próprios dias"
   on public.study_days for select to authenticated
   using ((select auth.uid()) = user_id);
 
-create policy "Usuária registra o próprio dia"
+create policy "Usuária registra o próprio dia (só hoje)"
   on public.study_days for insert to authenticated
-  with check ((select auth.uid()) = user_id);
+  with check ((select auth.uid()) = user_id and day = (now() at time zone 'America/Sao_Paulo')::date);
 
 revoke all on public.study_days from anon;
 grant select, insert on public.study_days to authenticated;
@@ -39,7 +39,11 @@ grant select, insert on public.study_days to authenticated;
 create table public.push_subscriptions (
   id         uuid primary key default gen_random_uuid(),
   user_id    uuid not null default auth.uid() references auth.users (id) on delete cascade,
-  endpoint   text not null check (endpoint ~ '^https://' and length(endpoint) <= 1000),
+  -- Só serviços de push conhecidos (o envio diário faz POST para este endereço).
+  endpoint   text not null check (
+    length(endpoint) <= 1000 and
+    endpoint ~ '^https://(fcm\.googleapis\.com|[a-z0-9.-]+\.push\.services\.mozilla\.com|[a-z0-9.-]+\.push\.apple\.com|[a-z0-9.-]+\.notify\.windows\.com)/'
+  ),
   p256dh     text not null check (length(p256dh) <= 200),
   auth       text not null check (length(auth) <= 100),
   created_at timestamptz not null default now(),
@@ -74,6 +78,20 @@ grant select, insert, update, delete on public.push_subscriptions to authenticat
 create trigger push_subscriptions_set_updated_at
   before update on public.push_subscriptions
   for each row execute function public.set_updated_at();
+
+-- Um celular passa a ser de outra conta (saiu de uma, entrou na outra): apaga a
+-- inscrição antiga com o mesmo endereço, para o lembrete de uma não ir para a outra.
+create or replace function public.assumir_inscricao(alvo text)
+returns void
+language sql
+security definer
+set search_path = ''
+as $$
+  delete from public.push_subscriptions
+  where endpoint = alvo and user_id <> (select auth.uid()) and (select auth.uid()) is not null;
+$$;
+revoke all on function public.assumir_inscricao(text) from public, anon;
+grant execute on function public.assumir_inscricao(text) to authenticated;
 
 -- 4. Envio diário -------------------------------------------------------
 -- Esquema privado: a API do Supabase não o expõe.
@@ -151,7 +169,8 @@ end;
 $$;
 
 -- O envio diário chama estas funções com a chave pública (anon) + o segredo.
-revoke all on function public.lembretes_do_dia(text) from public;
-revoke all on function public.apagar_inscricao_vencida(text, text) from public;
+-- O segredo tem 32 bytes aleatórios (força bruta inviável); mesmo assim só anon chama.
+revoke all on function public.lembretes_do_dia(text) from public, authenticated;
+revoke all on function public.apagar_inscricao_vencida(text, text) from public, authenticated;
 grant execute on function public.lembretes_do_dia(text) to anon;
 grant execute on function public.apagar_inscricao_vencida(text, text) to anon;

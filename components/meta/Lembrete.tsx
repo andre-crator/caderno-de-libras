@@ -2,7 +2,7 @@
 // Liga/desliga o lembrete diário (Web Push). Funciona no app instalado ou no Chrome
 // do Android; precisa do service worker (só em produção) e da permissão dela.
 import { useEffect, useState } from "react";
-import { apagarInscricao, salvarInscricao } from "@/lib/meta/acoes";
+import { apagarInscricao, type Inscricao, salvarInscricao } from "@/lib/meta/acoes";
 import styles from "./meta.module.css";
 
 const CHAVE_PUBLICA = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
@@ -32,7 +32,11 @@ export function Lembrete() {
       let novo: Estado;
       if (!reg) novo = "sem-suporte";
       else if (Notification.permission === "denied") novo = "bloqueado";
-      else novo = (await reg.pushManager.getSubscription()) ? "ligado" : "desligado";
+      else {
+        const sub = await reg.pushManager.getSubscription();
+        // Confere com o servidor: se a linha sumiu (ex.: saiu da conta), grava de novo.
+        novo = sub ? ((await salvarInscricao(sub.toJSON() as Inscricao)).ok ? "ligado" : "desligado") : "desligado";
+      }
       if (vivo) setEstado(novo);
     })().catch(() => vivo && setEstado("sem-suporte"));
     return () => {
@@ -50,9 +54,13 @@ export function Lembrete() {
       const sub =
         (await reg.pushManager.getSubscription()) ??
         (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: paraBytes(CHAVE_PUBLICA) }));
-      const json = sub.toJSON() as { endpoint: string; keys: { p256dh: string; auth: string } };
-      const r = await salvarInscricao({ endpoint: json.endpoint, keys: json.keys });
-      setEstado(r.ok ? "ligado" : "erro");
+      const r = await salvarInscricao(sub.toJSON() as Inscricao);
+      if (!r.ok) {
+        // Sem a linha no banco o lembrete nunca chegaria: desfaz para não mostrar "ligado".
+        await sub.unsubscribe().catch(() => {});
+        return setEstado("erro");
+      }
+      setEstado("ligado");
     } catch {
       setEstado("erro");
     }
@@ -63,7 +71,8 @@ export function Lembrete() {
     try {
       const sub = await (await registro())?.pushManager.getSubscription();
       if (sub) {
-        await apagarInscricao(sub.endpoint);
+        const r = await apagarInscricao(sub.endpoint);
+        if (!r.ok) return setEstado("erro");
         await sub.unsubscribe();
       }
       setEstado("desligado");

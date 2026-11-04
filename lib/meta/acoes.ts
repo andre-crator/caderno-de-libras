@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { registrarDia } from "./registrar";
+import { endpointPermitido } from "./push";
 import { METAS } from "./semana";
 
 /** Para telas que não gravam nada (jogos, soletrar): conta o dia como estudado. */
@@ -33,9 +34,7 @@ function inscricaoValida(i: unknown): i is Inscricao {
   if (!i || typeof i !== "object") return false;
   const x = i as Inscricao;
   return (
-    typeof x.endpoint === "string" &&
-    x.endpoint.startsWith("https://") &&
-    x.endpoint.length <= 1000 &&
+    endpointPermitido(x.endpoint) &&
     typeof x.keys?.p256dh === "string" &&
     x.keys.p256dh.length <= 200 &&
     typeof x.keys?.auth === "string" &&
@@ -48,6 +47,9 @@ export async function salvarInscricao(inscricao: Inscricao): Promise<{ ok: boole
   const user = await getCurrentUser();
   if (!user) return { ok: false };
   const supabase = await createClient();
+  // O mesmo celular pode ter sido de outra conta: tira de lá antes (função do banco).
+  const assumir = await supabase.rpc("assumir_inscricao", { alvo: inscricao.endpoint });
+  if (assumir.error) console.error("assumir_inscricao:", assumir.error.message);
   const { error } = await supabase.from("push_subscriptions").upsert(
     { user_id: user.id, endpoint: inscricao.endpoint, p256dh: inscricao.keys.p256dh, auth: inscricao.keys.auth },
     { onConflict: "user_id,endpoint" },

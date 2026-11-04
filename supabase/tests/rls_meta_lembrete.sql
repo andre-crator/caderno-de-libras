@@ -27,11 +27,21 @@ do $$ begin
 exception when check_violation then null;
 end $$;
 
-insert into public.push_subscriptions (endpoint, p256dh, auth) values ('https://push.exemplo/ana', 'chave', 'aut');
+insert into public.push_subscriptions (endpoint, p256dh, auth) values ('https://fcm.googleapis.com/fcm/send/ana', 'chave', 'aut');
 do $$ begin
-  insert into public.push_subscriptions (endpoint, p256dh, auth) values ('http://inseguro', 'c', 'a');
-  raise exception 'aceitou endpoint sem https';
+  insert into public.push_subscriptions (endpoint, p256dh, auth) values ('https://169.254.169.254/x', 'c', 'a');
+  raise exception 'aceitou endpoint fora dos serviços de push';
 exception when check_violation then null;
+end $$;
+do $$ begin
+  insert into public.study_days (day) values (((now() at time zone 'America/Sao_Paulo')::date) - 3);
+  raise exception 'aceitou dia que não é hoje';
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
+  perform * from public.lembretes_do_dia('segredo-de-teste');
+  raise exception 'usuária logada chamou lembretes_do_dia';
+exception when insufficient_privilege then null;
 end $$;
 do $$ begin
   insert into public.study_days (user_id) values ('66666666-6666-6666-6666-666666666666');
@@ -52,6 +62,21 @@ begin
   delete from public.push_subscriptions;
   get diagnostics n = row_count;
   assert n = 0, 'Bia apagou inscrição da Ana';
+end $$;
+
+-- Bia entra no mesmo celular e assume a inscrição; depois ela volta para a Ana.
+insert into public.push_subscriptions (endpoint, p256dh, auth) values ('https://fcm.googleapis.com/fcm/send/bia', 'c', 'a');
+select public.assumir_inscricao('https://fcm.googleapis.com/fcm/send/bia');
+reset role;
+do $$ begin
+  assert (select count(*) from public.push_subscriptions) = 2, 'deveria haver 2 inscrições';
+end $$;
+set role authenticated;
+select set_config('request.jwt.claims', json_build_object('sub', :'ana')::text, false);
+select public.assumir_inscricao('https://fcm.googleapis.com/fcm/send/bia');
+reset role;
+do $$ begin
+  assert not exists (select 1 from public.push_subscriptions where endpoint like '%/bia'), 'inscrição antiga da Bia ficou';
 end $$;
 
 -- Ninguém logado lê as tabelas nem o esquema privado.
@@ -79,16 +104,16 @@ do $$
 declare r record;
 begin
   select * into r from public.lembretes_do_dia('segredo-de-teste');
-  assert r.endpoint = 'https://push.exemplo/ana', 'lista sem a inscrição';
+  assert r.endpoint = 'https://fcm.googleapis.com/fcm/send/ana', 'lista sem a inscrição';
   assert r.estudou_hoje, 'deveria saber que estudou hoje';
   assert r.dias_na_semana = 1 and r.meta = 4 and r.vencidos = 0, 'números errados';
 end $$;
 do $$ begin
-  perform public.apagar_inscricao_vencida('chute', 'https://push.exemplo/ana');
+  perform public.apagar_inscricao_vencida('chute', 'https://fcm.googleapis.com/fcm/send/ana');
   raise exception 'apagou com segredo errado';
 exception when insufficient_privilege then null;
 end $$;
-select public.apagar_inscricao_vencida('segredo-de-teste', 'https://push.exemplo/ana');
+select public.apagar_inscricao_vencida('segredo-de-teste', 'https://fcm.googleapis.com/fcm/send/ana');
 
 reset role;
 do $$ begin

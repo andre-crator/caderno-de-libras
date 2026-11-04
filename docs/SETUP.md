@@ -66,7 +66,7 @@ de entrar. Depois de entrar, o painel mostra seu nome (vindo do Google) ou e-mai
 > ou o plano Pro.
 
 ## 6. Lembrete diário (Web Push, D10)
-1. Gere as chaves: `npx web-push generate-vapid-keys` e um segredo longo e aleatório.
+1. Gere as chaves: `npx web-push generate-vapid-keys` e um segredo de 32 bytes aleatórios (`openssl rand -base64 32`).
 2. Na Vercel, cadastre `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (sensível) e
    `CRON_SECRET` (sensível). A Vercel manda o `CRON_SECRET` sozinha ao chamar o cron.
 3. No SQL Editor do Supabase, guarde só o **hash** do segredo:
