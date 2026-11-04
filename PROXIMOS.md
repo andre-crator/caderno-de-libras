@@ -31,10 +31,10 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   2–5. **Memória, relâmpago, espelho e caça ao sinal** — feitos no PR `jogos-memoria-relampago`
      (em `/revisar/jogos`). Ideias para depois: no espelho, opção de guardar o vídeo dela
      como mídia do sinal; atalho "Jogos" na tela inicial.
-- **C. Meta da semana + lembrete diário:** tabela de dias estudados (sequência e meta, ex.:
-  3 dias/semana, no painel) e notificação diária no Android (Web Push: chaves VAPID nas
-  variáveis da Vercel, tabela de inscrições, Vercel Cron 1x/dia ~19h Brasília, que manda
-  "X sinais para revisar"). Migração nova → SQL para o André colar.
+- **C. Meta da semana + lembrete diário** — feito no PR `meta-lembrete` (D10). Chaves já na
+  Vercel. O André cola no Supabase a migração `20261105120000_meta_e_lembrete.sql` + o insert
+  do hash (mandado no chat). Depois: ela liga o lembrete no Início, **no app instalado**.
+  Falta: sequência de semanas no topo da trilha (opcional).
 - **D. Aulas da unidade 4** (família, ser/estar, ir, sentimentos): mesmo formato do lote 1,
   vídeos achados pela busca com domínio youtube.com e conferidos pelo CI.
 - **E. Mini questionário de opinião** (5 perguntas, como o primeiro, envio pelo WhatsApp).

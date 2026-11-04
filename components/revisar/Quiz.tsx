@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { responderCartao } from "@/lib/revisao/acoes";
+import { registrarEstudo } from "@/lib/meta/acoes";
 import type { Pergunta } from "@/lib/revisao/quiz";
 import type { Sinal } from "@/lib/sinais/dados";
 import { MidiaSinal } from "@/components/caderno/MidiaSinal";
@@ -84,6 +85,7 @@ export function Quiz({ perguntas }: { perguntas: Pergunta<Sinal>[] }) {
             type="button"
             className={`${styles.botaoPrincipal} ${styles.largo}`}
             onClick={() => {
+              if (pos + 1 >= perguntas.length) void registrarEstudo().catch(() => {});
               setEscolha(null);
               setPos((p) => p + 1);
             }}

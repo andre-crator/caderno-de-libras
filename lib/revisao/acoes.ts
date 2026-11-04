@@ -2,6 +2,7 @@
 // Grava a resposta de um cartão: novo nível e próxima data (agenda de Leitner).
 // Só a dona, só a própria linha (RLS + filtro). O nível vem do banco, não do navegador.
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
+import { registrarDia } from "@/lib/meta/registrar";
 import { type Resposta, proximaRevisao } from "./agenda";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -32,5 +33,6 @@ export async function responderCartao(id: string, resposta: Resposta): Promise<{
     if (error) console.error("responderCartao:", error.message);
     return { ok: false };
   }
+  await registrarDia(supabase, user.id);
   return { ok: true, nivel };
 }

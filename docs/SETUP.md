@@ -65,6 +65,17 @@ de entrar. Depois de entrar, o painel mostra seu nome (vindo do Google) ou e-mai
 > App de cliente pagante: use a conta da Vercel e do Supabase do próprio cliente,
 > ou o plano Pro.
 
+## 6. Lembrete diário (Web Push, D10)
+1. Gere as chaves: `npx web-push generate-vapid-keys` e um segredo longo e aleatório.
+2. Na Vercel, cadastre `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (sensível) e
+   `CRON_SECRET` (sensível). A Vercel manda o `CRON_SECRET` sozinha ao chamar o cron.
+3. No SQL Editor do Supabase, guarde só o **hash** do segredo:
+   `insert into private.segredos values ('lembrete', decode('<sha256 em hex>', 'hex'))
+   on conflict (nome) do update set hash = excluded.hash;`
+   (hash em hex: `printf %s "$CRON_SECRET" | sha256sum`).
+4. O horário fica em `vercel.json` (UTC). No plano grátis, o cron roda 1 vez por dia, com
+   até 1 hora de atraso.
+
 ## Checklist rápido
 - [ ] `.env.local` preenchido (e fora do Git: `git status` não pode mostrar ele)
 - [ ] `supabase db push` feito

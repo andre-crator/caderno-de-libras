@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { responderCartao } from "@/lib/revisao/acoes";
+import { registrarEstudo } from "@/lib/meta/acoes";
 import {
   ACERTOS_POR_NIVEL,
   VIDAS,
@@ -87,6 +88,7 @@ export function Relampago({ videos, todos }: { videos: Sinal[]; todos: Sinal[] }
       () => {
         if (vidasDepois <= 0) {
           if (pontosDepois > lerRecorde()) salvarRecorde(pontosDepois);
+          void registrarEstudo().catch(() => {});
           setFase("fim");
           return;
         }

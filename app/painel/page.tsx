@@ -9,6 +9,9 @@ import { redirect } from "next/navigation";
 import { resumoDoPainel } from "@/lib/painel/resumo";
 import { dataDeHoje, primeiroNome, primeirosPassos, saudacao, sugestaoDeAgora } from "@/lib/painel/agora";
 import { AULAS } from "@/lib/aulas/conteudo";
+import { lerMeta } from "@/lib/meta/dados";
+import { resumoDaSemana } from "@/lib/meta/semana";
+import { CartaoMeta } from "@/components/meta/CartaoMeta";
 import { Icone, type NomeIcone } from "@/components/Icone";
 import styles from "./painel.module.css";
 
@@ -42,8 +45,9 @@ function Esqueleto() {
 }
 
 async function Conteudo() {
-  const r = await resumoDoPainel();
-  if (!r) redirect("/login?next=/painel");
+  const [r, m] = await Promise.all([resumoDoPainel(), lerMeta()]);
+  if (!r || !m) redirect("/login?next=/painel");
+  const semana = resumoDaSemana(m.dias, m.meta, new Date());
 
   const agora = sugestaoDeAgora(r);
   const passos = primeirosPassos({ aulasFeitas: r.feitas.size, sinais: r.sinais, revisados: r.revisados });
@@ -107,6 +111,8 @@ async function Conteudo() {
           <span>para revisar</span>
         </Link>
       </section>
+
+      <CartaoMeta semana={semana} />
 
       {mostrarPassos && (
         <section className={styles.passos} aria-labelledby="passos-titulo">

@@ -91,6 +91,12 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   Regras puras em `lib/jogos/` (`caca.ts`: 3 palavras do tema da aula atual, fixas na semana
   que começa segunda 0h de Brasília). Erros dos jogos só vão para a revisão se ela tocar em
   "Mandar para a revisão". A trilha de estrelas (jogo 1) fica em `/aulas`.
+- Meta e lembrete (D10): `lib/meta/` (`semana.ts` puro: semana de segunda a domingo, sequência
+  de semanas e texto do lembrete; `registrar.ts` marca o dia em `study_days`, chamado por
+  `responderCartao`, `criarSinal`, `marcarAula` e `registrarEstudo` nos jogos, quiz e soletrar),
+  `components/meta/` (cartão no Início + botão do lembrete), `app/api/lembrete` (Vercel Cron,
+  `vercel.json`) e eventos `push`/`notificationclick` no `public/sw.js`. O cron lê a lista por
+  `lembretes_do_dia(segredo)` (hash em `private.segredos`), sem a chave secreta do Supabase.
 - Offline (parte 6): `public/sw.js` (telas: internet primeiro, cópia guardada sem internet,
   senão `/offline`; `/_next/static` guardado; fotos do bucket guardadas via CORS sem o
   token; vídeos e Server Actions só online). Privacidade: o proxy marca cada resposta com
