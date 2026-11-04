@@ -23,7 +23,8 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   própria: o conteúdo vem do que ela anota ou grava. Sinais variam por região; vale o que a
   professora ensinou.
 - Vídeos e imagens de dicionários (INES, Spread The Sign, VLibras etc.) só como **link**.
-  Nada copiado sem licença conferida; na dúvida, perguntar ao André.
+  Nada copiado sem licença conferida; na dúvida, perguntar ao André. Exceção (D9): vídeo do
+  YouTube toca nas aulas pelo player oficial, com crédito, sem baixar nem cobrir o player.
 - Descrição de sinal segue os 5 parâmetros da Libras: configuração de mão (CM), ponto de
   articulação (PA), movimento (M), orientação da palma (Or) e expressão não manual (ENM).
 - Fotos e vídeos dela são dados pessoais: privados por padrão (RLS + Storage privado).
@@ -77,6 +78,12 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
   `/auth/signout` manda `Clear-Site-Data`. Versão do SW = `NEXT_PUBLIC_VERSAO_APP`
   (`next.config.ts`), registrado em `components/RegistrarSW.tsx` só em produção.
   **Não** pôr Content-Security-Policy no `/sw.js`: bloqueia as fotos do Supabase.
+- Aulas (D9): `lib/aulas/conteudo.ts` (textos, um por tema; nunca descrever como fazer um
+  sinal), `content/aulas/videos.json` (vídeos por aula, `conferido` = alguém assistiu),
+  `lib/aulas/aulas.ts` (puras + testes de integridade), `lib/aulas/progresso.ts` e `acoes.ts`
+  (tabela `lesson_progress`), `app/aulas` (lista por unidade e aula), `components/aulas/`
+  (`PlayerYoutube`: miniatura → player youtube-nocookie no toque). `npm run verificar:videos`
+  confere no YouTube se os vídeos existem (no CI, sem travar o PR).
 - `lib/curso/` — roteiro do curso (`unidades.ts`, D6), listas de estudo por tema
   (`vocabulario.ts`, D7; acentos contam) e links para dicionários (`dicionarios.ts`).
 - `app/soletrar` (pública, sem dados dela) + `lib/soletrar/sequencia.ts` — treino de
@@ -126,6 +133,7 @@ pela sua revisão de exatidão antes de entrar no projeto.
 ## Comandos
 - `npm run dev` — rodar local (http://localhost:3000)
 - `npm run typecheck` · `npm run lint` · `npm test` · `npm run test:banco` · `npm run build`
+- `npm run verificar:videos` (precisa de internet; não roda dentro da sessão do Claude)
 
 ## Definição de pronto
 typecheck, lint, testes e build passando; migração testada; `docs/` atualizado se

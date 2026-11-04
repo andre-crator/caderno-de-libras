@@ -15,6 +15,12 @@
 - [ ] Datilologia e números.
 - [ ] PWA instalável no Android; tema claro, azul e branco, letras maiores.
 
+## Aulas (D9)
+- [x] Lote 1: unidades 1 a 3 (9 aulas, 20 vídeos sugeridos).
+- [ ] Conferir os vídeos do lote 1 (André/ela) e marcar `conferido: true`.
+- [ ] Lotes seguintes: unidades 4 a 12, acompanhando o curso.
+- [ ] Ela colar o link de um vídeo (ex.: do grupo da turma) direto na aula.
+
 ## Fase 2 — Leitura de sinais e hábito
 - [ ] Quiz: ver o sinal e escolher a palavra.
 - [ ] Vídeo em câmera lenta e repetição.

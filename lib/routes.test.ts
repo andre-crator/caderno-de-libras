@@ -25,6 +25,7 @@ describe("isPrivatePath", () => {
     expect(isPrivatePath("/caderno")).toBe(true);
     expect(isPrivatePath("/caderno/novo")).toBe(true);
     expect(isPrivatePath("/revisar")).toBe(true);
+    expect(isPrivatePath("/aulas/u2-numeros")).toBe(true);
   });
 
   it("não protege rotas públicas nem nomes parecidos", () => {
