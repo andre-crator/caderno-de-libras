@@ -36,7 +36,7 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
   do hash (mandado no chat). Depois: ela liga o lembrete no Início, **no app instalado**.
   Falta: sequência de semanas no topo da trilha (opcional).
 - **D. Aulas da unidade 4** — feito no PR `aulas-unidade-4` (3 aulas: família, ser/estar e ir,
-  sentimentos; 9 vídeos `conferido: false`, canal ainda vazio: o CI preenche/confere).
+  sentimentos; 9 vídeos `conferido: false`, todos no ar segundo o CI).
   Próximo lote (unidade 5) quando ela chegar lá.
 - **E. Mini questionário de opinião** (5 perguntas, como o primeiro, envio pelo WhatsApp).
 - **F. Guardar sinal sem internet** (fila no IndexedDB, sincroniza ao voltar a conexão) e
