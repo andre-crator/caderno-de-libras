@@ -2,7 +2,7 @@
 
 Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 
-## Onde paramos (2026-11-04)
+## Onde paramos (2026-11-04, fim do dia)
 
 - **App no ar:** https://caderno-de-libras.vercel.app (Vercel `caderno-de-libras`, deploy
   automático do `main`). Supabase **na conta dela** (D8), projeto `zgiqidfjddnxgicueqnv`; a
@@ -26,19 +26,11 @@ Leia no começo da sessão; atualize no fim. Meia página, sem histórico.
 ## Depois (Claude) — Fase 2, na ordem combinada em 2026-11-04
 
 - **Jogos (todos aprovados), nesta ordem:**
-  1. **Trilha de estrelas** — v1 feita (PR `jogo-trilha`): `/aulas` virou trilha; estrelas =
-     assistiu / guardou 3 sinais do tema / 3 desses com nível ≥ 2. Sem cadeado (ela já teve
-     aulas no curso). Falta: sequência de dias no topo (precisa da tabela da parte C).
-  2. **Jogo da memória**: 6 pares mídia do caderno ↔ palavra; tempo e tentativas; pares
-     difíceis vão para a revisão.
-  3. **Sinal relâmpago**: vídeo do caderno começa em 0,5× e acelera a cada 5 acertos;
-     3 opções, 3 vidas, combo, recorde (reaproveitar `lib/revisao/quiz.ts` e `VideoLento`).
-  4. **Desafio do espelho**: sorteia palavra guardada, ela se grava (câmera frontal, input
-     `capture="user"`), vê lado a lado com o vídeo do caderno e marca igual/quase/errei
-     (→ `responderCartao`). Modo dupla: o André só confere vendo o sinal certo. O vídeo dela
-     não é salvo, a não ser que ela queira.
-  5. **Caça ao sinal**: 3 missões por semana ligadas à aula da vez (texto nosso); cumprir =
-     guardar o sinal no caderno.
+  1. **Trilha de estrelas** — no `main` (`/aulas`). Falta: sequência de dias no topo
+     (precisa da tabela da parte C).
+  2–5. **Memória, relâmpago, espelho e caça ao sinal** — feitos no PR `jogos-memoria-relampago`
+     (em `/revisar/jogos`). Ideias para depois: no espelho, opção de guardar o vídeo dela
+     como mídia do sinal; atalho "Jogos" na tela inicial.
 - **C. Meta da semana + lembrete diário:** tabela de dias estudados (sequência e meta, ex.:
   3 dias/semana, no painel) e notificação diária no Android (Web Push: chaves VAPID nas
   variáveis da Vercel, tabela de inscrições, Vercel Cron 1x/dia ~19h Brasília, que manda

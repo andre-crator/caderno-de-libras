@@ -7,7 +7,7 @@ export const PERGUNTAS_POR_QUIZ = 10;
 export type ItemQuiz = { id: string; word: string; category: string | null; media_url: string | null };
 export type Pergunta<T extends ItemQuiz> = { item: T; opcoes: string[] };
 
-function embaralhar<T>(lista: readonly T[], aleatorio: () => number): T[] {
+export function embaralhar<T>(lista: readonly T[], aleatorio: () => number): T[] {
   const c = [...lista];
   for (let i = c.length - 1; i > 0; i--) {
     const j = Math.floor(aleatorio() * (i + 1));
@@ -19,17 +19,18 @@ function embaralhar<T>(lista: readonly T[], aleatorio: () => number): T[] {
 const chave = (p: string) => p.trim().toLocaleLowerCase("pt-BR");
 
 /** Dá para montar o quiz? Precisa de 1 sinal com mídia e 4 palavras diferentes no total. */
-export function podeFazerQuiz(itens: readonly ItemQuiz[]): boolean {
+export function podeFazerQuiz(itens: readonly ItemQuiz[], opcoes = OPCOES_POR_PERGUNTA): boolean {
   const palavras = new Set(itens.map((i) => chave(i.word)));
-  return itens.some((i) => i.media_url) && palavras.size >= OPCOES_POR_PERGUNTA;
+  return itens.some((i) => i.media_url) && palavras.size >= opcoes;
 }
 
 export function montarQuiz<T extends ItemQuiz>(
   itens: readonly T[],
   aleatorio: () => number = Math.random,
   quantas = PERGUNTAS_POR_QUIZ,
+  opcoes = OPCOES_POR_PERGUNTA,
 ): Pergunta<T>[] {
-  if (!podeFazerQuiz(itens)) return [];
+  if (!podeFazerQuiz(itens, opcoes)) return [];
   const comMidia = embaralhar(
     itens.filter((i) => i.media_url),
     aleatorio,
@@ -46,7 +47,7 @@ export function montarQuiz<T extends ItemQuiz>(
       });
     const mesmoTema = unicas(embaralhar(itens.filter((o) => o.category && o.category === item.category), aleatorio));
     const outros = unicas(embaralhar(itens, aleatorio));
-    const erradas = [...mesmoTema, ...outros].slice(0, OPCOES_POR_PERGUNTA - 1).map((o) => o.word);
+    const erradas = [...mesmoTema, ...outros].slice(0, opcoes - 1).map((o) => o.word);
     return { item, opcoes: embaralhar([item.word, ...erradas], aleatorio) };
   });
 }
