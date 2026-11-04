@@ -1,0 +1,16 @@
+.caixa { display: flex; flex-direction: column; gap: var(--spacing-2); width: 100%; }
+.controles { display: flex; flex-wrap: wrap; gap: var(--spacing-2); justify-content: center; }
+.controles button {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-height: var(--touch-target);
+  padding: 0 var(--spacing-4);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.controles button[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.controles .repetir { border-color: var(--primary); color: var(--primary); }

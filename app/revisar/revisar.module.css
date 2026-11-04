@@ -131,3 +131,22 @@
 .vazio h2 { margin: 0; font-size: 1.4rem; }
 .vazio p { margin: 0; color: var(--muted-foreground); }
 .aviso { padding: var(--spacing-2) var(--spacing-3); border-radius: var(--radius-sm); background: var(--highlight-soft); }
+
+/* Quiz */
+.opcoes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2); }
+.opcoes button {
+  font: inherit;
+  font-weight: 700;
+  min-height: 64px;
+  padding: var(--spacing-2);
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.opcoes button[data-estado="certa"] { background: var(--success); border-color: var(--success); color: var(--primary-foreground); }
+.opcoes button[data-estado="errada"] { background: var(--error); border-color: var(--error); color: var(--primary-foreground); }
+.opcoes button[data-estado="neutra"] { opacity: 0.5; }
+.feedback { margin: 0; font-weight: 700; text-align: center; }

@@ -80,7 +80,10 @@ publicada como Artifact). Mostra o fluxo validado: sinais → revisar → soletr
 - Revisão (parte 4): `app/revisar` (modos "palavra → sinal" e "sinal → palavra", `?todos=1`
   = treino livre), `components/revisar/Revisao.tsx` (sessão; "errei" volta ao fim uma vez),
   `lib/revisao/fila.ts` (vencidos primeiro, 20 por sessão) e `lib/revisao/acoes.ts`
-  (`responderCartao`: nível lido do banco, grava nível + próxima data).
+  (`responderCartao`: nível lido do banco, grava nível + próxima data). Quiz em
+  `app/revisar/quiz` (`lib/revisao/quiz.ts`: mídia + 4 palavras, erradas do mesmo tema;
+  errou → `responderCartao("errei")`). Vídeo de sinal = `components/VideoLento.tsx`
+  (0,5×/0,75×/normal + repetir; pausa ao esconder).
 - Offline (parte 6): `public/sw.js` (telas: internet primeiro, cópia guardada sem internet,
   senão `/offline`; `/_next/static` guardado; fotos do bucket guardadas via CORS sem o
   token; vídeos e Server Actions só online). Privacidade: o proxy marca cada resposta com
