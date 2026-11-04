@@ -13,7 +13,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--background);
+  background: var(--background-glow) no-repeat, var(--background);
+  background-size: 100% 520px, auto;
   color: var(--foreground);
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);

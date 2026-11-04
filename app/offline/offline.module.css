@@ -20,5 +20,5 @@
   font-weight: 700;
   text-decoration: none;
 }
-.botao { background: var(--primary); color: var(--primary-foreground); }
+.botao { background: var(--gradient-primary); box-shadow: var(--shadow-primary); color: var(--primary-foreground); }
 .botaoSecundario { border: 2px solid var(--border); background: var(--card); color: var(--foreground); }

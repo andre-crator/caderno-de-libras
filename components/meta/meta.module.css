@@ -68,7 +68,7 @@
   padding: 0 var(--spacing-6);
   border: 0;
   border-radius: var(--radius-full);
-  background: var(--primary);
+  background: var(--gradient-primary); box-shadow: var(--shadow-primary);
   color: var(--primary-foreground);
   font: inherit;
   font-weight: 700;

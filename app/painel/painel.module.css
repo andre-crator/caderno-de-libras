@@ -36,11 +36,24 @@
   flex-direction: column;
   gap: var(--spacing-2);
   padding: var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  position: relative;
+  overflow: hidden;
   border-radius: var(--radius-lg);
-  background: var(--primary);
+  background: var(--gradient-primary);
   color: var(--primary-foreground);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-primary), var(--shadow-lg);
 }
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  border-radius: var(--radius-full);
+  background: var(--on-gradient-soft);
+  pointer-events: none;
+}
+.hero::before { width: 200px; height: 200px; right: -60px; top: -70px; }
+.hero::after { width: 110px; height: 110px; right: 50px; bottom: -55px; }
+.hero > * { position: relative; }
 .heroRotulo {
   margin: 0;
   font-size: 0.8rem;
@@ -50,7 +63,7 @@
   color: var(--highlight);
 }
 .heroTitulo { margin: 0; font-size: clamp(1.5rem, 6vw, 1.9rem); font-weight: 800; color: var(--primary-foreground); }
-.heroTexto { margin: 0; opacity: 0.9; }
+.heroTexto { margin: 0; color: var(--on-gradient-muted); }
 .heroBotao {
   margin-top: var(--spacing-3);
   align-self: stretch;
@@ -65,7 +78,10 @@
   font-weight: 800;
   font-size: 1.1rem;
   text-decoration: none;
+  box-shadow: 0 8px 20px -10px var(--primary-strong);
+  transition: transform 0.15s ease;
 }
+.heroBotao:hover { transform: translateY(-1px); }
 .heroBotao:hover { background: var(--primary-soft); }
 
 /* Números */
@@ -77,27 +93,32 @@
   padding: var(--spacing-3);
   border-radius: var(--radius);
   background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--cor, var(--primary));
   box-shadow: var(--shadow);
   color: var(--foreground);
   text-decoration: none;
   min-width: 0;
 }
+.numero:nth-child(1) { --cor: var(--area-aulas); }
+.numero:nth-child(2) { --cor: var(--area-caderno); }
+.numero:nth-child(3) { --cor: var(--area-revisar); }
 .numero strong {
   font-family: var(--font-family-display);
   font-size: 1.9rem;
   font-weight: 800;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
-  color: var(--primary);
+  color: var(--cor, var(--primary));
 }
 .numero strong small { font-size: 1rem; color: var(--muted-foreground); }
 .numero > span { font-size: 0.85rem; color: var(--muted-foreground); line-height: 1.25; }
 .numero[data-alerta] strong { color: var(--warning); }
 .barrinha { display: block; height: 5px; margin-top: var(--spacing-1); border-radius: var(--radius-full); background: var(--muted); overflow: hidden; }
-.barrinha span { display: block; height: 100%; background: var(--success); }
+.barrinha span { display: block; height: 100%; border-radius: inherit; background: var(--cor, var(--success)); }
 
 /* Primeiros passos */
-.passos { padding: var(--spacing-4); border-radius: var(--radius-lg); background: var(--highlight-soft); }
+.passos { padding: var(--spacing-4); border-radius: var(--radius-lg); background: var(--highlight-soft); border: 1px solid var(--highlight); }
 .passos h2 { margin: 0 0 var(--spacing-3); font-size: 1.15rem; }
 .passos ol { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--spacing-2); }
 .passos li { display: flex; align-items: center; gap: var(--spacing-3); min-height: 40px; }
@@ -127,10 +148,19 @@
   padding: var(--spacing-4);
   border-radius: var(--radius-lg);
   background: var(--card);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
   color: var(--foreground);
   text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  --cor: var(--primary);
+  --cor-suave: var(--primary-soft);
 }
+.atalho:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.atalho[data-area="aulas"] { --cor: var(--area-aulas); --cor-suave: var(--area-aulas-soft); }
+.atalho[data-area="caderno"] { --cor: var(--area-caderno); --cor-suave: var(--area-caderno-soft); }
+.atalho[data-area="revisar"] { --cor: var(--area-revisar); --cor-suave: var(--area-revisar-soft); }
+.atalho[data-area="soletrar"] { --cor: var(--area-soletrar); --cor-suave: var(--area-soletrar-soft); }
 .atalho strong { font-family: var(--font-family-display); font-size: 1.15rem; }
 .atalho > span:last-child { color: var(--muted-foreground); font-size: 0.9rem; line-height: 1.3; }
 .atalhoIcone {
@@ -140,8 +170,8 @@
   border-radius: var(--radius);
   display: grid;
   place-items: center;
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: var(--cor-suave);
+  color: var(--cor);
 }
 
 /* Esqueleto enquanto carrega */

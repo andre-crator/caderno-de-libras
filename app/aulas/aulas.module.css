@@ -151,7 +151,7 @@
   text-decoration: none;
   cursor: pointer;
 }
-.botaoPrincipal { border: 0; background: var(--primary); color: var(--primary-foreground); width: 100%; }
+.botaoPrincipal { border: 0; background: var(--gradient-primary); box-shadow: var(--shadow-primary); color: var(--primary-foreground); width: 100%; }
 .botaoFeito { border: 0; background: var(--success); color: var(--primary-foreground); width: 100%; }
 .botaoSecundario { min-height: var(--touch-target); border: 2px solid var(--border); background: var(--card); color: var(--foreground); }
 .concluir { display: flex; flex-direction: column; gap: var(--spacing-2); }
@@ -171,7 +171,7 @@
 .resumoTrilha strong { font-family: var(--font-family-display); font-size: 1.6rem; color: var(--highlight); text-shadow: 0 1px 0 var(--foreground); }
 .botaoPrincipalPeq {
   min-height: var(--touch-target); display: inline-flex; align-items: center; padding: 0 var(--spacing-4);
-  border-radius: var(--radius-full); background: var(--primary); color: var(--primary-foreground); font-weight: 700; text-decoration: none;
+  border-radius: var(--radius-full); background: var(--gradient-primary); box-shadow: var(--shadow-primary); color: var(--primary-foreground); font-weight: 700; text-decoration: none;
 }
 .legenda { padding: var(--spacing-3) var(--spacing-4); border-radius: var(--radius); background: var(--highlight-soft); }
 .legenda summary { cursor: pointer; font-weight: 700; min-height: 32px; }
@@ -195,7 +195,7 @@
   font-family: var(--font-family-display); font-weight: 800; font-size: 1.5rem;
   border: 4px solid var(--card); box-shadow: 0 5px 0 rgba(20, 32, 54, 0.18);
 }
-.bolha[data-estado="aberta"] { background: var(--primary); color: var(--primary-foreground); }
+.bolha[data-estado="aberta"] { background: var(--gradient-primary); box-shadow: var(--shadow-primary); color: var(--primary-foreground); }
 .bolha[data-estado="completa"] { background: var(--success); color: var(--primary-foreground); }
 .bolha[data-estado="atual"] { background: var(--highlight); color: var(--foreground); width: 84px; height: 84px; }
 .bolha[data-estado="fechada"] { background: var(--primary-soft); color: var(--primary); }
